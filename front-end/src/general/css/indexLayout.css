@@ -1,0 +1,38 @@
+#bg-img {
+    background: linear-gradient(rgb(212, 63, 29), rgb(255, 195, 160));
+    height: 100%;
+    width: 100%;
+    left: 0;
+    position: fixed;
+    background-size: cover;
+}
+
+.header-content > h1 {
+    color: #fff;
+    font-family: 'MS Serif, New York, sans-serif';
+    font-weight: 200;
+    font-size: 40px;
+    margin: 7vh 0 0;
+}
+
+.header-content > h1 > span {
+    color: rgb(14, 11, 11);
+    font-size: 70px;
+    font-style: italic;
+}
+
+.card {
+    width: 60vw;
+    border: 1px solid #ebebeb;
+    margin: 7vh auto 17vh;
+    padding: 5vh 0vw;
+}
+.card h1 {
+    color: #606060;
+}
+.card input {
+    display: block;
+    margin-bottom: 20px;
+    padding: 5px;
+    width: 50vw;
+}

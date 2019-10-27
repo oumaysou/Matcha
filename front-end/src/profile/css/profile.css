@@ -1,0 +1,12 @@
+#profile {
+    margin-bottom: 60px;
+}
+
+.panel-default {
+    margin: 10px 0 0 0;
+}
+
+.scroll {
+    overflow-y: auto;
+    height: 40vh;
+}

@@ -1,0 +1,9 @@
+#visited-by img {
+    width: 70%;
+    border-radius: 100%;
+    padding: 5px 0;
+}
+
+#visited-by td {
+    width: 50px;
+}

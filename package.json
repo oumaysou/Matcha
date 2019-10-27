@@ -1,0 +1,16 @@
+{
+  "name": "Matcha",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd front-end && npm start",
+    "server": "cd back-end && npm start",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
+  },
+  "dependencies": {
+    "path": "^0.12.7",
+    "serve-favicon": "^2.5.0"
+  }
+}

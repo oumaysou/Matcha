@@ -1,0 +1,9 @@
+#liked-by img {
+    width: 70%;
+    border-radius: 100%;
+    padding: 5px 0;
+}
+
+#liked-by td {
+    width: 50px;
+}

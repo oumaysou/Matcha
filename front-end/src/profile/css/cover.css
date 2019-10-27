@@ -1,0 +1,18 @@
+#avatar {
+    border-radius: 100%;
+    width: 100px;
+    padding: 3vh 0;
+}
+
+#like-btn, #edit-btn {
+    display: inline-block;
+    margin: 3vh 0;
+    width: 15vw;
+    font-size: 16px;
+}
+
+#edit-btn {
+    color: #FF5252;
+    background-color: transparent;
+    border: 1px solid #FF5252;
+}

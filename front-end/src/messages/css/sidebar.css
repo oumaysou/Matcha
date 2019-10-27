@@ -1,0 +1,144 @@
+.side {
+  padding: 0;
+  margin: 0;
+  height: 80vh;
+}
+
+.side-one {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: block;
+  top: 0;
+}
+
+.searchBox {
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 60px;
+  width: 100%;
+}
+
+.searchBox-inner {
+  height: 100%;
+  width: 100%;
+  padding: 10px !important;
+  background-color: #fbfbfb;
+}
+
+.searchBox-inner input:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+
+.sideBar {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: #fff;
+  overflow-y: auto;
+  border: 1px solid #f7f7f7;
+  height: calc(90vh - 120px);
+}
+
+.sideBar-body {
+  position: relative;
+  padding: 10px !important;
+  border-bottom: 1px solid #f7f7f7;
+  height: 72px;
+  margin: 0 !important;
+  cursor: pointer;
+}
+
+.sideBar-body:hover {
+  background-color: #f2f2f2;
+}
+
+.sideBar-avatar {
+  text-align: center;
+  padding: 0 !important;
+}
+
+.avatar-icon img {
+  border-radius: 50%;
+  height: 49px;
+  width: 49px;
+}
+
+.sideBar-main {
+  padding: 0 !important;
+}
+
+.sideBar-main .row {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.sideBar-name {
+  padding: 10px !important;
+}
+
+.name-meta {
+  font-size: 100%;
+  padding: 1% !important;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #000;
+}
+
+.sideBar-time {
+  padding: 10px !important;
+}
+
+.time-meta {
+  text-align: right;
+  font-size: 12px;
+  padding: 1% !important;
+  color: rgba(0, 0, 0, .4);
+  vertical-align: baseline;
+}
+
+@media screen and (max-width: 700px) {
+    .sideBar {
+      height: calc(90% - 50px);
+    }
+    .sideBar-body {
+      height: 80px;
+    }
+    .sideBar-avatar {
+      text-align: left;
+      padding: 0 8px !important;
+    }
+    .avatar-icon img {
+      height: 55px;
+      width: 55px;
+    }
+    .sideBar-main {
+      padding: 0 !important;
+    }
+    .sideBar-main .row {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    .sideBar-name {
+      padding: 10px 5px !important;
+    }
+    .name-meta {
+      font-size: 16px;
+      padding: 5% !important;
+    }
+    .sideBar-time {
+      padding: 10px !important;
+    }
+    .time-meta {
+      text-align: right;
+      font-size: 14px;
+      padding: 4% !important;
+      color: rgba(0, 0, 0, .4);
+      vertical-align: baseline;
+    }
+}

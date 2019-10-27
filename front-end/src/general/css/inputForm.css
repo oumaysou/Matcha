@@ -1,0 +1,7 @@
+.inputForm {
+    margin: 5vh 5vw;
+}
+
+input[type="file"] {
+    display: inline-flex !important;
+}

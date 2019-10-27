@@ -1,0 +1,12 @@
+nav.navbar.navbar-default {
+    background-color: #fff;
+    margin-bottom: 0;
+}
+
+.navbar-default .container .navbar-brand {
+  color: #FF5252;
+}
+
+.navbar-default .container .navbar-brand:hover, .navbar-default .container .navbar-brand:focus {
+  color: #ffb9b9;
+ }

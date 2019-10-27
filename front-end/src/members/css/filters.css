@@ -1,0 +1,9 @@
+.filters {
+    margin: 10px 0;
+}
+
+#filter-basic input {
+    height: 30px;
+    border-radius: 9px;
+    background-color: #fcfcfc;
+}

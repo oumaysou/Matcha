@@ -1,0 +1,64 @@
+import profileQuery from '../../models/profileQuery';
+import { getUsernameFromToken } from '../../utils/crypt';
+import userTools from '../../utils/userTools';
+
+const getProfile = async (req, res) => {
+
+    const username = req.params.username;
+    const myUsername = getUsernameFromToken(req);
+
+    if (!myUsername)
+        return res.send({ success: false, message: "The profile doesn't exist" });
+
+    let user = await userTools.getUserData('username', username);
+    if (!user)
+        return res.send({ success: false, message: `${username} doesn't exist` });
+
+    user = userTools.removeConfidentials(user, user.username);
+    const photos = await profileQuery.getPhotos(user.username);
+    const tags = await profileQuery.getTags(user.username);
+    const visitedBy = await profileQuery.whoVisitedMe(user.username);
+    const likedBy = await profileQuery.whoLikedMe(user.username);
+
+    if (myUsername !== username) {
+        const blockedByMe = await profileQuery.getBlockedByMe(myUsername);
+        const userBlockedMe = await profileQuery.whoBlockedMe(myUsername);
+
+        if (blockedByMe.includes(username))
+            return res.send({ success: false, message: `remember that ${username} has been blocked` });
+        else if (userBlockedMe.includes(username))
+            return res.send({ success: false, message: `${username} blocked you` });
+
+        const result = await profileQuery.setNewVisit(myUsername, username);
+        if (result) {
+            return res.send({
+                success: true,
+                message: `${username}'s profile has been found`,
+                photos,
+                tags,
+                visitedBy,
+                likedBy,
+                userData: user
+            });
+        }
+        else {
+            return res.send({
+                success: false,
+                message: `Cannot set a new visit`
+            });
+        }
+    }
+    else {
+        return res.send({
+            success: true,
+            message: "Your profile has been found",
+            photos,
+            tags,
+            visitedBy,
+            likedBy,
+            userData: user
+        });
+    }
+};
+
+module.exports = getProfile;

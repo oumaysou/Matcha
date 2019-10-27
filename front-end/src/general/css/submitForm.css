@@ -1,0 +1,17 @@
+.btn.btn-primary {
+    display: block;
+    border: none;
+    color: white;
+    background-color: #FF5252;
+    border-radius: 5px;
+}
+
+.btn.btn-primary:hover, .btn.btn-primary:active, .btn.btn-primary:focus {
+    color: white;
+    text-decoration: none;
+    background-color: #ffb9b9;
+}
+
+.btn.btn-edit {
+    margin: 4vh auto;
+}
