@@ -30,14 +30,5 @@ export const thunk_register = (state) => {
             }
         })
             .catch(err => console.error('Error: ', err));
-
-        // fetch(`https://api.github.com/users/${user}`)
-        //     .then(data => data.json())
-        //     .then(data => {
-        //         if (data.message === "Not Found") {
-        //             throw new Error("No such user found!!");
-        //         } else dispatch(register(data));
-        //     })
-        //     .catch(err => dispatch(receive_error()));
     };
 };

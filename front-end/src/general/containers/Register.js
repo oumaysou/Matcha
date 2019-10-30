@@ -50,7 +50,7 @@ class Register extends React.Component {
     }
 
     render() {
-        // console.log(JSON.stringify(this.props, null, 4));
+        console.log(JSON.stringify(this.props, null, 4));
         return (
             <IndexLayout>
                 <RegisterForm

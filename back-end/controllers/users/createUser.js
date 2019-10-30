@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
         gender,
         orientation
     } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     if (!username || !password || !passwordCfm || !birthday
         || !firstName || !lastName || !email || !gender || !orientation) {
         return res.send({

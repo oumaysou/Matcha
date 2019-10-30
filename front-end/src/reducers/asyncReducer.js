@@ -10,7 +10,6 @@ const initialeState_register = {
     gender: '',
     orientation: '',
     location: '',
-    finish: false,
 }
 
 const reducer = (state = initialeState_register, action) => {
