@@ -26,7 +26,6 @@ export const thunk_register = (state) => {
             }
             else {
                 NotificationManager.error(message, 'Sorry but...', 6000);
-                dispatch(register(data));
             }
         })
             .catch(err => console.error('Error: ', err));

@@ -29,28 +29,12 @@ class Register extends React.Component {
         this.props.dispatch(thunk_register(NewState));
     }
 
-
-
-    // {
-    //     const user = Object.assign({}, this.state);
-    //     axios.post('/api/users', user).then(({ data }) => {
-    //         const { success, message } = data;
-    //         if (success === true)
-    //             NotificationManager.success(message, 'Success !', 6000);
-    //         else
-    //             NotificationManager.error(message, 'Sorry but...', 6000);
-    //     })
-    //         .catch(err => console.error('Error: ', err));
-    // }
-
-
-
     saveState = (name, value) => {
         this.setState({ [name]: value });
     }
 
     render() {
-        console.log(JSON.stringify(this.props, null, 4));
+        // console.log(JSON.stringify(this.props, null, 4));
         return (
             <IndexLayout>
                 <RegisterForm
