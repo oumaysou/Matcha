@@ -8,7 +8,8 @@ export default class Sidebar extends React.Component {
     constructor() {
         super()
         this.state = {
-            allMatches: []
+            allMatches: [],
+            whoChat: ""
         }
         this.getAllMatches = this.getAllMatches.bind(this);
     }
@@ -21,9 +22,9 @@ export default class Sidebar extends React.Component {
     }
 
     getAllMatches() {
-        const allMatches = this.props.allMatches;
-        if (allMatches) {
-            allMatches.map((match, index) => {
+        const allMatches = this.state.allMatches;
+        if (allMatches.lenth !== 0) {
+            return allMatches.map((match, index) => {
                 return <SidebarResult key={index} match={match} />;
             })
         }

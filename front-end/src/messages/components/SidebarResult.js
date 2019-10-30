@@ -1,14 +1,23 @@
 import React from 'react';
 
 export default class SidebarResult extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        };
+    }
+
     render() {
-        const { avatar, username } = this.props.match;
+        const username = this.props.match;
+        // console.log('utilisateur(s) = > ' + this.props.match)
         return (
-            <div className="row sideBar">
+            <div className="row sideBar" >
                 <div className="row sideBar-body">
                     <div className="col-sm-3 col-xs-3 sideBar-avatar">
                         <div className="avatar-icon">
-                            <img src={avatar} alt='' />
+                            <img src="" alt='' />
                         </div>
                     </div>
                     <div className="col-sm-9 col-xs-9 sideBar-main">
@@ -22,7 +31,7 @@ export default class SidebarResult extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </ div >
         );
     }
 }

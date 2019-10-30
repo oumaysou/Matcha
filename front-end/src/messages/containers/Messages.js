@@ -9,17 +9,17 @@ export default class Messages extends React.Component {
         this.state = {
 
         };
-//        this.saveState = this.saveState.bind(this);
+        //        this.saveState = this.saveState.bind(this);
     }
 
     render() {
         return (
             <div className='messenger'>
                 <div className="container app">
-                  <div className="row app-one">
-                    <Sidebar />
-                    <Conversation />
-                  </div>
+                    <div className="row app-one">
+                        <Sidebar />
+                        <Conversation />
+                    </div>
                 </div>
             </div>
         );
