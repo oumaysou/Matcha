@@ -21,7 +21,6 @@ class Sidebar extends React.Component {
 
     getAllMatches() {
         const { matches } = this.props;
-        // console.log("Sidebar.js\n" + JSON.stringify(this.props, null, 4));
 
         if (matches.lenth !== 0) {
             return matches.map((match, index) => {

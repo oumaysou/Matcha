@@ -17,6 +17,13 @@ export const getall = (data) => {
     };
 };
 
+export const usernameclicked = (data) => {
+    return {
+        type: "USERNAMECLICKED",
+        data: data
+    };
+};
+
 // ACTION FOR REGISTER
 
 export const thunk_register = (state) => {
@@ -48,3 +55,12 @@ export const thunk_getall = (allMatches) => {
         })
     };
 };
+
+// ACTION FOR USERNAMECLICKED - chat
+
+export const thunk_usernameClicked = (usernameClicked) => {
+    return function (dispatch, getState) {
+        // const test = getState();
+        dispatch(usernameclicked(usernameClicked));
+    }
+}

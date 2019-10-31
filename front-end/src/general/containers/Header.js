@@ -36,13 +36,14 @@ export default class Header extends React.Component {
     render() {
         const { username } = this.state;
         const pathname = window.location.pathname.split('/')[1];
-        if ( pathname === 'members' || pathname === 'messages') {
+        // console.log("pathname => " + pathname)
+        if (pathname === 'members' || pathname === 'messages' || pathname === 'activate') {
             return (
                 <UserNavbar
                     username={username}
-                    // nbVisits={nbVisits}
-                    // nbLikes={nbLikes}
-                    // nbMessages={nbMessages}
+                // nbVisits={nbVisits}
+                // nbLikes={nbLikes}
+                // nbMessages={nbMessages}
                 />
             );
         }

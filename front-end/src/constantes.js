@@ -1,6 +1,7 @@
 export const REGISTER = "REGISTER"
 export const SIGNIN = "SIGNIN"
 export const GETALL = "GETALL"
+export const USERNAMECLICKED = "USERNAMECLICKED"
 
 
 export const FETCH_REGISTER = "FETCH_REGISTER"

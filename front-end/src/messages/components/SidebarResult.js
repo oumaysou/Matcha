@@ -1,18 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { thunk_usernameClicked } from '../../actions/thunk_register';
+import { get } from 'lodash';
+// import { USERNAMECLICKED } from '../../constantes';
 
 class SidebarResult extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            usernameClicked: ""
         };
     }
 
     onClick = (e) => {
         e.preventDefault();
-        this.setState({ usernameClicked: this.props.match });
+        const usernameClicked = this.props.match;
+        // console.log("div cliquee\n" + usernameClicked);
+        this.props.dispatch(thunk_usernameClicked(usernameClicked));
     }
     render() {
         const username = this.props.match;
@@ -42,9 +46,9 @@ class SidebarResult extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
+    // console.log("state \n" + JSON.stringify(state.usernameCLicked));
     return {
-        data: state
+        usernameClicked: get(state, 'state.usernameCLicked')
     };
 };
 

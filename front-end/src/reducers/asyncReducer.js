@@ -1,7 +1,7 @@
-import { REGISTER, GETALL } from '../constantes';
+import { REGISTER, GETALL, USERNAMECLICKED } from '../constantes';
 
 const initialeState_register = {
-
+    clicked: false
 }
 
 // const initialeState_matches = {
@@ -18,8 +18,16 @@ const reducer = (state = initialeState_register, action) => {
             };
         case GETALL:
             return {
-                // ...state,
+                ...state,
                 state: action.data
+            };
+        case USERNAMECLICKED:
+            // console.log("action =>" + JSON.stringify(state))
+            return {
+                ...state,
+                usernameCLicked: action.data,
+                clicked: true
+
             };
         default: return state
     }
