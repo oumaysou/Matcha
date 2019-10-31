@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 
+
 export const register = data => {
     return {
         type: "REGISTER",
@@ -9,11 +10,14 @@ export const register = data => {
     };
 };
 
-export const receive_error = () => {
+export const getall = (data) => {
     return {
-        type: "RECEIVE_ERROR"
+        type: "GETALL",
+        data: data
     };
 };
+
+// ACTION FOR REGISTER
 
 export const thunk_register = (state) => {
     // const userInfo = Object.assign({}, state);
@@ -29,5 +33,18 @@ export const thunk_register = (state) => {
             }
         })
             .catch(err => console.error('Error: ', err));
+    };
+};
+
+// ACTION FOR GETALL MEMBERS
+
+export const thunk_getall = (allMatches) => {
+    return function (dispatch, getState) {
+        return axios.get(`api/matches/getall`).then(({ data }) => {
+            if (data.success) {
+                dispatch(getall(data));
+
+            }
+        })
     };
 };

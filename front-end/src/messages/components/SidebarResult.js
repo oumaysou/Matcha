@@ -1,19 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default class SidebarResult extends React.Component {
+class SidebarResult extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-
+            usernameClicked: ""
         };
     }
 
+    onClick = (e) => {
+        e.preventDefault();
+        this.setState({ usernameClicked: this.props.match });
+    }
     render() {
         const username = this.props.match;
-        // console.log('utilisateur(s) = > ' + this.props.match)
+        // console.log("store SidebarResult" + JSON.stringify(this.props, null, 4));
         return (
-            <div className="row sideBar" >
+            <div className="row sideBar" onClick={this.onClick}>
                 <div className="row sideBar-body">
                     <div className="col-sm-3 col-xs-3 sideBar-avatar">
                         <div className="avatar-icon">
@@ -35,3 +40,12 @@ export default class SidebarResult extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    console.log(state);
+    return {
+        data: state
+    };
+};
+
+export default connect(mapStateToProps)(SidebarResult);

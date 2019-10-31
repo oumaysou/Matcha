@@ -1,30 +1,30 @@
 import React from 'react';
-import axios from 'axios';
 import SidebarSearch from './SidebarSearch';
 import SidebarResult from './SidebarResult';
 import '../css/sidebar.css';
+import { thunk_getall } from '../../actions/thunk_register';
+import { connect } from 'react-redux';
+import { get } from 'lodash'
 
-export default class Sidebar extends React.Component {
+class Sidebar extends React.Component {
     constructor() {
         super()
         this.state = {
-            allMatches: [],
-            whoChat: ""
+            allMatches: []
         }
         this.getAllMatches = this.getAllMatches.bind(this);
     }
 
     componentWillMount() {
-        axios.get(`/api/matches/getall`).then(({ data }) => {
-            if (data.success)
-                this.setState({ allMatches: data.matches })
-        })
+        this.props.dispatch(thunk_getall(this.state.allMatches));
     }
 
     getAllMatches() {
-        const allMatches = this.state.allMatches;
-        if (allMatches.lenth !== 0) {
-            return allMatches.map((match, index) => {
+        const { matches } = this.props;
+        // console.log("Sidebar.js\n" + JSON.stringify(this.props, null, 4));
+
+        if (matches.lenth !== 0) {
+            return matches.map((match, index) => {
                 return <SidebarResult key={index} match={match} />;
             })
         }
@@ -33,6 +33,7 @@ export default class Sidebar extends React.Component {
     }
 
     render() {
+        // console.log("store Sidebar" + JSON.stringify(this.props, null, 4));
         const allMatches = this.state.allMatches;
         return (
             <div className="col-sm-4 side">
@@ -45,3 +46,11 @@ export default class Sidebar extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        matches: get(state, 'state.matches', [])
+    };
+};
+
+export default connect(mapStateToProps)(Sidebar);

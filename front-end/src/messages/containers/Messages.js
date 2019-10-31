@@ -2,8 +2,9 @@ import React from 'react';
 import Sidebar from '../components/Sidebar';
 import Conversation from '../components/Conversation';
 import '../css/messages.css';
+import { connect } from 'react-redux';
 
-export default class Messages extends React.Component {
+class Messages extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,6 +14,7 @@ export default class Messages extends React.Component {
     }
 
     render() {
+        // console.log("store message" + JSON.stringify(this.props, null, 4));
         return (
             <div className='messenger'>
                 <div className="container app">
@@ -25,3 +27,11 @@ export default class Messages extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        data: state
+    };
+};
+
+export default connect(mapStateToProps)(Messages);
