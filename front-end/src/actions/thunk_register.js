@@ -1,35 +1,43 @@
-// import store from '../store/store';
+import { REGISTER, GETALLMATCHES, USERNAMECLICKED } from '../constantes';
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 
 
-export const register = data => {
+export const register = (data) => {
     return {
-        type: "REGISTER",
-        data: data
+        type: REGISTER,
+        data
     };
 };
 
-export const getall = (data) => {
+export const getallMatches = (data) => {
     return {
-        type: "GETALL",
-        data: data
+        type: GETALLMATCHES,
+        data
     };
 };
+
+export const getMessages = (data) => {
+    return {
+        type: GETMESSAGES,
+        data
+    };
+};
+
 
 export const usernameclicked = (data) => {
     return {
-        type: "USERNAMECLICKED",
-        data: data
+        type: USERNAMECLICKED,
+        data
     };
 };
 
 // ACTION FOR REGISTER
 
-export const thunk_register = (state) => {
+export const thunk_register = (register) => {
     // const userInfo = Object.assign({}, state);
-    return function (dispatch, getState) {
-        return axios.post('/api/users', state).then(({ data }) => {
+    return function (dispatch) {
+        return axios.post('/api/users', register).then(({ data }) => {
             const { success, message } = data;
             if (success === true) {
                 dispatch(register(data));
@@ -43,14 +51,13 @@ export const thunk_register = (state) => {
     };
 };
 
-// ACTION FOR GETALL MEMBERS
+// ACTION FOR GETALL MATCHES
 
-export const thunk_getall = (allMatches) => {
-    return function (dispatch, getState) {
+export const thunk_getallMatches = () => {
+    return function (dispatch) {
         return axios.get(`api/matches/getall`).then(({ data }) => {
             if (data.success) {
-                dispatch(getall(data));
-
+                dispatch(getallMatches(data.matches));
             }
         })
     };
@@ -59,8 +66,20 @@ export const thunk_getall = (allMatches) => {
 // ACTION FOR USERNAMECLICKED - chat
 
 export const thunk_usernameClicked = (usernameClicked) => {
-    return function (dispatch, getState) {
+    return function (dispatch) {
         // const test = getState();
         dispatch(usernameclicked(usernameClicked));
     }
 }
+
+// ACTION FOR GET MESSAGES
+
+export const thunk_getMessages = (actUser, matchUser) => {
+    return function (dispatch) {
+        return axios.get(`api/matches/getall`).then(({ data }) => {
+            if (data.success) {
+                dispatch(getallMatches(data.matches));
+            }
+        })
+    };
+};

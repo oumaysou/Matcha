@@ -1,24 +1,27 @@
 import React from 'react';
 import '../css/conversation.css';
+import { thunk_getMessages } from '../../actions/thunk_register';
 import { connect } from 'react-redux';
-import { usernameclicked } from '../../actions/thunk_register';
 
 class Conversation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            messsage: []
         };
         //        this.saveState = this.saveState.bind(this);
     }
 
-    render() {
-        const isClicked = this.props.conv.clicked
-        const usernameClicked = this.props.conv.usernameCLicked
-        // console.log("Converstion.js\n" + JSON.stringify(this.props.conv.usernameCLicked, null, 4));
-        console.log("etat " + usernameclicked)
-        if (isClicked) {
+    componentDidMount() {
+        this.props.dispatch(thunk_getMessages(this.state.messages));
+    }
 
+    render() {
+        const isClicked = this.props.clicked
+        const usernameClicked = this.props.usernameClicked
+        console.log("Converstion.js\n" + JSON.stringify(this.props, null, 4));
+        if (isClicked) {
+            
             return (
                 <div className="col-sm-8 conversation">
                     <div className="row heading">
@@ -68,10 +71,11 @@ class Conversation extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ usernameClicked, clicked }) => {
     // console.log(JSON.stringify(state))
     return {
-        conv: state
+        usernameClicked,
+        clicked
     };
 };
 

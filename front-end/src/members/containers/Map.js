@@ -19,8 +19,10 @@ export default class Map extends React.Component {
         const decoded = utils.decodedCookie();
         if (decoded) {
             axios.get(`/api/users/username?value=${decoded.username}`).then(({ data }) => {
-                const lat = data.data.location.split(',')[0];
-                const lng = data.data.location.split(',')[1];
+                //const lat = data.data.location.split(',')[0];
+                //const lng = data.data.location.split(',')[1];
+                const lat = 48.8534;
+                const lng = 2.3488;
                 this.setState({lat, lng})
             })
 

@@ -1,31 +1,26 @@
-import { REGISTER, GETALL, USERNAMECLICKED } from '../constantes';
+import { REGISTER, GETALLMATCHES, USERNAMECLICKED } from '../constantes';
 
-const initialeState_register = {
+const initialeState = {
     clicked: false
 }
 
-// const initialeState_matches = {
-//     data: [],
-//     isLoading: false,
-//     error: null,
-// }
-
-const reducer = (state = initialeState_register, action) => {
+const reducer = (state = initialeState, action) => {
     switch (action.type) {
         case REGISTER:
             return {
-                state: action.data
+                ...state,
+                register: action.data
             };
-        case GETALL:
+        case GETALLMATCHES:
             return {
                 ...state,
-                state: action.data
+                matches: action.data
             };
         case USERNAMECLICKED:
             // console.log("action =>" + JSON.stringify(state))
             return {
                 ...state,
-                usernameCLicked: action.data,
+                usernameClicked: action.data,
                 clicked: true
 
             };

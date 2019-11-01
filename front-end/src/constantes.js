@@ -1,6 +1,6 @@
 export const REGISTER = "REGISTER"
 export const SIGNIN = "SIGNIN"
-export const GETALL = "GETALL"
+export const GETALLMATCHES = "GETALL"
 export const USERNAMECLICKED = "USERNAMECLICKED"
 
 

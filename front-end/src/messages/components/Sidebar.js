@@ -2,21 +2,20 @@ import React from 'react';
 import SidebarSearch from './SidebarSearch';
 import SidebarResult from './SidebarResult';
 import '../css/sidebar.css';
-import { thunk_getall } from '../../actions/thunk_register';
+import { thunk_getallMatches } from '../../actions/thunk_register';
 import { connect } from 'react-redux';
-import { get } from 'lodash'
 
 class Sidebar extends React.Component {
     constructor() {
         super()
         this.state = {
-            allMatches: []
+            matches: []
         }
-        this.getAllMatches = this.getAllMatches.bind(this);
+        //this.getAllMatches = this.getAllMatches.bind(this);
     }
 
-    componentWillMount() {
-        this.props.dispatch(thunk_getall(this.state.allMatches));
+    componentDidMount() {
+        this.props.dispatch(thunk_getallMatches(this.state.matches));
     }
 
     getAllMatches() {
@@ -32,7 +31,6 @@ class Sidebar extends React.Component {
     }
 
     render() {
-        // console.log("store Sidebar" + JSON.stringify(this.props, null, 4));
         const allMatches = this.state.allMatches;
         return (
             <div className="col-sm-4 side">
@@ -46,9 +44,9 @@ class Sidebar extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ matches, ...state}) => {
     return {
-        matches: get(state, 'state.matches', [])
+        matches: matches || []
     };
 };
 
