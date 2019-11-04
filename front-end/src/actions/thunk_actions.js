@@ -65,6 +65,7 @@ export const thunk_signIn = (dataSign) => {
         return axios.post('/api/users/signin', dataSign).then(({ data }) => {
             const { success, message, userData } = data;
             if (success === true) {
+                console.log( "   ", JSON.stringify(userData));
                 dispatch(signIn(userData));
                 const cookies = new Cookies();
                 cookies.set('token', userData.token, { path: '/' });
