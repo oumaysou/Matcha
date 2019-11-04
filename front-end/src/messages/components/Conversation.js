@@ -2,14 +2,16 @@ import React from 'react';
 import '../css/conversation.css';
 import { thunk_getMessages } from '../../actions/thunk_register';
 import { connect } from 'react-redux';
+import ConvHeader from './conversationParts/ConvHeader';
+import MesReceived from './conversationParts/MesReceived';
+import MesSend from './conversationParts/MesSend';
 
 class Conversation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            messsage: []
+            messsages: []
         };
-        //        this.saveState = this.saveState.bind(this);
     }
 
     componentDidMount() {
@@ -19,41 +21,14 @@ class Conversation extends React.Component {
     render() {
         const isClicked = this.props.clicked
         const usernameClicked = this.props.usernameClicked
-        console.log("Converstion.js\n" + JSON.stringify(this.props, null, 4));
         if (isClicked) {
             
             return (
                 <div className="col-sm-8 conversation">
-                    <div className="row heading">
-                        <div className="col-sm-2 col-md-1 col-xs-3 heading-avatar">
-                            <div className="heading-avatar-icon">
-                                <img src="https://www.bigmouthvoices.com/profile_picture/large/default-profile_picture.jpg" alt='' />
-                            </div>
-                        </div>
-                        <div className="col-sm-8 col-xs-7 heading-name">
-                            <a className="heading-name-meta">{usernameClicked}</a>
-                            <span className="heading-online">Online</span>
-                        </div>
-                    </div>
-
+                    <ConvHeader username = {usernameClicked}/>
                     <div className="row msg" id="conversation">
-                        <div className="row message-body">
-                            <div className="col-sm-12 message-main-receiver">
-                                <div className="receiver">
-                                    <div className="message-text">Hello !</div>
-                                    <span className="message-time pull-right">13:00</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="row message-body">
-                            <div className="col-sm-12 message-main-sender">
-                                <div className="sender">
-                                    <div className="message-text">Yo !</div>
-                                    <span className="message-time pull-right">14:00</span>
-                                </div>
-                            </div>
-                        </div>
+                        <MesReceived message = {usernameClicked}/>
+                        <MesSend message = {usernameClicked}/>
                     </div>
 
                     <div className="row reply">
@@ -71,11 +46,11 @@ class Conversation extends React.Component {
     }
 }
 
-const mapStateToProps = ({ usernameClicked, clicked }) => {
-    // console.log(JSON.stringify(state))
+const mapStateToProps = ({ usernameClicked, clicked, messages}) => {
     return {
         usernameClicked,
-        clicked
+        clicked,
+        messages: messages || []
     };
 };
 

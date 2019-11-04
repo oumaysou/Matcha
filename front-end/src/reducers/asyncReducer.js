@@ -17,7 +17,6 @@ const reducer = (state = initialeState, action) => {
                 matches: action.data
             };
         case USERNAMECLICKED:
-            // console.log("action =>" + JSON.stringify(state))
             return {
                 ...state,
                 usernameClicked: action.data,

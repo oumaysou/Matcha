@@ -18,6 +18,23 @@ const get = ({table, field, value}) => {
     }
 };
 
+const getBis = ({table, field, value, fieldBis, valueBis}) => {
+    try {
+        const user = new Promise((resolve, reject) => {
+            const sql = `SELECT * FROM ${table} WHERE ${field} = ? AND ${fieldBis} = ?`;
+            db.query(sql, [value, valueBis], (err, row) => {
+                if (err)
+                    return reject(err);
+                return resolve(row);
+            })
+        })
+        return user;
+
+    } catch(err) {
+        console.error('Cannot connect to the database db_matcha.\n');
+    }
+};
+
 const getId = ({table, field, value, fieldBis, valueBis}) => {
     try {
         const user = new Promise((resolve, reject) => {
@@ -99,4 +116,4 @@ const deleter = ({table, field, value}) => {
     }
 };
 
-module.exports = { get, getId, getAll, insert, update, deleter};
+module.exports = { get, getBis, getId, getAll, insert, update, deleter};

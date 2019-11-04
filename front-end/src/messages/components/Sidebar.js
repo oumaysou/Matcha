@@ -11,10 +11,9 @@ class Sidebar extends React.Component {
         this.state = {
             matches: []
         }
-        //this.getAllMatches = this.getAllMatches.bind(this);
     }
 
-    componentDidMount() {
+    componentDidlMount() {
         this.props.dispatch(thunk_getallMatches(this.state.matches));
     }
 

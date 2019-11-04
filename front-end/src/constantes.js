@@ -2,6 +2,7 @@ export const REGISTER = "REGISTER"
 export const SIGNIN = "SIGNIN"
 export const GETALLMATCHES = "GETALL"
 export const USERNAMECLICKED = "USERNAMECLICKED"
+export const GETMESSAGES = "GETMESSAGES"
 
 
 export const FETCH_REGISTER = "FETCH_REGISTER"

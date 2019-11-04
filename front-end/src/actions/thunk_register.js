@@ -1,4 +1,4 @@
-import { REGISTER, GETALLMATCHES, USERNAMECLICKED } from '../constantes';
+import { REGISTER, GETALLMATCHES, USERNAMECLICKED, GETMESSAGES } from '../constantes';
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 
@@ -35,7 +35,6 @@ export const usernameclicked = (data) => {
 // ACTION FOR REGISTER
 
 export const thunk_register = (register) => {
-    // const userInfo = Object.assign({}, state);
     return function (dispatch) {
         return axios.post('/api/users', register).then(({ data }) => {
             const { success, message } = data;
@@ -67,16 +66,15 @@ export const thunk_getallMatches = () => {
 
 export const thunk_usernameClicked = (usernameClicked) => {
     return function (dispatch) {
-        // const test = getState();
         dispatch(usernameclicked(usernameClicked));
     }
 }
 
 // ACTION FOR GET MESSAGES
 
-export const thunk_getMessages = (actUser, matchUser) => {
+export const thunk_getMessages = (users) => {
     return function (dispatch) {
-        return axios.get(`api/matches/getall`).then(({ data }) => {
+        return axios.get(`api/messages/getall`, users).then(({ data }) => {
             if (data.success) {
                 dispatch(getallMatches(data.matches));
             }
