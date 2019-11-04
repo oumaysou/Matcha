@@ -26,9 +26,9 @@ class SignIn extends React.Component {
     }
 
     render() {
-        if (this.props.connected){
-            console.log( "   ", JSON.stringify(this.props.connected));
-            console.log( "   ", JSON.stringify(this.state.username));
+        if (this.props.connected === true){
+            console.log( "pp", JSON.stringify(this.props.connected));
+            console.log( "us", JSON.stringify(this.state.username));
             return <RedirectToProfile username ={this.state.username} />; 
         }
         else 
