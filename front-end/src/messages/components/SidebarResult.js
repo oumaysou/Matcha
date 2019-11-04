@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { thunk_usernameClicked } from '../../actions/thunk_register';
+import { thunk_usernameClicked } from '../../actions/thunk_actions';
 import { get } from 'lodash';
 
 class SidebarResult extends React.Component {

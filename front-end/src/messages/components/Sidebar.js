@@ -2,7 +2,7 @@ import React from 'react';
 import SidebarSearch from './SidebarSearch';
 import SidebarResult from './SidebarResult';
 import '../css/sidebar.css';
-import { thunk_getallMatches } from '../../actions/thunk_register';
+import { thunk_getallMatches } from '../../actions/thunk_actions';
 import { connect } from 'react-redux';
 
 class Sidebar extends React.Component {
@@ -18,6 +18,7 @@ class Sidebar extends React.Component {
     }
 
     getAllMatches() {
+        console.log("MATCHES ",JSON.stringify(this.props));
         const { matches } = this.props;
 
         if (matches.lenth !== 0) {
@@ -44,6 +45,8 @@ class Sidebar extends React.Component {
 }
 
 const mapStateToProps = ({ matches, ...state}) => {
+    console.log(JSON.stringify(state));
+    
     return {
         matches: matches || []
     };

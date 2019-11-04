@@ -33,7 +33,7 @@ router.get('/like/get/:username', getLike);
 
 router.get('/:table', getAll);
 router.get('/:table/:field', getter);
-router.get('/:table/:field/:fieldBis', getterBis);
+// router.get('/:table/:field/:fieldBis', getterBis);
 router.put('/:table/:field', updater);
 router.delete('/:table/:field', deleter);
 

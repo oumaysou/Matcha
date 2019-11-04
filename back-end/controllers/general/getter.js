@@ -22,28 +22,28 @@ const getter = async (req, res) => {
     }
 };
 
-const getterBis = async (req, res) => {
-    const table = req.params.table;
-    const field = req.params.field;
-    const value = req.query.value;
-    const fieldBis = req.params.fieldBis;
-    const valueBis = req.query.valueBis;
+// const getterBis = async (req, res) => {
+//     const table = req.params.table;
+//     const field = req.params.field;
+//     const value = req.query.value;
+//     const fieldBis = req.params.fieldBis;
+//     const valueBis = req.query.valueBis;
 
-    const user = await generalQuery.getBis({table, field, value, fieldBis, valueBis});
-    if (user[0]) {
-        res.send({
-            success: true,
-            message: `${value} and ${valueBis} has been found.`,
-            data: user[0]
-        });
-    }
-    else {
-        res.send({
-            success: false,
-            message: `Sorry but, ${value} doesn't exist.`,
-        });
-    }
-};
+//     const user = await generalQuery.getBis({table, field, value, fieldBis, valueBis});
+//     if (user[0]) {
+//         res.send({
+//             success: true,
+//             message: `${value} and ${valueBis} has been found.`,
+//             data: user[0]
+//         });
+//     }
+//     else {
+//         res.send({
+//             success: false,
+//             message: `Sorry but, ${value} doesn't exist.`,
+//         });
+//     }
+// };
 
 const getAll = async (req, res) => {
     const table = req.params.table;
@@ -66,6 +66,6 @@ const getAll = async (req, res) => {
 
 module.exports = {
     getAll,
-    getter,
-    getterBis
+    getter
+    // getterBis
 }

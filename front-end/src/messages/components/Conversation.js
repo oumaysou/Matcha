@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/conversation.css';
-import { thunk_getMessages } from '../../actions/thunk_register';
+import { thunk_getMessages } from '../../actions/thunk_actions';
 import { connect } from 'react-redux';
 import ConvHeader from './conversationParts/ConvHeader';
 import MesReceived from './conversationParts/MesReceived';
@@ -19,6 +19,7 @@ class Conversation extends React.Component {
     }
 
     render() {
+        console.log("reduc ",JSON.stringify(this.props));
         const isClicked = this.props.clicked
         const usernameClicked = this.props.usernameClicked
         if (isClicked) {
