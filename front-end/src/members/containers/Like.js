@@ -8,6 +8,7 @@ export default class Like extends React.Component {
         super()
 
         this.state = {
+            once: false,
             likedMe: '',
             likedByMe: '',
             finish: false
@@ -28,13 +29,19 @@ export default class Like extends React.Component {
         const username = this.props.user.username;
 
         axios.get(`/api/like/set/${username}`).then(({ data }) => {
-            if (data.success)
-        
+            if (data.success && this.state.false) {
+                this.setState({ once: true })
                 NotificationManager.success(data.message, 'Success !', 6000);
-            else
-
+            }
+            else if (!data.success) {
                 NotificationManager.error(data.message, 'Sorry but...', 6000);
+            }
         })
+    }
+
+    UnsetLike = () => {
+        const username = this.props.user.username;
+        axios.get
     }
 
     render() {
@@ -55,7 +62,7 @@ export default class Like extends React.Component {
                     </button>
                 );
             }
-            else {
+            else if (likedByMe) {
                 return (
                     <button className="like-btn btn btn-primary text-center" onSubmit={this.setLike()}>
                         Unlike <i className="fa fa-thumbs-down"></i>

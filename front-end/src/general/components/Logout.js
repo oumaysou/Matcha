@@ -11,9 +11,10 @@ export default class Logout extends React.Component {
     axios.put(`/api/users/connected?value=0&token=${token}`).then(data => {
       cookies.remove('token', { path: '/' });
       global.socket.disconnect();
-      this.LoadOnce();
+
     })
       .catch(err => console.error('Error: ', err));
+    // this.LoadOnce();
   }
 
   LoadOnce = () => {
