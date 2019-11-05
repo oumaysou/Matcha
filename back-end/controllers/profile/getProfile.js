@@ -6,21 +6,27 @@ const getProfile = async (req, res) => {
 
     const username = req.params.username;
     const myUsername = getUsernameFromToken(req);
-
     if (!myUsername)
         return res.send({ success: false, message: "The profile doesn't exist" });
 
     let user = await userTools.getUserData('username', username);
+    // console.log("USER\n\n\n\n" + JSON.stringify(user) + "\n\n\n")
     if (!user)
         return res.send({ success: false, message: `${username} doesn't exist` });
 
     user = userTools.removeConfidentials(user, user.username);
     const photos = await profileQuery.getPhotos(user.username);
     const tags = await profileQuery.getTags(user.username);
+
+    //bug heeeeeeere : correct avatar
     const visitedBy = await profileQuery.whoVisitedMe(user.username);
+
+
     const likedBy = await profileQuery.whoLikedMe(user.username);
 
+
     if (myUsername !== username) {
+
         const blockedByMe = await profileQuery.getBlockedByMe(myUsername);
         const userBlockedMe = await profileQuery.whoBlockedMe(myUsername);
 
@@ -42,6 +48,7 @@ const getProfile = async (req, res) => {
             });
         }
         else {
+
             return res.send({
                 success: false,
                 message: `Cannot set a new visit`

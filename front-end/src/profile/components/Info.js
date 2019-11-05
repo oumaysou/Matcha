@@ -37,7 +37,7 @@ export default class Info extends React.Component {
     componentDidMount() {
         const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&key=AIzaSyBhsxTkddjmFdZsCPq82usy-ASv1ATzpV0`;
         axios.get(url).then((data) => {
-            return this.setState({address: data.data.results[0].formatted_address});
+            return this.setState({ address: data.data.results[0].formatted_address });
         }).catch(err => console.error('Error: ', err));
     }
 

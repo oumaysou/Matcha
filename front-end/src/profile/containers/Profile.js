@@ -37,7 +37,7 @@ export default class Profile extends React.Component {
         const profileUser = this.props.match.params.username;
         const decoded = utils.decodedCookie();
         if (decoded) {
-            axios.get(`/api/users/profile/${profileUser}`).then(({data}) => {
+            axios.get(`/api/users/profile/${profileUser}`).then(({ data }) => {
                 this.setState({
                     username: data.userData.username,
                     firstName: data.userData.firstName,
@@ -59,9 +59,22 @@ export default class Profile extends React.Component {
             }).catch(err => console.error('Error: ', err));
         }
     }
+    LoadOnce = () => {
+        var currentDocumentTimestamp = new Date(performance.timing.domLoading).getTime();
+        // Current Time //
+        var now = Date.now();
+        // Total Process Lenght as Minutes //
+        var tenSec = 1000;
+        // End Time of Process //
+        var plusTenSec = currentDocumentTimestamp + tenSec;
+        if (now > plusTenSec) {
+            window.location.reload();
+        }
+    }
 
     render() {
-        if (this.state.finish === true) {
+        this.LoadOnce();
+        if (this.state.finish) {
             return (
                 <div id='profile'>
                     <Cover profile={this.state} />

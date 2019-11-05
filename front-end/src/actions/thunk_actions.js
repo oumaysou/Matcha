@@ -1,4 +1,4 @@
-import { REGISTER, SIGNIN, GETALLMATCHES, USERNAMECLICKED} from '../constantes';
+import { REGISTER, SIGNIN, GETALLMATCHES, USERNAMECLICKED } from '../constantes';
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 import Cookies from 'universal-cookie';
@@ -64,8 +64,8 @@ export const thunk_signIn = (dataSign) => {
     return function (dispatch) {
         return axios.post('/api/users/signin', dataSign).then(({ data }) => {
             const { success, message, userData } = data;
+            // console.log("Data " + JSON.stringify(data))
             if (success === true) {
-                console.log( "   ", JSON.stringify(userData));
                 dispatch(signIn(userData));
                 const cookies = new Cookies();
                 cookies.set('token', userData.token, { path: '/' });

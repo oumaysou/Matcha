@@ -188,3 +188,31 @@
     font-size: 1.8em !important;
   }
 }
+
+/* NoMessage */
+.nomessage {
+  padding: 100px !important;
+  margin: 5vw 35vh !important;
+  height: 10%;
+  width: 50%;
+}
+
+.startconversation{
+  padding: 17px !important;
+  margin: 4vh !important;
+  color: red;
+}
+
+@media screen and (max-width: 700px) {
+  .nomessage {
+      margin: 0 !important;
+      padding: 5vw !important;
+      display: inline-block;
+    }
+    .startconversation{
+      padding: 5px !important;
+      margin: 3vh !important;
+      display: inline-block;
+      color: red;
+    }
+  }

@@ -1,9 +1,10 @@
 import React from 'react';
 import SignInForm from '../components/SignInForm';
 import IndexLayout from '../components/IndexLayout';
-import RedirectToProfile from '../components/RedirectToProfile';
 import { thunk_signIn } from '../../actions/thunk_actions';
 import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
+import Profile from '../../profile/containers/Profile';
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -19,20 +20,19 @@ class SignIn extends React.Component {
 
     connectUser = () => {
         this.props.dispatch(thunk_signIn(this.state));
+
     }
-    
+
     saveState = (name, value) => {
-      this.setState({ [name]: value });
+        this.setState({ [name]: value });
     }
 
     render() {
-        if (this.props.connected === true){
-            console.log( "pp", JSON.stringify(this.props.connected));
-            console.log( "us", JSON.stringify(this.state.username));
-            return <RedirectToProfile username ={this.state.username} />; 
+        if (this.props.connected) {
+            return <Route component={Profile} />
         }
-        else 
-        {
+        else {
+
             return (
                 <IndexLayout>
                     <SignInForm
@@ -46,7 +46,7 @@ class SignIn extends React.Component {
 }
 
 
-const mapStateToProps = ({ connected, username}) => {
+const mapStateToProps = ({ connected, username }) => {
     return {
         connected,
         username

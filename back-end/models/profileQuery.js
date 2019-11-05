@@ -4,55 +4,63 @@ import userTools from '../utils/userTools';
 
 
 const whoBlockedMe = async (username) => {
-    const results = await generalQuery.get({table: 'blocks', field: 'block', value: username});
+    const results = await generalQuery.get({ table: 'blocks', field: 'block', value: username });
     if (results) {
         let users = results.map(result => result.blockedBy);
         return (users);
     }
-    return ;
+    return;
 }
 
 const getBlockedByMe = async (username) => {
-    const results = await generalQuery.get({table: 'blocks', field: 'blockedBy', value: username});
+    const results = await generalQuery.get({ table: 'blocks', field: 'blockedBy', value: username });
     if (results) {
         let users = results.map(result => result.blocked);
         return (users);
     }
-    return ;
+    return;
 }
 
 const whoVisitedMe = async (username) => {
-    const results = await generalQuery.get({table: 'visits', field: 'visit', value: username});
+    const results = await generalQuery.get({ table: 'visits', field: 'visit', value: username });
 
     let members = [];
+    // console.log("\n\nResult ==>\n\n" + JSON.stringify(results) + "\n\n\n\n")
     if (results) {
+
         let users = results.map(result => {
             return result;
         });
+
         for (let index in users) {
-            let userInfo = await generalQuery.get({table: 'users', field: 'username', value: users[index].visitedBy });
+
+
+            let userInfo = await generalQuery.get({ table: 'users', field: 'username', value: users[index].visitedBy });
+            // console.log("\n\nuserINFOS=>\n" + userInfo + "\n\n\n\n")
             members.push({ username: users[index].visitedBy, avatar: userInfo[0].avatar, date: users[index].date });
+
         }
+        // console.log("\n\n\nMEMBERS\n\n" + members + "\n\n\n")
         members = members.reverse().slice(0, 10);
         return members;
     }
-    return ;
+    return;
 }
 
 const setNewVisit = async (myUsername, username) => {
     const date = moment().format('L LT');
-    const userData = { visit: username, visitedBy: myUsername, date};
+    const userData = { visit: username, visitedBy: myUsername, date };
     const result = await generalQuery.insert({ table: 'visits', userData });
     return result.affectedRows > 0 ? true : false;
 }
 
 const getTags = async (username) => {
-    const results = await generalQuery.get({table: 'tags', field: 'taggedBy', value: username});
+    const results = await generalQuery.get({ table: 'tags', field: 'taggedBy', value: username });
     if (results) {
         let tags = results.map(result => result.tag);
         return (tags);
     }
-    return ;
+    return;
 }
 
 const setNewTag = async (tag, username) => {
@@ -62,7 +70,7 @@ const setNewTag = async (tag, username) => {
 }
 
 const whoLikedMe = async (username) => {
-    const results = await generalQuery.get({table: 'likes', field: '`like`', value: username});
+    const results = await generalQuery.get({ table: 'likes', field: '`like`', value: username });
     if (results) {
         let users = results.map(result => result.likedBy);
         return (users);
@@ -70,12 +78,12 @@ const whoLikedMe = async (username) => {
 }
 
 const whoILike = async (username) => {
-    const results = await generalQuery.get({table: '`likes`', field: '`likedBy`', value: username});
+    const results = await generalQuery.get({ table: '`likes`', field: '`likedBy`', value: username });
     if (results) {
         let users = results.map(result => result.like);
         return (users);
     }
-    return ;
+    return;
 }
 
 const getLikeId = async (myUsername, username) => {
@@ -123,12 +131,12 @@ const setNewLike = async (myUsername, username) => {
 }
 
 const getPhotos = async (username) => {
-    const results = await generalQuery.get({table: 'photos', field: 'photoBy', value: username});
+    const results = await generalQuery.get({ table: 'photos', field: 'photoBy', value: username });
     if (results) {
         let photos = results.map(result => result.photo);
         return (photos);
     }
-    return ;
+    return;
 }
 
 const setNewPhoto = async (photo, username) => {

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import ConvHeader from './conversationParts/ConvHeader';
 import MesReceived from './conversationParts/MesReceived';
 import MesSend from './conversationParts/MesSend';
+import NoMessage from './conversationParts/NoMessage';
 
 class Conversation extends React.Component {
     constructor(props) {
@@ -19,17 +20,17 @@ class Conversation extends React.Component {
     }
 
     render() {
-        console.log("reduc ",JSON.stringify(this.props));
+        console.log("reduc ", JSON.stringify(this.props));
         const isClicked = this.props.clicked
         const usernameClicked = this.props.usernameClicked
         if (isClicked) {
-            
+
             return (
                 <div className="col-sm-8 conversation">
-                    <ConvHeader username = {usernameClicked}/>
+                    <ConvHeader username={usernameClicked} />
                     <div className="row msg" id="conversation">
-                        <MesReceived message = {usernameClicked}/>
-                        <MesSend message = {usernameClicked}/>
+                        <MesReceived message={usernameClicked} />
+                        <MesSend message={usernameClicked} />
                     </div>
 
                     <div className="row reply">
@@ -43,11 +44,11 @@ class Conversation extends React.Component {
                 </div>
             );
         }
-        else return <p>CLick on a User to Start Converstation</p>;
+        else return <NoMessage />;
     }
 }
 
-const mapStateToProps = ({ usernameClicked, clicked, messages}) => {
+const mapStateToProps = ({ usernameClicked, clicked, messages }) => {
     return {
         usernameClicked,
         clicked,
