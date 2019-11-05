@@ -6,9 +6,9 @@
 ```
 git clone https://github.com/oumaysou/Matcha.git
 cd Matcha
-npm run setup
-npm run server
-npm run client
+cd front-end && npm i
+cd ../back-end && npm i
+cd .. && npm run dev
 ```
 # Subject
 

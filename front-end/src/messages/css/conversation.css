@@ -91,7 +91,7 @@
 }
 
 .sender {
-  float: right;
+  /* float: right; */
   width: auto !important;
   background: #dcf8c6;
   border-radius: 10px 10px 0 10px;
@@ -207,12 +207,10 @@
   .nomessage {
       margin: 0 !important;
       padding: 5vw !important;
-      display: inline-block;
     }
     .startconversation{
       padding: 5px !important;
       margin: 3vh !important;
-      display: inline-block;
       color: red;
     }
   }
