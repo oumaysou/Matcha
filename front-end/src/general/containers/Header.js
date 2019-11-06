@@ -36,8 +36,7 @@ export default class Header extends React.Component {
     render() {
         const { username } = this.state;
         const pathname = window.location.pathname.split('/')[1];
-        // console.log("pathname => " + pathname)
-        if (pathname === 'members' || pathname === 'messages' || pathname === 'activate') {
+        if (pathname === 'activate' || ((pathname === 'members' || pathname === 'messages') && this.state.connected)) {
             return (
                 <UserNavbar
                     username={username}

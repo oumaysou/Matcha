@@ -5,6 +5,7 @@ import { thunk_signIn } from '../../actions/thunk_actions';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import Profile from '../../profile/containers/Profile';
+import MatchaPrime from './../components/bg-landing.jpg';
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -34,7 +35,7 @@ class SignIn extends React.Component {
         else {
 
             return (
-                <IndexLayout>
+                <IndexLayout whichone={MatchaPrime}>
                     <SignInForm
                         onSubmit={this.connectUser}
                         onChange={this.saveState}

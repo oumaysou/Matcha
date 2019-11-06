@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/indexLayout.css';
-import Matcha from './matcha-coeur.jpg';
+// import Matcha from './matcha-coeur.jpg';
+// import MatchaPrime from './bg-landing.jpg';
 
 export default class IndexLayout extends React.Component {
     render() {
@@ -11,7 +12,7 @@ export default class IndexLayout extends React.Component {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="header-content text-center">
-                                <h1>Because it just <span>matcha</span> your need.</h1><img src={Matcha} height="auto" width="1000px" alt="matcha coeur" />
+                                <h1>Because it just <span>matcha</span> your need.</h1><img src={this.props.whichone} height="auto" width="1000px" alt="matcha coeur" />
 
                                 <div className="card">
                                     {this.props.children}

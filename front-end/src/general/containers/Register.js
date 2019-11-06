@@ -4,6 +4,8 @@ import IndexLayout from '../components/IndexLayout';
 // import { NotificationManager } from 'react-notifications';
 import { thunk_register } from '../../actions/thunk_actions';
 import { connect } from 'react-redux';
+import Matcha from './../components/matcha-coeur.jpg';
+
 
 // const API_KEY = 'AIzaSyDfMEOIYCjr5sC1IBCg6RNc5E7Jg1Iw9yM'; 
 
@@ -35,7 +37,7 @@ class Register extends React.Component {
     render() {
         // console.log(JSON.stringify(this.props, null, 4));
         return (
-            <IndexLayout>
+            <IndexLayout whichone={Matcha}>
                 <RegisterForm
                     onSubmit={this.createUser}
                     onChange={this.saveState}
