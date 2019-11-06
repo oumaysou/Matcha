@@ -9,8 +9,6 @@ export default class Like extends React.Component {
 
         this.state = {
             once: false,
-            like: false,
-            unlike: false,
             likedMe: '',
             likedByMe: '',
             finish: false
@@ -31,29 +29,25 @@ export default class Like extends React.Component {
         const username = this.props.user.username;
         axios.get(`/api/like/set/${username}`).then(({ data }) => {
             if (data.success && this.state.false) {
-                this.setState({ once: true, like: true })
+                this.setState({ once: true })
                 NotificationManager.success(data.message, 'Success !', 6000);
             }
             else if (!data.success) {
                 NotificationManager.error(data.message, 'Sorry but...', 6000);
             }
         })
-        // this.LoadOnce()
     }
 
     UnsetLike = () => {
         const username = this.props.user.username;
-        console.log(JSON.stringify(this.props))
         axios.get(`/api/like/Unset/${username}`).then(({ data }) => {
             if (data.success) {
-                this.setState({ unlike: true })
                 NotificationManager.success(data.message, 'Success !', 6000);
             }
             else if (!data.success) {
                 NotificationManager.error(data.message, 'Sorry but...', 6000);
             }
         })
-        // this.LoadOnce()
     }
 
     LoadOnce = () => {

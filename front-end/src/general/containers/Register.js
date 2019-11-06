@@ -48,7 +48,7 @@ class Register extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        data: state
+        state
     };
 };
 

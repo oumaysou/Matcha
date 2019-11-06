@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import MapContainer from './Map';
+// import MapContainer from './Map';
 import UserCard from '../components/UserCard';
 import utils from '../../general/components/utils';
 import '../css/members.css';
@@ -47,12 +47,12 @@ export default class Members extends React.Component {
                     <div className='container-fluid'>
                         <div className='row'>
                             <div id='listing-members' className='col-md-6 col-sm-12 col-xs-12 pull-left'>
-                                { this.getAllUserCard() }
+                                {this.getAllUserCard()}
                             </div>
 
                             <div id='google-map' className='col-md-6 col-sm-12 col-xs-12 pull-right position-static'>
-                                <div style={{width: '100%', height: '90vh'}}>
-                                    <MapContainer users={this.state.users} />
+                                <div style={{ width: '100%', height: '90vh' }}>
+                                    {/* <MapContainer users={this.state.users} /> */}
                                 </div>
                             </div>
 

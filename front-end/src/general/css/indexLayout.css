@@ -11,18 +11,18 @@
     color: #fff;
     font-family: 'MS Serif, New York, sans-serif';
     font-weight: 200;
-    font-size: 40px;
-    margin: 7vh 0 0;
+    font-size: 3vw;
+    margin: 7vh auto;
 }
 
 .header-content > h1 > span {
     color: rgb(14, 11, 11);
-    font-size: 70px;
+    font-size: 4vw;
     font-style: italic;
 }
 
 .card {
-    width: 60vw;
+    width: 100%;
     border: 1px solid #ebebeb;
     margin: 7vh auto 17vh;
     padding: 5vh 0vw;
@@ -34,5 +34,5 @@
     display: block;
     margin-bottom: 20px;
     padding: 5px;
-    width: 50vw;
+    width: 100%;
 }

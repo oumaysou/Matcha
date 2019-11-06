@@ -4,6 +4,8 @@
     color: white;
     background-color: #FF5252;
     border-radius: 5px;
+    width: 20%;
+    margin: 4vw auto;
 }
 
 .btn.btn-primary:hover, .btn.btn-primary:active, .btn.btn-primary:focus {
@@ -14,4 +16,9 @@
 
 .btn.btn-edit {
     margin: 4vh auto;
+}
+
+img{
+    width: 100%;
+    height: 100%;
 }
