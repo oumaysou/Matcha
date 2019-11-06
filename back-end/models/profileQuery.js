@@ -22,29 +22,32 @@ const getBlockedByMe = async (username) => {
 }
 
 const whoVisitedMe = async (username) => {
-    const results = await generalQuery.get({ table: 'visits', field: 'visit', value: username });
+    try {
+        const results = await generalQuery.get({ table: 'visits', field: 'visit', value: username });
 
-    let members = [];
-    // console.log("\n\nResult ==>\n\n" + JSON.stringify(results) + "\n\n\n\n")
-    if (results) {
+        let members = [];
+        // console.log("\n\nResult ==>\n\n" + JSON.stringify(results) + "\n\n\n\n")
+        if (results) {
 
-        let users = results.map(result => {
-            return result;
-        });
+            let users = results.map(result => {
+                return result;
+            });
 
-        for (let index in users) {
+            for (let index in users) {
 
 
-            let userInfo = await generalQuery.get({ table: 'users', field: 'username', value: users[index].visitedBy });
-            // console.log("\n\nuserINFOS=>\n" + userInfo + "\n\n\n\n")
-            members.push({ username: users[index].visitedBy, avatar: userInfo[0].avatar, date: users[index].date });
+                let userInfo = await generalQuery.get({ table: 'users', field: 'username', value: users[index].visitedBy });
+                // console.log("\n\nuserINFOS=>\n" + userInfo + "\n\n\n\n")
+                members.push({ username: users[index].visitedBy, avatar: userInfo[0].avatar, date: users[index].date });
 
+            }
+            // console.log("\n\n\nMEMBERS\n\n" + members + "\n\n\n")
+            members = members.reverse().slice(0, 10);
+            return members;
         }
-        // console.log("\n\n\nMEMBERS\n\n" + members + "\n\n\n")
-        members = members.reverse().slice(0, 10);
-        return members;
+        return;
     }
-    return;
+    catch (err) { console.error('Error ProfileQuery => ' + err) }
 }
 
 const setNewVisit = async (myUsername, username) => {
@@ -116,7 +119,7 @@ const setNewLike = async (myUsername, username) => {
     }
     else {
         const likeId = await getLikeId(myUsername, username);
-        result = await generalQuery.deleter({ table: '`likes`', field: 'id', value: likeId });
+        result = await generalQuery.deleter({ table: '`likes`', field: 'id', value: likeId.id });
         const popularity = await userTools.setPopularity(myUsername, username, 'remove');
 
         result = await generalQuery.update({
@@ -145,11 +148,53 @@ const setNewPhoto = async (photo, username) => {
     return result.affectedRows > 0 ? true : false;
 }
 
+
+const UnsetLike = async (myUsername, username) => {
+    const likedByMe = await whoILike(myUsername);
+    const userData = { like: username, likedBy: myUsername };
+    let result;
+
+    if (!likedByMe.includes(username)) {
+        result = null;
+        const popularity = await userTools.setPopularity(myUsername, username, 'add');
+
+        result = await generalQuery.update({
+            table: 'users',
+            field: 'popularity',
+            value: popularity,
+            where: 'username',
+            whereValue: myUsername
+        });
+    }
+    else {
+        const likeId = await getLikeId(myUsername, username);
+        const likeId1 = likeId[0].id;
+        result = await generalQuery.deleter({ table: '`likes`', field: 'id', value: likeId1 });
+        const popularity = await userTools.setPopularity(myUsername, username, 'remove');
+
+        result = await generalQuery.update({
+            table: 'users',
+            field: 'popularity',
+            value: popularity,
+            where: 'username',
+            whereValue: myUsername
+        });
+    }
+    return result.affectedRows > 0 ? true : false;
+}
+
+
+
+
+
+
+
 module.exports = {
     whoBlockedMe,
     getBlockedByMe,
     whoVisitedMe,
     setNewVisit,
+    UnsetLike,
     getTags,
     setNewTag,
     whoLikedMe,

@@ -9,11 +9,13 @@ export default class Like extends React.Component {
 
         this.state = {
             once: false,
+            like: false,
+            unlike: false,
             likedMe: '',
             likedByMe: '',
             finish: false
         }
-        this.setLike = this.setLike.bind(this);
+        // this.setLike = this.setLike.bind(this);
     }
 
     componentWillMount() {
@@ -25,23 +27,46 @@ export default class Like extends React.Component {
         }).catch(err => console.error('Error: ', err));
     }
 
-    setLike() {
+    setLike = () => {
         const username = this.props.user.username;
-
         axios.get(`/api/like/set/${username}`).then(({ data }) => {
             if (data.success && this.state.false) {
-                this.setState({ once: true })
+                this.setState({ once: true, like: true })
                 NotificationManager.success(data.message, 'Success !', 6000);
             }
             else if (!data.success) {
                 NotificationManager.error(data.message, 'Sorry but...', 6000);
             }
         })
+        // this.LoadOnce()
     }
 
     UnsetLike = () => {
         const username = this.props.user.username;
-        axios.get
+        console.log(JSON.stringify(this.props))
+        axios.get(`/api/like/Unset/${username}`).then(({ data }) => {
+            if (data.success) {
+                this.setState({ unlike: true })
+                NotificationManager.success(data.message, 'Success !', 6000);
+            }
+            else if (!data.success) {
+                NotificationManager.error(data.message, 'Sorry but...', 6000);
+            }
+        })
+        // this.LoadOnce()
+    }
+
+    LoadOnce = () => {
+        var currentDocumentTimestamp = new Date(performance.timing.domLoading).getTime();
+        // Current Time //
+        var now = Date.now();
+        // Total Process Lenght as Minutes //
+        var tenSec = 1000;
+        // End Time of Process //
+        var plusTenSec = currentDocumentTimestamp + tenSec;
+        if (now > plusTenSec) {
+            window.location.reload();
+        }
     }
 
     render() {
@@ -50,21 +75,21 @@ export default class Like extends React.Component {
         if (this.state.finish) {
             if (likedMe && !likedByMe) {
                 return (
-                    <button className="like-btn btn btn-primary text-center" onSubmit={this.setLike()}>
+                    <button className="like-btn btn btn-primary text-center" onClick={() => { this.setLike(); this.LoadOnce() }}>
                         Like back <i className="fa fa-heart"></i>
                     </button>
                 );
             }
             else if (!likedMe && !likedByMe) {
                 return (
-                    <button className="like-btn btn btn-primary text-center" onSubmit={this.setLike()}>
+                    <button className="like-btn btn btn-primary text-center" onClick={() => { this.setLike(); this.LoadOnce() }}>
                         Like <i className="fa fa-heart"></i>
                     </button>
                 );
             }
             else if (likedByMe) {
                 return (
-                    <button className="like-btn btn btn-primary text-center" onSubmit={this.setLike()}>
+                    <button className="like-btn btn btn-primary text-center" onClick={() => { this.UnsetLike(); this.LoadOnce() }}>
                         Unlike <i className="fa fa-thumbs-down"></i>
                     </button>
                 );

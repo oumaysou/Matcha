@@ -1,7 +1,7 @@
 import mysql from 'mysql';
 import { db } from '../initDb.js';
 
-const get = ({table, field, value}) => {
+const get = ({ table, field, value }) => {
     try {
         const user = new Promise((resolve, reject) => {
             const sql = `SELECT * FROM ${table} WHERE ${field} = ?`;
@@ -13,7 +13,7 @@ const get = ({table, field, value}) => {
         })
         return user;
 
-    } catch(err) {
+    } catch (err) {
         console.error('Cannot connect to the database db_matcha.\n');
     }
 };
@@ -35,7 +35,7 @@ const get = ({table, field, value}) => {
 //     }
 // };
 
-const getId = ({table, field, value, fieldBis, valueBis}) => {
+const getId = ({ table, field, value, fieldBis, valueBis }) => {
     try {
         const user = new Promise((resolve, reject) => {
             const sql = `SELECT id FROM ${table} WHERE ${field} = ? AND ${fieldBis} = ?`;
@@ -47,12 +47,12 @@ const getId = ({table, field, value, fieldBis, valueBis}) => {
         })
         return user;
 
-    } catch(err) {
+    } catch (err) {
         console.error('Cannot connect to the database db_matcha.\n');
     }
 };
 
-const getAll = ({table}) => {
+const getAll = ({ table }) => {
     try {
         const users = new Promise((resolve, reject) => {
             const sql = `SELECT * FROM ${table}`;
@@ -63,12 +63,12 @@ const getAll = ({table}) => {
             })
         });
         return users;
-    } catch(err) {
+    } catch (err) {
         console.error('Cannot connect to the database db_matcha.\n');
     }
 }
 
-const insert = ({table, userData}) => {
+const insert = ({ table, userData }) => {
     try {
         const result = new Promise((resolve, reject) => {
             const sql = `INSERT INTO ${table} SET ?`;
@@ -79,12 +79,12 @@ const insert = ({table, userData}) => {
             })
         });
         return result;
-    } catch(err) {
+    } catch (err) {
         console.error('Cannot connect to the database db_matcha.\n', err);
     }
 };
 
-const update = ({table, field, value, where, whereValue}) => {
+const update = ({ table, field, value, where, whereValue }) => {
     try {
         const user = new Promise((resolve, reject) => {
             const sql = `UPDATE ${table} SET ${field} = ? WHERE ${where} = ?`;
@@ -95,25 +95,26 @@ const update = ({table, field, value, where, whereValue}) => {
             })
         });
         return user;
-    } catch(err) {
+    } catch (err) {
         console.error('Cannot connect to the database db_matcha.\n');
     }
 };
 
-const deleter = ({table, field, value}) => {
+const deleter = ({ table, field, value }) => {
     try {
         const result = new Promise((resolve, reject) => {
             const sql = `DELETE FROM ${table} WHERE ${field} = ?`;
             db.query(sql, value, (err, row) => {
                 if (err)
                     reject(err);
+                console.log(JSON.stringify(row))
                 resolve(row);
             })
         });
         return result;
-    } catch(err) {
+    } catch (err) {
         console.error('Cannot connect to the database db_matcha.\n');
     }
 };
 
-module.exports = { get, getId, getAll, insert, update, deleter};
+module.exports = { get, getId, getAll, insert, update, deleter };

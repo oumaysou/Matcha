@@ -21,7 +21,7 @@ export default class App extends React.Component {
           <Template location={this.props.location} >
             <Switch>
               <PublicRoute exact path="/" component={SignIn} />
-              <Route exact path="/register" component={Register} />
+              <PublicRoute exact path="/register" component={Register} />
               <Route exact path="/activate" component={Activate} />
               <PrivateRoute exact path="/members" component={Members} />
               <PrivateRoute exact path="/members/:username" component={Profile} />

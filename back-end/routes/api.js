@@ -7,7 +7,7 @@ import signIn from '../controllers/users/signIn';
 import activateUser from '../controllers/users/activate';
 import getProfile from '../controllers/profile/getProfile';
 import getMembers from '../controllers/members/getMembers';
-import { setLike, getLike } from '../controllers/profile/like';
+import { setLike, getLike, UnsetLike } from '../controllers/profile/like';
 import getMatches from '../controllers/messages/getMatches';
 import updateUser from '../controllers/users/updateUser';
 
@@ -30,6 +30,7 @@ router.get('/users/profile/:username', getProfile);
 
 router.get('/like/set/:username', setLike);
 router.get('/like/get/:username', getLike);
+router.get('/like/Unset/:username', UnsetLike);
 
 router.get('/:table', getAll);
 router.get('/:table/:field', getter);

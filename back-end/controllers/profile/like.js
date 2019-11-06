@@ -23,16 +23,16 @@ const UnsetLike = async (req, res) => {
     const myUsername = getUsernameFromToken(req);
     const username = req.params.username;
 
-    const result = await profileQuery.setNewLike(myUsername, username);
+    const result = await profileQuery.UnsetLike(myUsername, username);
     if (result) {
         return res.send({
             success: true,
-            message: `You liked ${username}`,
+            message: `You don't liked ${username} anymore`,
         })
     }
     return res.send({
         success: false,
-        message: `You cannot like ${username}`
+        message: `You cannot unlike ${username}`
     })
 }
 
@@ -63,5 +63,6 @@ const getMatch = async (loginsArray, blockedFilter) => {
 module.exports = {
     setLike,
     getLike,
+    UnsetLike,
     getMatch
 }
