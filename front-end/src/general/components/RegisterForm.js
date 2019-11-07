@@ -11,11 +11,11 @@ export default class RegisterForm extends React.Component {
     }
 
     handleInputChange = (name, value) => {
-      this.props.onChange(name, value);
+        this.props.onChange(name, value);
     }
 
     handleRadioChange = (name, value) => {
-      this.props.onChange(name, value);
+        this.props.onChange(name, value);
     }
 
     render() {
@@ -23,22 +23,22 @@ export default class RegisterForm extends React.Component {
             <form className="form-register" onSubmit={this.handleSubmit}>
                 <div className="form-inline">
                     <RadioForm
-                      label="male"
-                      name="gender"
-                      text="Male"
-                      onChange={this.handleInputChange}
+                        label="male"
+                        name="gender"
+                        text="Male"
+                        onChange={this.handleInputChange}
                     />
                     <RadioForm
-                      label="female"
-                      name="gender"
-                      text="Female"
-                      onChange={this.handleInputChange}
+                        label="female"
+                        name="gender"
+                        text="Female"
+                        onChange={this.handleInputChange}
                     />
                     <RadioForm
-                      label="both"
-                      name="gender"
-                      text="Both"
-                      onChange={this.handleInputChange}
+                        label="both"
+                        name="gender"
+                        text="Both"
+                        onChange={this.handleInputChange}
                     />
                 </div>
 

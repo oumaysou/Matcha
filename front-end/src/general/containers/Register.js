@@ -23,11 +23,12 @@ class Register extends React.Component {
             gender: '',
             orientation: '',
             location: '',
+            activateOn: false
         };
     }
 
-    createUser = () => {
-        this.props.dispatch(thunk_register(this.state));
+    createUser = async () => {
+        await this.props.dispatch(thunk_register(this.state));
     }
 
     saveState = (name, value) => {
@@ -35,7 +36,8 @@ class Register extends React.Component {
     }
 
     render() {
-        // console.log(JSON.stringify(this.props, null, 4));
+        // console.log("this PROPS\n" + JSON.stringify(this.props.state, null, 4));
+        // console.log("STAAATE of SUCESS" + this.props.state.clicked)
         return (
             <IndexLayout whichone={Matcha}>
                 <RegisterForm

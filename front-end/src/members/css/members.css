@@ -1,4 +1,4 @@
 #listing-members {
     max-height: 90vh;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
 }

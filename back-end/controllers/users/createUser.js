@@ -22,7 +22,7 @@ const createUser = async (req, res) => {
         || !firstName || !lastName || !email || !gender || !orientation) {
         return res.send({
             success: false,
-            message: "All fields must be completed a weld 3mi."
+            message: "All fields must be completed!"
         });
     }
 
