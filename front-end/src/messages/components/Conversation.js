@@ -6,12 +6,15 @@ import ConvHeader from './conversationParts/ConvHeader';
 import MesReceived from './conversationParts/MesReceived';
 import MesSend from './conversationParts/MesSend';
 import NoMessage from './conversationParts/NoMessage';
+import InputForm from './../../general/components/InputForm';
+// import socket from '../../../../back-end/sockets/socketIo';
 
 class Conversation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            messsages: []
+            messages: [],
+            value: ""
         };
     }
 
@@ -19,8 +22,16 @@ class Conversation extends React.Component {
         this.props.dispatch(thunk_getMessages(this.state.messages));
     }
 
+    handleInputChange = (name, value) => {
+        this.setState({ messages: value })
+    }
+
+    onClick = (messages) => {
+        console.log(messages)
+    }
+
     render() {
-        console.log("reduc ", JSON.stringify(this.props));
+        // console.log("reduc ", JSON.stringify(this.state));
         const isClicked = this.props.clicked
         const usernameClicked = this.props.usernameClicked
         if (isClicked) {
@@ -35,9 +46,15 @@ class Conversation extends React.Component {
 
                     <div className="row reply">
                         <div className="col-sm-11 col-xs-11 reply-main">
-                            <textarea className="form-control" rows="1" id="comment"></textarea>
+                            <InputForm
+                                type="text"
+                                name="messagetosend"
+                                placeholder="Ecrivez un message"
+                                onChange={this.handleInputChange}
+                                classNameChat="form-control text-left"
+                            />
                         </div>
-                        <div className="col-sm-1 col-xs-1 reply-send">
+                        <div className="col-sm-1 col-xs-1 reply-send" onClick={() => { this.onClick(this.state.messages) }}>
                             <i className="fa fa-send fa-2x" aria-hidden="true"></i>
                         </div>
                     </div>

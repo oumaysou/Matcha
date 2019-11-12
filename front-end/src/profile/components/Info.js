@@ -35,9 +35,9 @@ export default class Info extends React.Component {
     }
 
     componentDidMount() {
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&key=AIzaSyAHaj67ZsG8UrjwBp1RH9isMQdUK8TS97Y`;
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&key=AIzaSyAHaj67ZsG8UrjwBp1RH9isMQdUK8TS97Y `;
         axios.get(url).then((data) => {
-            console.log(JSON.stringify(data))
+            // console.log(JSON.stringify(data))
             return this.setState({ address: data.data.results[0].formatted_address });
         }).catch(err => console.error('Error: ', err));
     }

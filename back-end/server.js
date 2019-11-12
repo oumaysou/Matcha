@@ -42,14 +42,14 @@ app.use(morgan('dev'));
 
 app.use('/api', api);
 
-app.use(function(err, req, res, next) {
-	res.status(422).send({error: err.message});
+app.use(function (err, req, res, next) {
+	res.status(422).send({ error: err.message });
 });
 
 app.set('port', (process.env.PORT || '5000'));
 
 server.listen(app.get('port'), () => {
-	console.log('Server started on port '+ app.get('port'))
+	console.log('Server started on port ' + app.get('port'))
 });
 
 module.exports = app;

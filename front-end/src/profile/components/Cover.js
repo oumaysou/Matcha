@@ -4,7 +4,7 @@ import utils from '../../general/components/utils';
 import '../css/cover.css';
 
 export default class Cover extends React.Component {
-    getTheRightBtn() {
+    getTheRightBtn = () => {
         const decoded = utils.decodedCookie();
         const { username } = this.props.profile;
         let theRightBtn = '';
@@ -13,7 +13,7 @@ export default class Cover extends React.Component {
             theRightBtn = <Link to={urlEdit}><button id='edit-btn' className="btn btn-primary text-center">Edit</button></Link>
         } else {
             theRightBtn = <button id='like-btn' className="btn btn-primary text-center">Like <i className="fa fa-heart"></i></button>;
-        //    theRightBtn = <Like />
+            //    theRightBtn = <Like />
         }
         return theRightBtn;
     }
