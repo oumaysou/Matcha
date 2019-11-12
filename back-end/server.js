@@ -27,12 +27,23 @@ const users = [];
 
 moment().locale('fr');
 
-io.use(socketioJwt.authorize({
-	secret: 'mybadasssecretkey',
-	handshake: true
-}));
+// io.use(socketioJwt.authorize({
+// 	secret: 'mybadasssecretkey',
+// 	handshake: true
+// }));
 
-io.on('connection', socket(users));
+io.on('connection', socket => {
+	// const userConnected = socket.decoded_token.username;
+	// users.push({ username: userConnected, socketId: socket.id })
+	socket.on('send-chat-message', message => {
+		console.log("Envoi du message CHAT => " + message)
+		socket.broadcast.emit('chat-message', message)
+	})
+	socket.on('disconnect', () => {
+		socket.broadcast.emit('user-disconnected', users[socket.id])
+		delete users[socket.id]
+	})
+})
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

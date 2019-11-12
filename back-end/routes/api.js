@@ -10,6 +10,7 @@ import getMembers from '../controllers/members/getMembers';
 import { setLike, getLike, UnsetLike } from '../controllers/profile/like';
 import getMatches from '../controllers/messages/getMatches';
 import updateUser from '../controllers/users/updateUser';
+import getMessages from '../controllers/messages/getMessages.js';
 
 const router = express.Router();
 
@@ -21,6 +22,7 @@ const router = express.Router();
 
 router.get('/users/getall', getMembers);
 router.get('/matches/getall', getMatches);
+// router.get('/messages/getall', getMessages);
 
 router.post('/users', createUser);
 router.post('/update', updateUser);

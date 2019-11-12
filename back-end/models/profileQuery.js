@@ -183,8 +183,9 @@ const UnsetLike = async (myUsername, username) => {
     return result.affectedRows > 0 ? true : false;
 }
 
-
-
+const getMessages = async (myUsername, username) => {
+    const allMessage = await generalQuery.getBis({ table: 'message', field: 'messageBy', value: myUsername, fieldBis: 'massageTo', valueBis: username })
+}
 
 
 
@@ -201,5 +202,6 @@ module.exports = {
     whoILike,
     setNewLike,
     getPhotos,
-    setNewPhoto
+    setNewPhoto,
+    getMessages
 }
