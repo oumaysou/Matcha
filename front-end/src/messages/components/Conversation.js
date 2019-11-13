@@ -55,6 +55,8 @@ class Conversation extends React.Component {
             const { success } = data;
             if (success === true)
                 console.log('Message Stored')
+            else
+                console.log('nothing')
         })
         .catch(err => console.error('Error to store msg: '+ err))
     }
