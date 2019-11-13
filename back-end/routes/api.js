@@ -39,5 +39,5 @@ router.get('/:table/:field', getter);
 // router.get('/:table/:field/:fieldBis', getterBis);
 router.put('/:table/:field', updater);
 router.delete('/:table/:field', deleter);
-
+//Ok
 module.exports = router;
