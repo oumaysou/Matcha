@@ -6,8 +6,9 @@ import ConvHeader from './conversationParts/ConvHeader';
 import MesReceived from './conversationParts/MesReceived';
 import MesSend from './conversationParts/MesSend';
 import NoMessage from './conversationParts/NoMessage';
-import InputForm from './../../general/components/InputForm';
+// import InputForm from './../../general/components/InputForm';
 import io from 'socket.io-client';
+import axios from 'axios';
 
 const socket = io("http://localhost:5000");
 
@@ -20,6 +21,16 @@ class Conversation extends React.Component {
             messageSent: '',
             messageRec: []
         };
+    }
+    getAll = (username) => {
+            axios.get(`/api/message/getallmessages/${username}`).then(({ data }) => {
+            const { success, allMessages} = data;
+            if (success === true)
+             console.log(JSON.stringify(allMessages))
+            else
+            console.log("Error get all messages")
+        })
+        . catch(err => console.error('Error catch: '+err))
     }
 
     componentWillUnmount() {
@@ -34,12 +45,24 @@ class Conversation extends React.Component {
         })
     }
 
-    handleInputChange = (name, value) => {
-        this.setState({ message: value })
+    handleInputChange = (e) => {
+        this.setState({ message: e.target.value })
+    }
+
+    storeMessage = (message) => {
+        const username = this.props.usernameClicked
+        axios.put(`/api/storemessage/${message}/${username}`).then(({ data }) => {
+            const { success } = data;
+            if (success === true)
+                console.log('Message Stored')
+        })
+        .catch(err => console.error('Error to store msg: '+ err))
     }
 
     onClick = (e) => {
         e.preventDefault();
+        this.storeMessage(this.state.message);
+        console.log(this.state.message)
         if (this.state.message)
             this.state.messageSen.push(this.state.message)
         const New = this.state.messageSen
@@ -48,7 +71,7 @@ class Conversation extends React.Component {
             const msg = this.state.message
             socket.emit('send-chat-message', msg)
         }
-        this.setState({ message: '' })
+        this.setState({ message: "" })
     }
 
     messageSent = () => {
@@ -74,6 +97,7 @@ class Conversation extends React.Component {
         const isClicked = this.props.clicked
         const usernameClicked = this.props.usernameClicked
         if (isClicked) {
+            this.getAll(this.props.usernameClicked)
             return (
                 <div className="col-sm-8 conversation">
                     <ConvHeader username={usernameClicked} />
@@ -84,16 +108,9 @@ class Conversation extends React.Component {
 
                     <div className="row reply">
                         <div className="col-sm-11 col-xs-11 reply-main">
-                            <InputForm
-                                type="text"
-                                name="messagetosend"
-                                placeholder="Ecrivez un message"
-                                value={this.state.message}
-                                onChange={this.handleInputChange}
-                                classNameChat="form-control text-left"
-                            />
+                          <input className="inputchat" name="inputchat" value={this.state.message} onChange={this.handleInputChange}/>
                         </div>
-                        <div className="col-sm-1 col-xs-1 reply-send" onClick={this.onClick} onChange={this.handleInputChange}>
+                        <div className="col-sm-1 col-xs-1 reply-send" onClick={this.onClick} >
                             <i className="fa fa-send fa-2x" aria-hidden="true"></i>
                         </div>
                     </div>
