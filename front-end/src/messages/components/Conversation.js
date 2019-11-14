@@ -19,30 +19,30 @@ class Conversation extends React.Component {
             messageSen: [],
             message: '',
             messageSent: '',
-            messageRec: []
+            messageRec: [],
+            allMessages: [],
         };
+        socket.on('chat-message', message => {
+            const last = {
+                ...this.state.allMessages,
+                msgToReceive: message
+            }
+            this.setState({ allMessages: last })
+        })
     }
     getAll = (username) => {
-            axios.get(`/api/message/getallmessages/${username}`).then(({ data }) => {
-            const { success, allMessages} = data;
+        axios.get(`/api/message/getallmessages/${username}`).then(({ data }) => {
+            const { success, allMessages } = data;
             if (success === true)
-             console.log(JSON.stringify(allMessages))
+                success == true
             else
-            console.log("Error get all messages")
+                console.log("Error get all messages")
         })
-        . catch(err => console.error('Error catch: '+err))
+            .catch(err => console.error('Error catch: ' + err))
     }
 
     componentWillUnmount() {
         this.socket.off();
-    }
-
-    componentDidMount() {
-        socket.on('chat-message', message => {
-            this.state.messageRec.push(message)
-            const Rec = this.state.messageRec
-            this.setState({ messageRec: Rec })
-        })
     }
 
     handleInputChange = (e) => {
@@ -58,44 +58,56 @@ class Conversation extends React.Component {
             else
                 console.log('nothing')
         })
-        .catch(err => console.error('Error to store msg: '+ err))
+            .catch(err => console.error('Error to store msg: ' + err))
+    }
+
+    onKey = (e) => {
+        if (e.keyCode === 13)
+            this.onClick(e);
     }
 
     onClick = (e) => {
         e.preventDefault();
         this.storeMessage(this.state.message);
-        console.log(this.state.message)
-        if (this.state.message)
-            this.state.messageSen.push(this.state.message)
-        const New = this.state.messageSen
-        this.setState({ messageSen: New })
-        if (this.state.messageSen) {
+        if (this.state.message) {
             const msg = this.state.message
+            const last = {
+                ...this.state.allMessages,
+                msgToSend: msg
+            }
+            this.setState({ allMessages: last })
             socket.emit('send-chat-message', msg)
         }
         this.setState({ message: "" })
     }
 
-    messageSent = () => {
-        const allMessage = this.state.messageSen;
-        if (allMessage.length > 0) {
-            return allMessage.map((message, index) => {
-                return <MesSend message={message} key={index} />
-            })
-        }
+    showAllMessages = () => {
+
+        console.log("LAST => " + JSON.stringify(this.state.allMessages))
+        const obj = this.state.allMessages;
+        if (obj.msgToReceive)
+            return <div>
+                <MesReceived message={obj.msgToReceive} key={1} />
+                <MesSend message={obj.msgToSend} key={2} />
+            </div>
+        else if (obj.msgToSend)
+            return <div>
+                <MesSend message={obj.msgToSend} key={2} />
+
+            </div>
+
     }
 
-    messageRec = () => {
-        const allMessage = this.state.messageRec;
-        if (allMessage.length > 0) {
-            return allMessage.map((message, index) => {
-                return <MesReceived message={message} key={index} />
-            })
-        }
-    }
+    //     var myObject = { 'a': 1, 'b': 2, 'c': 3 };
+
+    // Object.keys(myObject).map(function(key, index) {
+    //   myObject[key] *= 2;
+    // });
+
+    // console.log(myObject);
 
     render() {
-        // console.log("reduc ", JSON.stringify(this.props));
+        // console.log("Mon test allMessages: " + JSON.stringify(this.state.allMessages))
         const isClicked = this.props.clicked
         const usernameClicked = this.props.usernameClicked
         if (isClicked) {
@@ -104,13 +116,12 @@ class Conversation extends React.Component {
                 <div className="col-sm-8 conversation">
                     <ConvHeader username={usernameClicked} />
                     <div className="row msg" id="conversation">
-                        {this.messageSent()}
-                        {this.messageRec()}
+                        {this.showAllMessages()}
                     </div>
 
                     <div className="row reply">
                         <div className="col-sm-11 col-xs-11 reply-main">
-                          <input className="inputchat" name="inputchat" value={this.state.message} onChange={this.handleInputChange}/>
+                            <input className="inputchat" name="inputchat" onKeyDown={this.onKey} value={this.state.message} onChange={this.handleInputChange} />
                         </div>
                         <div className="col-sm-1 col-xs-1 reply-send" onClick={this.onClick} >
                             <i className="fa fa-send fa-2x" aria-hidden="true"></i>

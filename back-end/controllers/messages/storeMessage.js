@@ -10,7 +10,7 @@ const storeMessage = async (req, res) => {
     const message = req.params.message;
     const messageBy = getUsernameFromToken(req);
     const messageTo = req.params.username;
-    const time = moment().format('L LT');
+    const time = moment().format('YYYY:MM:DD HH:mm:ss');
     const userData = {
         message,
         messageBy,

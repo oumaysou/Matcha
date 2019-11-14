@@ -59,6 +59,7 @@
   padding: 0 !important;
   width: auto;
   height: auto;
+  display: flex;
 }
 
 .message-text {
@@ -99,7 +100,7 @@
   margin: 0 20px;
   font-size: 12px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-  /* display: inline-block; */
+  display: inline-block;
   word-wrap: break-word;
 }
 
