@@ -2,15 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import UserCard from '../components/UserCard';
 import utils from '../../general/components/utils';
-import { ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
-// import { Link } from 'react-router-dom';
-// import Like from '../containers/Like'
-
+// import { ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
 
 import '../css/members.css';
 import '../css/filters.css'
-
-// import Filters from '../components/Filters';
 
 export default class Members extends React.Component {
     constructor(props) {
@@ -53,10 +48,7 @@ export default class Members extends React.Component {
     //     });
     // }
 
-    updateAdmired(event) {
-        this.mostAdmired = "1";
-        console.log(this.mostAdmired);
-    }
+   
     
     componentWillMount() {
         // const mostAdmired = "1"
@@ -76,7 +68,7 @@ export default class Members extends React.Component {
         // }
     }
 
-    function1 = () => {
+    updateAdmired = () => {
         axios.get('api/members/getall').then(({ data }) => {
             if (data.success)
                 this.setState({ users: data.usersData, finish: true })
@@ -115,25 +107,38 @@ export default class Members extends React.Component {
                 <div className='wrapper'>
                     <div className='container-fluid'>
                         <div className='container-fluid'>
-                            <div className='row col-md-6 col-sm-12 col-xs-12 filters'>
+                            {/* <div className='row col-md-6 col-sm-12 col-xs-12 filters'> */}
                                     <div id='filter-basic'>
-                                        <input className='col-md-10 col-sm-10 col-xs-10' type="text" placeholder="Search a tag" />
-                                        <div className='col-md-2 col-sm-2 col-xs-2 pull-right'>
-                                            <ButtonToolbar>
-                                                <DropdownButton
-                                                    bsSize="small"
-                                                    title="Filters"
-                                                    id="dropdown-size-small"
-                                                >
-                                                    {/* <MenuItem onClick={this.getAllUserCard}>Must Admired</MenuItem> */}
-                                                    <MenuItem onClick={this.getAdmired}>Must Admired</MenuItem>
-                                                    <button onClick={this.sortByPriceAsc}>Age: Low to High</button>
-                                                    <MenuItem onClick={this.function1}>Age: High to Low</MenuItem>
-                                                    <MenuItem onClick={() => {console.log("4")}}>Person close to you</MenuItem>
-                                                </DropdownButton>
-                                            </ButtonToolbar>
+                                        {/* <h3 className="title">Filters</h3> */}
+                                        <div className="tag">
+                                            <input type="text" placeholder="Search a tag" />
+                                        </div> 
+                                        <div className="admired">
+                                            <p>Must Admired:</p>
+                                            <input type="text" name="must admired" placeholder="Min" maxlength="5" size="6"/>
+                                            <p className="line">-</p>
+                                            <input type="text" name="must admired" placeholder="Max" maxlength="5" size="6"/>
                                         </div>
-                                    </div>
+                                        <div className="age">
+                                            <p>Age:</p>
+                                            <input type="text" name="must admired" placeholder="Min" maxlength="5" size="6"/>
+                                            <p className="line">-</p>
+                                            <input type="text" name="must admired" placeholder="Max" maxlength="5" size="6"/>
+                                        </div>
+                                        <div className="admired">
+                                            <p>Around you:</p>
+                                            <input type="text" name="must admired" placeholder="Min-km" maxlength="3" size="10"/>
+                                            <p className="line">-</p>
+                                            <input type="text" name="must admired" placeholder="Max" maxlength="3" size="10"/>
+                                        </div>
+                                        {/* <MenuItem onClick={this.updateAdmired}>Min Admired</MenuItem>
+                                        <MenuItem onClick={this.updateAdmired}>Max Admired</MenuItem>
+                                        <button onClick={this.sortByPriceAsc}>Age: Low to High</button>
+                                        <MenuItem onClick={console.log("ok")}>Age: High to Low</MenuItem>
+                                        <MenuItem onClick={() => {console.log("4")}}>Person close to you</MenuItem> */}
+                                        
+                                      
+                                    {/* </div> */}
                                 </div>
                             </div>
                         <div className='row'>

@@ -2,8 +2,61 @@
     margin: 10px 0;
 }
 
-#filter-basic input {
-    height: 30px;
+#filter-basic {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-flow: row wrap;
+    border: 1px solid #e0e0e0;
+    margin: 25px 0;
+    /* height: 30px;
     border-radius: 9px;
-    background-color: #fcfcfc;
+    background-color: #fcfcfc; */
+}
+
+#filter-basic .title {
+    /* position: absolute; */
+    /* margin-bottom: 100px; */
+}
+
+#filter-basic .tag {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    margin: 0 25px 0 25px;
+}
+
+#filter-basic .admired {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 5px 15px;
+    /* background: rgb(238, 238, 238); */
+}
+
+#filter-basic .admired p {
+    margin: 10px 10px 10px 0px;
+}
+
+#filter-basic .admired .line {
+    margin: 0 10px;
+}
+
+#filter-basic .age {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    margin: 0;
+    /* background: red; */
+    padding: 5px 15px;
+    /* align-content: center; */
+}
+
+#filter-basic .age p {
+    margin: 10px 10px 10px 0px;
+}
+
+#filter-basic .age .line {
+    margin: 0 10px;
 }
