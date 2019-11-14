@@ -5,6 +5,7 @@ import RadioForm from '../../general/components/RadioForm';
 import SubmitForm from '../../general/components/SubmitForm';
 import { thunk_editInfosUser } from '../../actions/thunk_actions_editProfile';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 class EditForm extends React.Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class EditForm extends React.Component {
             gender: this.props.userInfos.userData.gender,
             orientation: this.props.userInfos.userData.orientation,
             location: this.props.userInfos.userData.location,
-            birthday: this.props.userInfos.userData.birthday,
+            birthday: moment(this.props.userInfos.userData.birthday).format('L'),
             avatar: this.props.userInfos.userData.avatar,
             bio: this.props.userInfos.userData.bio || '',
             photos: [],
@@ -27,16 +28,23 @@ class EditForm extends React.Component {
         }
     }
 
-    // propsToState = (userData) => {
-    //     console.log(userData);
-        
-    //     this.setState({ avatar: userData.avatar });
-    // }
-
     handleInfosSubmit = (e) => {
         e.preventDefault();
         const user = Object.assign({}, this.state);
         console.log(user);
+        
+        this.props.dispatch(thunk_editInfosUser(user));
+    }
+
+    handleAvatarSubmit = (e) => {
+        e.preventDefault();
+        const user = Object.assign({}, this.state);
+        this.props.dispatch(thunk_editInfosUser(user));
+    }
+
+    handleTagsSubmit = (e) => {
+        e.preventDefault();
+        const user = Object.assign({}, this.state);
         this.props.dispatch(thunk_editInfosUser(user));
     }
 
@@ -56,12 +64,14 @@ class EditForm extends React.Component {
     }
 
     render() {
+        console.log(this.state.birthday);
+        
         return (
             <div id='edit'>
                 <div className="container">
                     <div className="row">
                         <h3 className='text-center'>Avatar</h3>
-                        <form id="form-editPhoto" onSubmit={this.handleSubmit}>
+                        <form id="form-editPhoto" onSubmit={this.handleAvatarSubmit}>
                             <div className="col-md-12 text-center">
                                 <div className="panel panel-default">
                                     <div className="userpic">
@@ -84,10 +94,10 @@ class EditForm extends React.Component {
 
 
                         <h3 className='text-center'>Identity</h3>
-                        <form className="form-editIdentity" onSubmit={this.handleSubmit}>
+                        <form className="form-editIdentity" onSubmit={this.handleInfosSubmit}>
                             <div className="col-md-12 text-center">
                                 <div className="panel panel-default">
-                                    <div className="form-inline">
+                                    <div className="form-inline mb5">
                                         <RadioForm
                                           label="male"
                                           name="gender"
@@ -111,68 +121,52 @@ class EditForm extends React.Component {
                                         />
                                     </div>
 
-                                    <InputForm
-                                        type="text"
-                                        name="username"
-                                        value={this.state.username || ''}
-                                        placeholder='Login'
-                                        onChange={this.handleInputChange}
-                                        className="form-group inputForm"
-                                    />
-
+                                    <label>First Name</label>
                                     <InputForm
                                         type="text"
                                         name="firstName"
                                         value={this.state.firstName || ''}
                                         placeholder="First name"
                                         onChange={this.handleInputChange}
-                                        className="form-group inputForm"
+                                        className="inputForm mb5"
                                     />
 
+                                    <label>Last Name</label>
                                     <InputForm
                                         type="text"
                                         name="lastName"
                                         value={this.state.lastName || ''}
                                         placeholder="Last name"
                                         onChange={this.handleInputChange}
-                                        className="form-group inputForm"
+                                        className="inputForm mb5"
                                     />
 
+                                    <label>Password</label>
                                     <InputForm
                                         type="password"
                                         name="password"
                                         placeholder="new password"
                                         onChange={this.handleInputChange}
-                                        className="form-group inputForm"
+                                        className="inputForm"
                                     />
                                     <InputForm
                                         type="password"
                                         name="passwordCfm"
                                         placeholder="Confirm password"
                                         onChange={this.handleInputChange}
-                                        className="form-group inputForm"
+                                        className="inputForm mb5"
                                     />
 
-                                    <InputForm type="date"
+                                    <label>Birthday</label>
+                                    <p>{this.state.birthday}</p>
+                                    <input type="date"
                                         name="birthday"
                                         placeholder="Birth Date"
-                                        onChange={this.handleInputChange}
-                                        className="form-group inputForm"
+                                        onChange={this.handleRawChange}
+                                        className="inputForm mb5"
                                     />
 
-                                    <SubmitForm
-                                        value="Change identity"
-                                        className="inputForm btn-edit"
-                                    />
-                                </div>
-                            </div>
-                        </form>
-
-
-                        <h3 className='text-center'>Infos</h3>
-                        <form className="form-editInfos" onSubmit={this.handleSubmit}>
-                            <div className="col-md-12 text-center">
-                                <div className="panel panel-default">
+                                    <div className="form-inline mb5">
                                         <RadioForm
                                             label="straight"
                                             name="orientation"
@@ -194,26 +188,31 @@ class EditForm extends React.Component {
                                             checked={this.state.orientation === "bisexual"}
                                             onChange={this.handleInputChange}
                                         />
+                                    </div>
+                                    
+                                    <label className="block">Biographie</label>
+                                    <textarea
+                                        rows="5"
+                                        cols="40"
+                                        name="bio"
+                                        value={this.state.bio}
+                                        placeholder="Bio"
+                                        onChange={this.handleRawChange}
+                                    />
 
-                                        {/* <InputForm
-                                            type="textarea"
-                                            name="bio"
-                                            value={this.state.bio || ''}
-                                            placeholder="Bio"
-                                            onChange={this.handleInputChange}
-                                            className="form-group inputForm"
-                                        /> */}
-                                        
-                                        <input 
-                                            type="textarea"
-                                            rows="5"
-                                            cols="20"
-                                            name="bio"
-                                            value={this.state.bio}
-                                            placeholder="Bio"
-                                            onChange={this.handleRawChange}
-                                            className="form-group inputForm"
-                                        />
+                                    <SubmitForm
+                                        value="Change identity"
+                                        className="inputForm btn-edit"
+                                    />
+                                </div>
+                            </div>
+                        </form>
+
+
+                        <h3 className='text-center'>Tags</h3>
+                        <form className="form-editInfos" onSubmit={this.handleTagsSubmit}>
+                            <div className="col-md-12 text-center">
+                                <div className="panel panel-default">
 
                                         <InputForm
                                             type="text"

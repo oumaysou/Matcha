@@ -10,16 +10,21 @@ class Edit extends React.Component {
         super()
         this.state = {
             updated: false,
-            loaded:false
+            userloaded:false,
+            tagsloaded:false,
+            usertagsloaded:false
         };
     }
 
     componentDidMount() {
-        const decoded = utils.decodedCookie();    
+        this.props.dispatch(thunk_getAllTags())
+            .then(() => {this.setState({ tagsloaded: true })})
+        this.props.dispatch(thunk_getUserTags())
+        .then(() => {this.setState({ usertagsloaded: true })})
+        const decoded = utils.decodedCookie();
         if (decoded){
-                this.props.dispatch(
-                    thunk_getInfosUser(decoded.username)
-                    ).then( () => {this.setState({ loaded: true })})
+                this.props.dispatch(thunk_getInfosUser(decoded.username))
+                .then( () => {this.setState({ userloaded: true })})
         }
         else
             console.error('Error Decode Cookie');
@@ -30,7 +35,7 @@ class Edit extends React.Component {
             case true:
                 return <RedirectToProfile username={this.state.username} />;
             default:
-                if (this.state.loaded)
+                if (this.state.userloaded && this.state.tagsloaded && this.state.usertagsloaded)
                     return (
                         <EditForm/>
                     );
@@ -43,6 +48,7 @@ class Edit extends React.Component {
 const mapStateToProps = (state) => {
     return {
         userInfos: state.userInfos || {}
+        
     };
 };
 
