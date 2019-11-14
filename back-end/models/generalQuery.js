@@ -53,6 +53,7 @@ const getId = ({ table, field, value, fieldBis, valueBis }) => {
 };
 
 const getAll = ({ table }) => {
+    console.log("getAll ok");
     try {
         const users = new Promise((resolve, reject) => {
             const sql = `SELECT * FROM ${table}`;
@@ -117,4 +118,20 @@ const deleter = ({ table, field, value }) => {
     }
 };
 
-module.exports = { get, getId, getAll, insert, update, deleter };
+const getFilters = ({ table }) => {
+    try {
+        const users = new Promise((resolve, reject) => {
+            const sql = `SELECT * FROM ${table} ORDER BY popularity DESC`;
+            db.query(sql, (err, rows) => {
+                if (err)
+                    return reject(err);
+                return resolve(rows);
+            })
+        });
+        return users;
+    } catch (err) {
+        console.error('Cannot connect to the database db_matcha.\n');
+    }
+}
+
+module.exports = { get, getId, getAll, insert, update, deleter, getFilters };
