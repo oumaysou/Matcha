@@ -5,3 +5,7 @@
 input[type="file"] {
     display: inline-flex !important;
 }
+
+.pannel{
+    padding: 20px;
+}

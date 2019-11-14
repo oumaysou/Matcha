@@ -3,44 +3,59 @@ import InputImageForm from '../../general/components/InputImageForm';
 import InputForm from '../../general/components/InputForm';
 import RadioForm from '../../general/components/RadioForm';
 import SubmitForm from '../../general/components/SubmitForm';
+import { thunk_editInfosUser } from '../../actions/thunk_actions_editProfile';
+import { connect } from 'react-redux';
 
-export default class EditForm extends React.Component {
+class EditForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            firstName: '',
-            lastName: '',
+            oldusername: this.props.userInfos.userData.username,
+            username: this.props.userInfos.userData.username,
+            firstName: this.props.userInfos.userData.firstName,
+            lastName: this.props.userInfos.userData.lastName,
             password: '',
             passwordCfm: '',
-            gender: '',
-            orientation: '',
-            location: '',
-            birthday: '',
-            avatar: '',
-            bio: '',
+            gender: this.props.userInfos.userData.gender,
+            orientation: this.props.userInfos.userData.orientation,
+            location: this.props.userInfos.userData.location,
+            birthday: this.props.userInfos.userData.birthday,
+            avatar: this.props.userInfos.userData.avatar,
+            bio: this.props.userInfos.userData.bio || '',
             photos: [],
             tags: []
         }
     }
 
-    handleSubmit = (e) => {
+    // propsToState = (userData) => {
+    //     console.log(userData);
+        
+    //     this.setState({ avatar: userData.avatar });
+    // }
+
+    handleInfosSubmit = (e) => {
         e.preventDefault();
-        this.props.onSubmit();
+        const user = Object.assign({}, this.state);
+        console.log(user);
+        this.props.dispatch(thunk_editInfosUser(user));
     }
 
     handleInputChange = (name, value) => {
-      this.props.onChange(name, value);
+        this.setState({ [name]: value });
     }
 
-    //   handleRadioChange = (name, value) => {
-    //   this.props.onChange(name, value);
-    // }
+    handleRawChange = (e) => {
+        e.preventDefault();
+        const name = e.target.name;
+        const value = e.target.value;
+        this.handleInputChange(name, value);
+    }
+
+      handleRadioChange = (name, value) => {
+        this.setState({ [name]: value });
+    }
 
     render() {
-        const user = this.props.user;
-        // console.log(user)
-        // console.log(this.state)
         return (
             <div id='edit'>
                 <div className="container">
@@ -50,7 +65,7 @@ export default class EditForm extends React.Component {
                             <div className="col-md-12 text-center">
                                 <div className="panel panel-default">
                                     <div className="userpic">
-                                        <img src={user.avatar} alt="avatar" id="avatar" />
+                                        <img src={this.state.avatar} alt="avatar" id="avatar" />
                                     </div>
 
                                     <InputImageForm
@@ -77,18 +92,21 @@ export default class EditForm extends React.Component {
                                           label="male"
                                           name="gender"
                                           text="Male"
+                                          checked= {this.state.gender === "male"}
                                           onChange={this.handleInputChange}
                                         />
                                         <RadioForm
                                           label="female"
                                           name="gender"
                                           text="Female"
+                                          checked={this.state.gender === "female"}
                                           onChange={this.handleInputChange}
                                         />
                                         <RadioForm
                                           label="both"
                                           name="gender"
                                           text="Both"
+                                          checked={this.state.gender === "both"}
                                           onChange={this.handleInputChange}
                                         />
                                     </div>
@@ -96,6 +114,7 @@ export default class EditForm extends React.Component {
                                     <InputForm
                                         type="text"
                                         name="username"
+                                        value={this.state.username || ''}
                                         placeholder='Login'
                                         onChange={this.handleInputChange}
                                         className="form-group inputForm"
@@ -104,6 +123,7 @@ export default class EditForm extends React.Component {
                                     <InputForm
                                         type="text"
                                         name="firstName"
+                                        value={this.state.firstName || ''}
                                         placeholder="First name"
                                         onChange={this.handleInputChange}
                                         className="form-group inputForm"
@@ -112,6 +132,7 @@ export default class EditForm extends React.Component {
                                     <InputForm
                                         type="text"
                                         name="lastName"
+                                        value={this.state.lastName || ''}
                                         placeholder="Last name"
                                         onChange={this.handleInputChange}
                                         className="form-group inputForm"
@@ -152,31 +173,45 @@ export default class EditForm extends React.Component {
                         <form className="form-editInfos" onSubmit={this.handleSubmit}>
                             <div className="col-md-12 text-center">
                                 <div className="panel panel-default">
-                                    <div className="form-inline">
                                         <RadioForm
                                             label="straight"
                                             name="orientation"
                                             text="Straight"
+                                            checked={this.state.orientation === "straight"}
                                             onChange={this.handleInputChange}
                                         />
                                         <RadioForm
                                             label="gay"
                                             name="orientation"
                                             text="Gay"
+                                            checked={this.state.orientation === "gay"}
                                             onChange={this.handleInputChange}
                                         />
                                         <RadioForm
                                             label="bisexual"
                                             name="orientation"
                                             text="Bisexual"
+                                            checked={this.state.orientation === "bisexual"}
                                             onChange={this.handleInputChange}
                                         />
 
-                                        <InputForm
-                                            type="text"
+                                        {/* <InputForm
+                                            type="textarea"
                                             name="bio"
+                                            value={this.state.bio || ''}
                                             placeholder="Bio"
                                             onChange={this.handleInputChange}
+                                            className="form-group inputForm"
+                                        /> */}
+                                        
+                                        <input 
+                                            type="textarea"
+                                            rows="5"
+                                            cols="20"
+                                            name="bio"
+                                            value={this.state.bio}
+                                            placeholder="Bio"
+                                            onChange={this.handleRawChange}
                                             className="form-group inputForm"
                                         />
 
@@ -192,7 +227,6 @@ export default class EditForm extends React.Component {
                                             value="Change infos"
                                             className="inputForm btn-edit"
                                         />
-                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -204,3 +238,11 @@ export default class EditForm extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        userInfos: state.userInfos || {}
+    };
+};
+
+export default connect(mapStateToProps)(EditForm);
