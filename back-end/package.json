@@ -26,14 +26,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gphilips/Matcha.git"
+    "url": "git+https://github.com/oumaysou/Matcha.git"
   },
-  "author": "gphilips",
+  "author": "oumaysou",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gphilips/Matcha/issues"
+    "url": "https://github.com/oumaysou/Matcha/issues"
   },
-  "homepage": "https://github.com/gphilips/Matcha#readme",
+  "homepage": "https://github.com/oumaysou/Matcha#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
