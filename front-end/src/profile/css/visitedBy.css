@@ -7,3 +7,13 @@
 #visited-by td {
     width: 50px;
 }
+
+.a-visitedBy {
+    color: black;
+    text-decoration: none;
+}
+
+.a-visitedBy:hover {
+    color: black;
+    text-decoration: none;
+}
