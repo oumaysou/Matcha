@@ -24,13 +24,16 @@ export default class Info extends React.Component {
             birthday,
             gender,
             orientation,
+            location,
             city,
             lastConnection
         } = this.props.profile;
 
         const age = moment().diff(birthday, 'years');
+        const latitude = location.split(',')[0];
+        const longitude = location.split(',')[1];
         const cityName = city;
-        this.setState({ age, birthday, gender, orientation, cityName, lastConnection })
+        this.setState({ age, birthday, gender, orientation, latitude, longitude, cityName, lastConnection })
     }
 
     componentDidMount() {
