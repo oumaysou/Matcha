@@ -53,7 +53,7 @@ const getId = ({ table, field, value, fieldBis, valueBis }) => {
 };
 
 const getAll = ({ table }) => {
-    console.log("getAll ok");
+    // console.log("getAll ok");
     try {
         const users = new Promise((resolve, reject) => {
             const sql = `SELECT * FROM ${table}`;
@@ -118,10 +118,13 @@ const deleter = ({ table, field, value }) => {
     }
 };
 
-const getFilters = ({ table }) => {
+const getFilters = ({ table, minAdmired }) => {
     try {
         const users = new Promise((resolve, reject) => {
-            const sql = `SELECT * FROM ${table} ORDER BY popularity DESC`;
+            // const sql = `SELECT * FROM ${table} ORDER BY popularity DESC`;
+
+            // const sql = `SELECT * FROM ${table} WHERE popularity BETWEEN ${minAdmired} = ? AND ${maxAdmired} = ? ORDER BY popularity DESC`;
+            const sql = `SELECT * FROM ${table} WHERE popularity BETWEEN ${minAdmired} AND 300 ORDER BY popularity DESC`;
             db.query(sql, (err, rows) => {
                 if (err)
                     return reject(err);

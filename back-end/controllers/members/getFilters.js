@@ -6,8 +6,9 @@ import userTools from '../../utils/userTools';
 const getFilters = async (req, res) => {
     // console.log("getFilters ok 2");
     const myUsername = getUsernameFromToken(req);
+    const minAdmired = req.params.minAdmired;
 
-    const allMembers = await generalQuery.getFilters({table: 'users'});
+    const allMembers = await generalQuery.getFilters({table: 'users', minAdmired: '200'});
     const index = allMembers.findIndex(member => member.username === myUsername);
     allMembers.splice(index, 1);
 
