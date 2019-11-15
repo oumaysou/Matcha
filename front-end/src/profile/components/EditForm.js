@@ -6,6 +6,8 @@ import SubmitForm from '../../general/components/SubmitForm';
 import { thunk_editInfosUser } from '../../actions/thunk_actions_editProfile';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import TagCompo from './Tag';
+
 
 class EditForm extends React.Component {
     constructor(props) {
@@ -24,25 +26,59 @@ class EditForm extends React.Component {
             avatar: this.props.userInfos.userData.avatar,
             bio: this.props.userInfos.userData.bio || '',
             photos: [],
-            tags: []
+            tags: this.props.userInfos.tags || []
         }
+    }
+
+    handleAddTag = (e) => {
+        const array = [...this.state.tags];
+        const tag = e.target.id;
+        if (!array.includes(tag)){
+            array.push(tag);
+            this.setState({tags:array});
+        }   
+    }
+
+    handleRemTag = (e) => {
+        const array = [...this.state.tags];
+        const index = array.indexOf(e.target.id);
+        if (index !== -1) {
+            array.splice(index, 1);
+            this.setState({tags: array});
+        }    
+    }
+    
+    renderAllTags() {
+        const allTags = this.props.allTags.data;
+
+        if (allTags.lenth !== 0) {
+            return allTags.map((allTag, index) => {
+                return <TagCompo key={index} tag={allTag.tagName} func={this.handleAddTag}/>;
+            })
+        }
+        else
+            return <div className='text-center'><p>No tags aviable</p></div>;
+    }
+
+    renderUserTags() {
+        const userTags = this.state.tags;
+       
+        if (userTags.lenth !== 0) {
+            return userTags.map((userTag, index) => {
+                return <TagCompo key={index} tag={userTag} func={this.handleRemTag}/>;
+            })
+        }
+        else
+            return <div className='text-center'><p>Please select a tag</p></div>;
     }
 
     handleInfosSubmit = (e) => {
         e.preventDefault();
         const user = Object.assign({}, this.state);
-        console.log(user);
-        
         this.props.dispatch(thunk_editInfosUser(user));
     }
 
-    handleAvatarSubmit = (e) => {
-        e.preventDefault();
-        const user = Object.assign({}, this.state);
-        this.props.dispatch(thunk_editInfosUser(user));
-    }
-
-    handleTagsSubmit = (e) => {
+    handlePicturesSubmit = (e) => {
         e.preventDefault();
         const user = Object.assign({}, this.state);
         this.props.dispatch(thunk_editInfosUser(user));
@@ -63,9 +99,7 @@ class EditForm extends React.Component {
         this.setState({ [name]: value });
     }
 
-    render() {
-        console.log(this.state.birthday);
-        
+    render() {       
         return (
             <div id='edit'>
                 <div className="container">
@@ -199,6 +233,15 @@ class EditForm extends React.Component {
                                         placeholder="Bio"
                                         onChange={this.handleRawChange}
                                     />
+                                    
+                                    <div>
+                                        <p>All Tags</p>
+                                        {this.renderAllTags()}
+                                    </div>
+                                    <div>
+                                        <p>Your Tags</p>
+                                        {this.renderUserTags()}
+                                    </div>
 
                                     <SubmitForm
                                         value="Change identity"
@@ -207,30 +250,6 @@ class EditForm extends React.Component {
                                 </div>
                             </div>
                         </form>
-
-
-                        <h3 className='text-center'>Tags</h3>
-                        <form className="form-editInfos" onSubmit={this.handleTagsSubmit}>
-                            <div className="col-md-12 text-center">
-                                <div className="panel panel-default">
-
-                                        <InputForm
-                                            type="text"
-                                            name="tags"
-                                            placeholder="Tags"
-                                            onChange={this.handleInputChange}
-                                            className="form-group inputForm"
-                                        />
-
-                                        <SubmitForm
-                                            value="Change infos"
-                                            className="inputForm btn-edit"
-                                        />
-                                </div>
-                            </div>
-                        </form>
-
-
                     </div>
                 </div>
             </div>
@@ -240,7 +259,8 @@ class EditForm extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        userInfos: state.userInfos || {}
+        userInfos: state.userInfos || {},
+        allTags: state.allTags || {}
     };
 };
 

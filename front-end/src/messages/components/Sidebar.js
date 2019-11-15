@@ -18,7 +18,6 @@ class Sidebar extends React.Component {
     }
 
     getAllMatches() {
-        console.log("MATCHES ",JSON.stringify(this.props));
         const { matches } = this.props;
 
         if (matches.lenth !== 0) {

@@ -1,4 +1,4 @@
-import { GETINFOSUSER, EDITUSER, GETALLTAGS, GETUSERTAGS } from '../constantes';
+import { GETINFOSUSER, EDITUSER, GETALLTAGS } from '../constantes';
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 // import Cookies from 'universal-cookie';
@@ -20,13 +20,6 @@ export const editInfosUser = (data) => {
 export const getAllTags = (data) => {
     return {
         type: GETALLTAGS,
-        data: data
-    };
-};
-
-export const getUserTags = (data) => {
-    return {
-        type: GETUSERTAGS,
         data: data
     };
 };
@@ -64,23 +57,11 @@ export const thunk_editInfosUser = (userData) => {
 
 // ACTION FOR GET ALL TAGS
 
-export const thunk_getAllTags = (username) => {
+export const thunk_getAllTags = () => {
     return function (dispatch) {
-        return axios.get(`/api/users/profile/${username}`).then(({ data }) => {
+        return axios.get(`/api/tagslist`).then(({ data }) => {
             if (data.success) {
-                dispatch(getInfosUser(data));
-            }
-        })
-    };
-};
-
-// ACTION FOR GET USER TAGS
-
-export const thunk_getUserTags = (username) => {
-    return function (dispatch) {
-        return axios.get(`/api/users/profile/${username}`).then(({ data }) => {
-            if (data.success) {
-                dispatch(getInfosUser(data));
+                dispatch(getAllTags(data));
             }
         })
     };
