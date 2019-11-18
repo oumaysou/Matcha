@@ -22,7 +22,7 @@ const updateUser = async (req, res) => {
         bio,
 
     } = req.body;
-
+    
     if (!username || !password || !passwordCfm || !birthday
         || !firstName || !lastName || !gender || !orientation || !bio || !tags)
     {
@@ -57,6 +57,7 @@ const updateUser = async (req, res) => {
                 tags
             };
             
+
             const fields = [];
             fields['username'] = userData.username;
             fields['password'] = userData.pswd;
@@ -72,6 +73,25 @@ const updateUser = async (req, res) => {
             for (let key in fields) {
                 await generalQuery.update({ table: 'users', field : key, value: fields[key], where: 'username' , whereValue: userData.oldusername });
             }
+
+            await generalQuery.deleter({table: 'tags', field: 'taggedBy', value: oldusername})
+            
+            
+            
+            tags.forEach(async e => {
+
+                let dataObj ={
+                    tag: e,
+                    taggedBy: userData.username
+                };
+                try { 
+                    await generalQuery.insert({ table: 'tags', userData: dataObj })
+                }
+                catch(error) {
+                    console.error("ERROR : ",error);
+                }
+            });
+
             console.log("Les infos ont été enregistrés avec succès");
             res.status(200).send({
                     success: true,

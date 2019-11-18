@@ -89,7 +89,6 @@ const deleter = ({ table, field, value }) => {
             db.query(sql, value, (err, row) => {
                 if (err)
                     reject(err);
-                console.log(JSON.stringify(row))
                 resolve(row);
             })
         });

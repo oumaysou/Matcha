@@ -4,6 +4,7 @@ import EditForm from '../components/EditForm';
 import RedirectToProfile from '../../general/components/RedirectToProfile';
 import { thunk_getInfosUser, thunk_getAllTags } from '../../actions/thunk_actions_editProfile';
 import { connect } from 'react-redux';
+import PicturesForm from '../components/PicturesForm';
 
 class Edit extends React.Component {
     constructor() {
@@ -34,7 +35,10 @@ class Edit extends React.Component {
             default:
                 if (this.state.userloaded && this.state.tagsloaded)
                     return (
-                        <EditForm/>
+                        <div>
+                            <PicturesForm/>
+                            <EditForm/>
+                        </div>
                     );
                 else
                         return(<p>ELSE</p>);

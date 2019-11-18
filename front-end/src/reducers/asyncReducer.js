@@ -1,4 +1,4 @@
-import { REGISTER, SIGNIN, GETALLMATCHES, USERNAMECLICKED, GETINFOSUSER, EDITUSER, GETALLTAGS } from '../constantes';
+import { REGISTER, SIGNIN, GETALLMATCHES, USERNAMECLICKED, GETINFOSUSER, EDITUSER, EDITPICTURES, GETALLTAGS } from '../constantes';
 
 const initialeState = {
     clicked: false
@@ -43,6 +43,10 @@ const reducer = (state = initialeState, action) => {
             return {
                 ...state,
                 updated: true
+            };
+        case EDITPICTURES:
+            return {
+                ...state
             };
         default: return state
     }

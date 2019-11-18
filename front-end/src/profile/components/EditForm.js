@@ -1,5 +1,4 @@
 import React from 'react';
-import InputImageForm from '../../general/components/InputImageForm';
 import InputForm from '../../general/components/InputForm';
 import RadioForm from '../../general/components/RadioForm';
 import SubmitForm from '../../general/components/SubmitForm';
@@ -104,29 +103,6 @@ class EditForm extends React.Component {
             <div id='edit'>
                 <div className="container">
                     <div className="row">
-                        <h3 className='text-center'>Avatar</h3>
-                        <form id="form-editPhoto" onSubmit={this.handleAvatarSubmit}>
-                            <div className="col-md-12 text-center">
-                                <div className="panel panel-default">
-                                    <div className="userpic">
-                                        <img src={this.state.avatar} alt="avatar" id="avatar" />
-                                    </div>
-
-                                    <InputImageForm
-                                        name="avatar"
-                                        className="form-group inputForm"
-                                        onChange={this.handleInputChange}
-                                    />
-
-                                    <SubmitForm
-                                        value="Change avatar"
-                                        className="inputForm btn-edit"
-                                    />
-                                </div>
-                            </div>
-                        </form>
-
-
                         <h3 className='text-center'>Identity</h3>
                         <form className="form-editIdentity" onSubmit={this.handleInfosSubmit}>
                             <div className="col-md-12 text-center">
