@@ -92,12 +92,12 @@
 }
 
 .sender {
-  float: right;
+  /* float: right; */
   width: auto !important;
   background: #dcf8c6;
   border-radius: 10px 10px 0 10px;
   padding: 4px 10px 7px !important;
-  margin: 0 20px;
+  margin: 1px 20px;
   font-size: 12px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
   display: inline-block;

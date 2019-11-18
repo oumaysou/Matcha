@@ -21,7 +21,7 @@ const get = ({ table, field, value }) => {
 const getBis = ({ table, field, value, fieldBis, valueBis }) => {
     try {
         const user = new Promise((resolve, reject) => {
-            const sql = `SELECT * FROM ${table} WHERE ${field} = ? AND ${fieldBis} = ?`;
+            const sql = `SELECT id, message, messageBy FROM ${table} WHERE ${field} = ? AND ${fieldBis} = ?`;
             db.query(sql, [value, valueBis], (err, row) => {
                 if (err)
                     return reject(err);

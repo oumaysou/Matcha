@@ -185,9 +185,9 @@ const UnsetLike = async (myUsername, username) => {
 
 const getMessages = async (myUsername, username) => {
 
-    const allMessageFromMe = await generalQuery.getBis({ table: 'messages', field: 'messageBy', value: myUsername, fieldBis: 'messageTo', valueBis: username })
-    const allMessageFromHim = await generalQuery.getBis({ table: 'messages', field: 'messageBy', value: username, fieldBis: 'messageTo', valueBis: myUsername })
-    const allMessages = Object.assign({allMessageFromHim, allMessageFromMe})
+    const msgS = await generalQuery.getBis({ table: 'messages', field: 'messageBy', value: myUsername, fieldBis: 'messageTo', valueBis: username })
+    const msgR = await generalQuery.getBis({ table: 'messages', field: 'messageBy', value: username, fieldBis: 'messageTo', valueBis: myUsername })
+    let allMessages = msgS.concat(msgR)
     return allMessages;
 }
 
