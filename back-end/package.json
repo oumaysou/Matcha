@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A dating web-app",
   "scripts": {
-    "start": "nodemon --exec 'babel-node server.js'",
+    "start": "nodemon --exec 'babel-node server.js' --ignore client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "mysql": "^2.15.0",
     "nodemailer": "^4.6.3",
     "socket.io": "^2.0.4",
+    "socket.io-parser": "^3.4.0",
     "socketio-jwt": "^4.5.0",
     "uuid-token-generator": "^1.0.0"
   },

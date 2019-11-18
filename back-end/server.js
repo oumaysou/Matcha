@@ -1,14 +1,13 @@
 import express from 'express';
-import session from 'express-session';
+// import session from 'express-session';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import http from 'http';
 import socketIo from 'socket.io';
-// import socketioJwt from 'socketio-jwt';
+import socketioJwt from 'socketio-jwt';
 import api from './routes/api';
 import { initDb } from './initDb';
-// import socket from './sockets/socketIo';
 import moment from 'moment';
 
 const app = express();
@@ -20,7 +19,7 @@ initDb();
 
 const server = http.createServer(app);
 const io = socketIo.listen(server);
-let users = [];
+const users = [];
 
 moment().locale('fr');
 
@@ -30,9 +29,12 @@ moment().locale('fr');
 // }));
 
 io.on('connection', socket => {
-	const socketID = socket.id;
-	console.log("test  " + JSON.stringify(socketID));
-	// socket.emit('chat-history', )
+	let chatHistory = {}
+	// const userConnected = socket.decoded_token.username;
+	// users.push({ username: userConnected, socketId: socket.id })
+	socket.on('chat-history', chatHistory => {
+		socket.emit('chat', chatHistory)
+	})
 	socket.on('send-chat-message', message => {
 		socket.broadcast.emit('chat-message', message)
 	})
