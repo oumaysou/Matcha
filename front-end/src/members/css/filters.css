@@ -60,3 +60,19 @@
 #filter-basic .age .line {
     margin: 0 10px;
 }
+
+#filter-basic .filterButton {
+    margin: 0 3px;
+    padding: 3px 8px;
+    background: #FF5252;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+}
+
+
+#filter-basic .filterButton:hover {
+    opacity: 50%;
+}

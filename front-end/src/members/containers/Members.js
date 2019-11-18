@@ -21,10 +21,10 @@ export default class Members extends React.Component {
             orientation: '',
             birthday: '',
             avatar: '',
-            mostAdmired: '',
-            // value: '',
             minAdmired: '',
             maxAdmired: '',
+            minAge: '',
+            maxAge: '',
             finish: false
         };
         // this.getAllUserCard = this.getAllUserCard.bind(this);
@@ -34,6 +34,8 @@ export default class Members extends React.Component {
         // this.sortByPriceDesc = this.sortByPriceDesc.bind(this);
     }
     
+    // TENGO QUE REVISAR EL CUMPLEANOS BUSCARLO DONDE ESTA IMPRIMIENDO PARA EL CALCULO
+
     componentWillMount() {
         axios.get('api/users/getall').then(({ data }) => {
             if (data.success)
@@ -42,11 +44,30 @@ export default class Members extends React.Component {
     }
 
     updateAdmired = () => {
-        axios.get('api/members/getall/').then(({ data }) => {
+        const minAdmired = this.state.minAdmired;
+        const maxAdmired = this.state.maxAdmired;
+        // console.log("Members min ", minAdmired);
+        // console.log("Members max ", maxAdmired);
+        axios.get(`api/members/getall/${minAdmired}/${maxAdmired}`).then(({ data }) => {
+            // console.log("users ousssama "+data.usersData)
             if (data.success)
                 this.setState({ 
                     users: data.usersData,
-                    // minAdmired: data.min,
+                    finish: true 
+                })
+        }).catch(err => console.error('Error: ', err));
+    }
+
+    updateAge = () => {
+        const minAge = this.state.minAge;
+        const maxAge = this.state.maxAge;
+        console.log("Members min ", minAge);
+        console.log("Members max ", maxAge);
+        axios.get(`api/members/getall/${minAge}/${maxAge}`).then(({ data }) => {
+            // console.log("users ousssama "+data.usersData)
+            if (data.success)
+                this.setState({ 
+                    users: data.usersData,
                     finish: true 
                 })
         }).catch(err => console.error('Error: ', err));
@@ -79,9 +100,8 @@ export default class Members extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        const data = this.state
-        // console.log(event);
-        console.log('final data: ', data);
+        // const data = this.state
+        // console.log('final data: ', data);
     }
 
     handleInputChange = (event) => {
@@ -107,9 +127,10 @@ export default class Members extends React.Component {
                             {/* <div className='row col-md-6 col-sm-12 col-xs-12 filters'> */}
                                     <div id='filter-basic'>
                                         {/* <h3 className="title">Filters</h3> */}
-                                        <div className="tag">
+                                        <form className="tag">
                                             <input type="text" placeholder="Search a tag" />
-                                        </div>
+                                            <button className="filterButton">></button>
+                                        </form>
                                         <form onSubmit={this.handleSubmit} className="admired">
                                             <p>Must Admired:</p>
                                             <input 
@@ -122,7 +143,7 @@ export default class Members extends React.Component {
                                                 onChange={this.handleInputChange}  
                                             />
                                             <p className="line">-</p>
-                                            {/* <input 
+                                            <input 
                                                 type="text" 
                                                 name="maxAdmired"
                                                 placeholder="Max"
@@ -130,21 +151,51 @@ export default class Members extends React.Component {
                                                 size="6"
                                                 // value={this.state}
                                                 onChange={this.handleInputChange}
-                                            /> */}
-                                            <button onClick={this.updateAdmired}>ok</button>
+                                            />
+                                            <button className="filterButton" onClick={this.updateAdmired}>></button>
                                         </form>
-                                        <div className="age">
+                                        <form onSubmit={this.handleSubmit} className="admired">
                                             <p>Age:</p>
-                                            <input type="text" name="must admired" placeholder="Min" maxLength="2" size="6"/>
+                                            <input 
+                                                type="text"
+                                                name="minAge"
+                                                placeholder="Min"
+                                                maxLength="3"
+                                                size="6"
+                                                onChange={this.handleInputChange}  
+                                            />
                                             <p className="line">-</p>
-                                            <input type="text" name="must admired" placeholder="Max" maxLength="2" size="6"/>
-                                        </div>
-                                        <div className="admired">
-                                            <p>Around you:</p>
-                                            <input type="text" name="must admired" placeholder="Min-km" maxLength="3" size="10"/>
+                                            <input 
+                                                type="text"
+                                                name="maxAge" 
+                                                placeholder="Max" 
+                                                maxLength="3" 
+                                                size="6"
+                                                onChange={this.handleInputChange}  
+                                            />
+                                            <button className="filterButton" onClick={this.updateAge}>></button>
+                                        </form>
+                                        <form onSubmit={this.handleSubmit} className="admired">
+                                            <p>Around you (km):</p>
+                                            <input 
+                                                type="text" 
+                                                name="must admired" 
+                                                placeholder="Min" 
+                                                maxLength="3" 
+                                                size="10"
+                                                onChange={this.handleInputChange}      
+                                            />
                                             <p className="line">-</p>
-                                            <input type="text" name="must admired" placeholder="Max" maxLength="3" size="10"/>
-                                        </div>
+                                            <input 
+                                                type="text" 
+                                                name="must admired" 
+                                                placeholder="Max" 
+                                                maxLength="3" 
+                                                size="10"
+                                                onChange={this.handleInputChange}  
+                                            />
+                                            <button className="filterButton" onClick={this.updateAdmired}>></button>
+                                        </form>
                                          {/* <MenuItem onClick={this.updateAdmired}>Min Admired</MenuItem> */}
                                         {/*<MenuItem onClick={this.updateAdmired}>Max Admired</MenuItem>
                                         <button onClick={this.sortByPriceAsc}>Age: Low to High</button>

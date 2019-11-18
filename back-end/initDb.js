@@ -39,7 +39,7 @@ function initDb() {
         	\`activated\` BOOLEAN NOT NULL DEFAULT '0',
         	\`gender\` varchar(255) NOT NULL,
         	\`orientation\` varchar(255) NOT NULL,
-        	\`birthday\` DATE NOT NULL,
+			\`birthday\` DATE NOT NULL,
         	\`location\` varchar(255),
         	\`connected\` BOOLEAN NOT NULL DEFAULT '0',
         	\`lastConnection\` varchar(255),

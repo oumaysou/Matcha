@@ -11,6 +11,7 @@ import getFilters from '../controllers/members/getFilters';
 import { setLike, getLike, UnsetLike } from '../controllers/profile/like';
 import getMatches from '../controllers/messages/getMatches';
 import updateUser from '../controllers/users/updateUser';
+import getAge from '../controllers/members/getAge'
 
 const router = express.Router();
 
@@ -21,7 +22,6 @@ const router = express.Router();
 // http://localhost:5000/api/users/email?value=greg.philips@yopmail.com&id=22
 
 router.get('/users/getall', getMembers);
-router.get('/members/getall', getFilters);
 router.get('/matches/getall', getMatches);
 
 router.post('/users', createUser);
@@ -39,5 +39,8 @@ router.get('/:table/:field', getter);
 // router.get('/:table/:field/:fieldBis', getterBis);
 router.put('/:table/:field', updater);
 router.delete('/:table/:field', deleter);
+
+router.get('/members/getall/:minAdmired/:maxAdmired', getFilters);
+router.get('/members/getall/:minAge/:maxAge', getAge);
 
 module.exports = router;

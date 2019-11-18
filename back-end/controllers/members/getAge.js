@@ -3,24 +3,36 @@ import profileQuery from '../../models/profileQuery';
 import { getUsernameFromToken } from '../../utils/crypt';
 import userTools from '../../utils/userTools';
 
-const getFilters = async (req, res) => {
+const getAge = async (req, res) => {
     
     // const table = `users`;
     const myUsername = getUsernameFromToken(req);
-    let minAdmired = req.params.minAdmired;
-    let maxAdmired = req.params.maxAdmired;
+    const myAge = req.generalQuery.birthday;
+    let minAge = req.params.minAge;
+    let maxAge = req.params.maxAge;
+
+
+    // let birthday = moment(birthDate, "YYYY-MM-DD");
+    // let age = moment().diff(birthday, 'years');
+
+    // const age = moment().diff(birthday, 'years');
+    console.log("\n\nbith\n\n", myAge);
+    // console.log("yo\n\n", age);
+
     // console.log("getfilters min: ", minAdmired);
     // console.log("gedsadsa: ", myUsername);
     // console.log("getfilters max: ", maxAdmired);
     // const minAdmired = req.params.minAdmired;
     // const allMembers = await generalQuery.getFilters({table: 'users', minAdmired: minAdmiredA});
-    const allMembers = await generalQuery.getFilters({table: 'users', minAdmired, maxAdmired, myUsername});
+    const allMembers = await generalQuery.getAge({table: 'users', minAge, maxAge, myUsername});
     if (!allMembers[0]) {
         return res.send({
             success: false,
             message: "There is no member yet"
         });
     }
+
+    
     // console.log("\n\n\n ALL " + JSON.stringify(allMembers))
     // const index = allMembers.findIndex(member => member.username === myUsername);
     // allMembers.splice(index, 1);
@@ -47,4 +59,4 @@ const getFilters = async (req, res) => {
     });
 };
 
-module.exports = getFilters;
+module.exports = getAge;

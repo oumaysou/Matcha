@@ -118,13 +118,17 @@ const deleter = ({ table, field, value }) => {
     }
 };
 
-const getFilters = ({ table, minAdmired }) => {
+const getFilters = ({ table, minAdmired, maxAdmired, myUsername }) => {
     try {
         const users = new Promise((resolve, reject) => {
+            // console.log("minadmired" + minAdmired);
             // const sql = `SELECT * FROM ${table} ORDER BY popularity DESC`;
-
-            // const sql = `SELECT * FROM ${table} WHERE popularity BETWEEN ${minAdmired} = ? AND ${maxAdmired} = ? ORDER BY popularity DESC`;
-            const sql = `SELECT * FROM ${table} WHERE popularity BETWEEN ${minAdmired} AND 300 ORDER BY popularity DESC`;
+            // let minAdmired = 200; 
+            // const sql = `SELECT * FROM ${table} WHERE popularity BETWEEN ${minAdmired} AND ${maxAdmired} ORDER BY popularity DESC`;
+            // SELECT * FROM users WHERE NOT username = 'roxanita' AND popularity BETWEEN 100 AND 200 ORDER BY popularity DESC
+            const sql = `SELECT * FROM ${table} WHERE NOT username = '${myUsername}' AND popularity BETWEEN ${minAdmired} AND ${maxAdmired} ORDER BY popularity DESC`;
+            // console.log("minadmired sql: " + minAdmired);
+            // console.log("maxadmired sql: " + maxAdmired);
             db.query(sql, (err, rows) => {
                 if (err)
                     return reject(err);
@@ -137,4 +141,34 @@ const getFilters = ({ table, minAdmired }) => {
     }
 }
 
-module.exports = { get, getId, getAll, insert, update, deleter, getFilters };
+const getAge = ({ table, minAge, maxAge, myUsername }) => {
+    try {
+        const users = new Promise((resolve, reject) => {
+            // console.log("minadmired" + minAdmired);
+            // const sql = `SELECT * FROM ${table} ORDER BY popularity DESC`;
+            // let minAdmired = 200; 
+            // const sql = `SELECT * FROM ${table} WHERE popularity BETWEEN ${minAdmired} AND ${maxAdmired} ORDER BY popularity DESC`;
+            // SELECT * FROM users WHERE NOT username = 'roxanita' AND popularity BETWEEN 100 AND 200 ORDER BY popularity DESC
+
+
+            const sql = `SELECT * FROM ${table} WHERE NOT username = '${myUsername}' AND popularity BETWEEN ${minAge} AND ${maxAge} ORDER BY popularity DESC`;
+            // const sql = SELECT * FROM users WHERE NOT username = 'roxanita' AND birthday BETWEEN '1990-12-02' AND '1990-12-03' ORDER BY birthday DESC;
+            
+            
+            
+            // console.log("minadmired sql: " + minAdmired);
+            // console.log("maxadmired sql: " + maxAdmired);
+            db.query(sql, (err, rows) => {
+                if (err)
+                    return reject(err);
+                return resolve(rows);
+            })
+        });
+        return users;
+    } catch (err) {
+        console.error('Cannot connect to the database db_matcha.\n');
+    }
+}
+
+
+module.exports = { get, getId, getAll, insert, update, deleter, getFilters, getAge };
