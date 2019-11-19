@@ -9,6 +9,10 @@ import socketioJwt from 'socketio-jwt';
 import api from './routes/api';
 import { initDb } from './initDb';
 import moment from 'moment';
+import * as util from 'util' // has no default export
+import { inspect } from 'util' // or directly
+// or 
+// var util = require('util')
 
 const app = express();
 
@@ -23,18 +27,10 @@ const users = [];
 
 moment().locale('fr');
 
-// io.use(socketioJwt.authorize({
-// 	secret: 'mybadasssecretkey',
-// 	handshake: true
-// }));
-
 io.on('connection', socket => {
-	let chatHistory = {}
+	// console.log("Socket ID => " + socket.id)
 	// const userConnected = socket.decoded_token.username;
 	// users.push({ username: userConnected, socketId: socket.id })
-	socket.on('chat-history', chatHistory => {
-		socket.emit('chat', chatHistory)
-	})
 	socket.on('send-chat-message', message => {
 		socket.broadcast.emit('chat-message', message)
 	})

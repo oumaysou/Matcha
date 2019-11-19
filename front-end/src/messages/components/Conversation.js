@@ -21,25 +21,37 @@ class Conversation extends React.Component {
             allMessages: [],
             msgstored: {},
             key: 0,
-            finish: false
+            finish: false,
+            close: true
         };
-        socket.on('connect', () => {
-            console.log("socket ID client " + socket.id)
-        })
         socket.on('chat-message', message => {
             let key = this.state.key;
             let actu = this.state.allMessages;
             actu.push(<MesReceived message={message} key={key} />)
-            this.setState({ allMessages: actu })
-            this.setState({ key: key + 1 })
-        })
+            this.setState({ allMessages: actu, key: key + 1 })
+        });
     }
-    getAll = (username) => {
+    getAll = async (username) => {
         if (!this.state.finish) {
-            axios.get(`/api/message/getallmessages/${username}`).then(({ data }) => {
+            await axios.get(`/api/message/getallmessages/${username}`).then(({ data }) => {
                 const { success, allMessages } = data;
-                if (success === true)
-                    this.setState({ msgstored: data.allMessages, finish: true })
+                if (success === true) {
+                    let all = allMessages
+                    let userto = username
+                    let test = []
+                    all = lodash.orderBy(all, ['id'], ['asn'])
+                    return all.map((obj, key) => {
+                        if (obj.messageBy !== userto) {
+                            test.push(<MesSend message={obj.message} key={key} />);
+                            key += 1;
+                        }
+                        else if (obj.messageBy === userto) {
+                            test.push(<MesReceived message={obj.message} key={key} />)
+                            key += 1;
+                        }
+                        return this.setState({ allMessages: test, finish: true, key: key + 1 })
+                    })
+                }
                 else
                     console.log("Error get all messages")
             })
@@ -64,7 +76,7 @@ class Conversation extends React.Component {
             else
                 console.log('nothing')
         })
-            .catch(err => console.error('Error to store msg: ' + err))
+            .catch(err => console.error('Error to store msg: ' + err));
     }
 
     onKey = (e) => {
@@ -95,26 +107,24 @@ class Conversation extends React.Component {
         })
     }
 
-    showStoredMsg = () => {
-        let all = this.state.msgstored;
-        all = lodash.orderBy(all, ['id'], ['asn']);
-        // console.log("all " + JSON.stringify(all));
-        all.map((obj, index) => {
-            console.log("")
-        })
-    }
+    // showStoredMsg = () => {
+    //     if (this.state.close) {
+
+
+    //         })
+    //     }
+    // }
 
     render() {
-        // console.log("stored  => " + JSON.stringify(this.state.msgstored))
+        console.log("Allmessage => " + JSON.stringify(this.state.allMessages))
         const isClicked = this.props.clicked
         const usernameClicked = this.props.usernameClicked
         if (isClicked) {
-            this.getAll(this.props.usernameClicked)
+            this.getAll(usernameClicked)
             return (
                 <div className="col-sm-8 conversation">
                     <ConvHeader username={usernameClicked} />
                     <div className="row msg" id="conversation">
-                        {this.showStoredMsg()}
                         {this.showMessage()}
                     </div>
 

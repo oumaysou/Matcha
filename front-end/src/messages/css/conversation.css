@@ -92,7 +92,7 @@
 }
 
 .sender {
-  /* float: right; */
+  float: right;
   width: auto !important;
   background: #dcf8c6;
   border-radius: 10px 10px 0 10px;

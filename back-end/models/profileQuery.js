@@ -191,9 +191,6 @@ const getMessages = async (myUsername, username) => {
     return allMessages;
 }
 
-
-
-
 module.exports = {
     whoBlockedMe,
     getBlockedByMe,
