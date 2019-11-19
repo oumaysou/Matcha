@@ -1,4 +1,4 @@
-import { GETINFOSUSER, EDITUSER, EDITPICTURES, GETALLTAGS } from '../constantes';
+import { GETINFOSUSER, EDITUSER, SAVEPICTURES, GETALLTAGS } from '../constantes';
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 // import Cookies from 'universal-cookie';
@@ -17,9 +17,9 @@ export const editInfosUser = (data) => {
     };
 };
 
-export const editPicturesUser = (data) => {
+export const savePicturesUser = (data) => {
     return {
-        type: EDITPICTURES,
+        type: SAVEPICTURES,
         data: data
     };
 };
@@ -60,11 +60,21 @@ export const thunk_editInfosUser = (userData) => {
     };
 };
 
-// ACTION FOR EDIT Pictures USER
+// ACTION FOR SAVE PICTURES USER
 
-export const thunk_editPicturesUser = (userData) => {
-    console.log(userData);
-    // return function (dispatch) {
+export const thunk_savePicturesUser = (userData) => {
+    return function (dispatch) {
+        axios.post(`/api/pictures`, userData).then(({ data }) => {
+            const { success, message } = data;
+            if (success) {
+                dispatch(savePicturesUser(data));
+                NotificationManager.success(message, 'Success !', 3000);
+            }
+            else
+                NotificationManager.error(message, 'Sorry but...', 3000);
+        }).catch(err => console.error('Error: ', err))
+        };
+
         // axios.post('/api/update', userData).then(({ data }) => {
         //     const { success, message } = data;
         //     if (success) {
@@ -74,9 +84,27 @@ export const thunk_editPicturesUser = (userData) => {
         //     else
         //         NotificationManager.error(message, 'Sorry but...', 3000);
         // })
-        // .catch(err => console.error('Error: ', err));
-    // };
+        // .catch(err => console.error('Error: ', err)))
+        // };
 };
+
+// // ACTION FOR DEL PICTURE USER
+
+// export const thunk_delPictureUser = (picture) => {
+    
+//     return function (dispatch) {
+//         axios.delete(`/api/photos/${picture.username}/${picture.id}/1`).then(({ data }) => {
+//             const { success, message } = data;
+//             if (success) {
+//                 dispatch(delPictureUser(data));
+//                 NotificationManager.success(message, 'Success !', 3000);
+//             }
+//             else
+//                 NotificationManager.error(message, 'Sorry but...', 3000);
+//         })
+//         .catch(err => console.error('Error: ', err));
+//     };
+// };
 
 // ACTION FOR GET ALL TAGS
 

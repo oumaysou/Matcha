@@ -1,6 +1,6 @@
 import React from 'react';
 import SubmitForm from '../../general/components/SubmitForm';
-import { thunk_editPicturesUser } from '../../actions/thunk_actions_editProfile';
+import { thunk_savePicturesUser } from '../../actions/thunk_actions_editProfile';
 import { connect } from 'react-redux';
 
 class PicturesForm extends React.Component {
@@ -21,7 +21,10 @@ class PicturesForm extends React.Component {
         }
         if (pictures.lenth !== 0) {
             return pictures.map((picture, index) => {
-                return <img key={index} src={picture} alt={'picture'+index} className="picture" />
+                return <div key={index} className='text-center'>
+                            <img src={picture} alt={'picture'+index} className="picture" />
+                            <p id={index} className="redCross" onClick={this.delPicture}>X</p>
+                        </div>
             })
         }
         else
@@ -31,7 +34,7 @@ class PicturesForm extends React.Component {
     handlePicturesSubmit = (e) => {
         e.preventDefault();
         const user = Object.assign({}, this.state);
-        this.props.dispatch(thunk_editPicturesUser(user));
+        this.props.dispatch(thunk_savePicturesUser(user));
     }
 
     pictureChange = (e) => {
@@ -58,7 +61,9 @@ class PicturesForm extends React.Component {
 
                                     <div className="pictureWrap">
                                         <p>Your Pictures</p>
-                                        {this.renderPictures()}
+                                        <div className="picList">
+                                            {this.renderPictures()}
+                                        </div>
                                     </div>
 
                                     <input 
