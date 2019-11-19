@@ -89,7 +89,8 @@ function initDb() {
         	\`id\` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         	\`message\` varchar(255) NOT NULL,
         	\`messageBy\` varchar(255) NOT NULL,
-        	\`messageTo\` varchar(255) NOT NULL
+        	\`messageTo\` varchar(255) NOT NULL,
+			\`time\` DATE NOT NULL
         );`)
 
 	});

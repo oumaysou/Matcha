@@ -13,12 +13,11 @@ class Sidebar extends React.Component {
         }
     }
 
-    componentDidlMount() {
+    componentWillMount() {
         this.props.dispatch(thunk_getallMatches(this.state.matches));
     }
 
     getAllMatches() {
-        console.log("MATCHES ",JSON.stringify(this.props));
         const { matches } = this.props;
 
         if (matches.lenth !== 0) {
@@ -44,9 +43,9 @@ class Sidebar extends React.Component {
     }
 }
 
-const mapStateToProps = ({ matches, ...state}) => {
-    console.log(JSON.stringify(state));
-    
+const mapStateToProps = ({ matches, ...state }) => {
+    // console.log(JSON.stringify(state));
+
     return {
         matches: matches || []
     };

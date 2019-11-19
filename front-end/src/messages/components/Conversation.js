@@ -1,60 +1,133 @@
 import React from 'react';
 import '../css/conversation.css';
-import { thunk_getMessages } from '../../actions/thunk_actions';
+// import { thunk_getMessages } from '../../actions/thunk_actions';
 import { connect } from 'react-redux';
 import ConvHeader from './conversationParts/ConvHeader';
 import MesReceived from './conversationParts/MesReceived';
 import MesSend from './conversationParts/MesSend';
 import NoMessage from './conversationParts/NoMessage';
-import InputForm from './../../general/components/InputForm';
-// import socket from '../../../../back-end/sockets/socketIo';
+// import InputForm from './../../general/components/InputForm';
+import io from 'socket.io-client';
+import axios from 'axios';
+import lodash from 'lodash';
+
+const socket = io("http://localhost:5000");
 
 class Conversation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: [],
-            value: ""
+            message: '',
+            allMessages: [],
+            msgstored: {},
+            key: 0,
+            finish: false,
+            Clicked: '',
         };
+        socket.on('chat-message', message => {
+            let key = this.state.key;
+            let actu = this.state.allMessages;
+            actu.push(<MesReceived message={message} key={key} />)
+            this.setState({ allMessages: actu, key: key + 1 })
+        });
     }
 
-    componentDidMount() {
-        this.props.dispatch(thunk_getMessages(this.state.messages));
+    getAll = async () => {
+        if (!this.state.finish || this.state.Clicked !== this.props.usernameClicked) {
+            let username = this.props.usernameClicked;
+            console.log("usernaaaaaaame =>>> " + username)
+            await axios.get(`/api/message/getallmessages/${username}`).then(({ data }) => {
+                const { success, allMessages } = data;
+                if (success === true) {
+                    let all = allMessages
+                    console.log("Message pour user " + username + " " + all)
+                    let userto = username
+                    let test = []
+                    all = lodash.orderBy(all, ['id'], ['asn'])
+                    return all.map((obj, key) => {
+                        if (obj.messageBy !== userto) {
+                            test.push(<MesSend message={obj.message} key={key} />);
+                            key += 1;
+                        }
+                        else if (obj.messageBy === userto) {
+                            test.push(<MesReceived message={obj.message} key={key} />)
+                            key += 1;
+                        }
+                        return this.setState({ allMessages: test, finish: true, key: key + 1, Clicked: username })
+                    })
+                }
+                else
+                    console.log("Error get all messages")
+            })
+                .catch(err => console.error('Error catch: ' + err))
+        }
     }
 
-    handleInputChange = (name, value) => {
-        this.setState({ messages: value })
+    componentWillUnmount() {
+        socket.emit('disconnect')
     }
 
-    onClick = (messages) => {
-        console.log(messages)
+    handleInputChange = (e) => {
+        this.setState({ message: e.target.value })
+    }
+
+    storeMessage = (message) => {
+        const username = this.props.usernameClicked
+        message = escape(message)
+        axios.put(`/api/storemessage/${message}/${username}`).then(({ data }) => {
+            const { success } = data;
+            if (success === true)
+                console.log('Message Stored')
+            else
+                console.log('Request failed : the msg doesn\'t be stored')
+        })
+            .catch(err => console.error('Error to store msg: ' + err));
+    }
+
+    onKey = (e) => {
+        if (e.keyCode === 13)
+            this.onClick(e);
+    }
+
+    onClick = (e) => {
+        e.preventDefault();
+        let actu = this.state.allMessages;
+        let key = this.state.key
+        let user = this.props.usernameClicked;
+        this.storeMessage(this.state.message);
+        if (this.state.message) {
+            const msg = this.state.message
+            actu.push(<MesSend message={msg} key={key} />);
+            this.setState({ allMessages: actu })
+            this.setState({ key: key + 1 })
+            socket.emit('send-chat-message', user, msg)
+        }
+        this.setState({ message: "" })
+    }
+
+    showMessage = () => {
+        this.getAll();
+        let all = this.state.allMessages;
+        return all.map((msg) => {
+            return msg
+        })
     }
 
     render() {
-        // console.log("reduc ", JSON.stringify(this.state));
-        const isClicked = this.props.clicked
-        const usernameClicked = this.props.usernameClicked
+        const isClicked = this.props.clicked;
         if (isClicked) {
-
             return (
                 <div className="col-sm-8 conversation">
-                    <ConvHeader username={usernameClicked} />
+                    <ConvHeader username={this.props.usernameClicked} />
                     <div className="row msg" id="conversation">
-                        <MesReceived message={usernameClicked} />
-                        <MesSend message={usernameClicked} />
+                        {this.showMessage()}
                     </div>
 
                     <div className="row reply">
                         <div className="col-sm-11 col-xs-11 reply-main">
-                            <InputForm
-                                type="text"
-                                name="messagetosend"
-                                placeholder="Ecrivez un message"
-                                onChange={this.handleInputChange}
-                                classNameChat="form-control text-left"
-                            />
+                            <input className="inputchat" name="inputchat" onKeyDown={this.onKey} value={this.state.message} onChange={this.handleInputChange} />
                         </div>
-                        <div className="col-sm-1 col-xs-1 reply-send" onClick={() => { this.onClick(this.state.messages) }}>
+                        <div className="col-sm-1 col-xs-1 reply-send" onClick={this.onClick} >
                             <i className="fa fa-send fa-2x" aria-hidden="true"></i>
                         </div>
                     </div>

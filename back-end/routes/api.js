@@ -10,6 +10,8 @@ import getMembers from '../controllers/members/getMembers';
 import { setLike, getLike, UnsetLike } from '../controllers/profile/like';
 import getMatches from '../controllers/messages/getMatches';
 import updateUser from '../controllers/users/updateUser';
+import getMessages from '../controllers/messages/getMessages';
+import storeMessage from '../controllers/messages/storeMessage';
 
 const router = express.Router();
 
@@ -21,6 +23,7 @@ const router = express.Router();
 
 router.get('/users/getall', getMembers);
 router.get('/matches/getall', getMatches);
+// router.get('/messages/getall', getMessages);
 
 router.post('/users', createUser);
 router.post('/update', updateUser);
@@ -37,5 +40,7 @@ router.get('/:table/:field', getter);
 // router.get('/:table/:field/:fieldBis', getterBis);
 router.put('/:table/:field', updater);
 router.delete('/:table/:field', deleter);
-
+// router.get messageBy/messageTo
+router.get('/message/getallmessages/:username', getMessages)
+router.put('/storemessage/:message/:username', storeMessage)
 module.exports = router;
