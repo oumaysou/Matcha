@@ -2,22 +2,45 @@ import generalQuery from '../../models/generalQuery';
 import profileQuery from '../../models/profileQuery';
 import { getUsernameFromToken } from '../../utils/crypt';
 import userTools from '../../utils/userTools';
+// import moment from 'moment';
 
 const getAge = async (req, res) => {
     
     // const table = `users`;
     const myUsername = getUsernameFromToken(req);
-    const myAge = req.generalQuery.birthday;
-    let minAge = req.params.minAge;
-    let maxAge = req.params.maxAge;
+    let minAge = 2018 - req.params.maxAge;
+    let maxAge = 2019 - req.params.minAge;
+    // let DDMM = "-12-31";
+    // let minDDMMYY = minAge + DDMM;
+    // let maxDDMMYY = maxAge + DDMM;
+    
+    // let minAge = moment().diff(req.params.minAge, "YYYY-MM-DD");
 
+    // let minBirthday = moment(minAge, "years");
+    // const age = moment().diff(minBirthday, "YYYY-MM-DD");
+    // console.log(age);
+
+    
+    // let age = moment().diff(minAge, 'years');
+    // let birthday = moment(age, "YYYY-MM-DD");
+    // console.log("dasadsdasda", minDDMMYY);
+
+    // console.log("dasadsdasda", minDDMM);
+    console.log("getage min              ", minAge);
+    console.log("getage max", maxAge);
+    // console.log("birthhhh", birthday);
+    // console.log("aggggegeg", age);
+    
 
     // let birthday = moment(birthDate, "YYYY-MM-DD");
     // let age = moment().diff(birthday, 'years');
 
-    // const age = moment().diff(birthday, 'years');
-    console.log("\n\nbith\n\n", myAge);
+    
     // console.log("yo\n\n", age);
+
+    
+    // let error = '';
+
 
     // console.log("getfilters min: ", minAdmired);
     // console.log("gedsadsa: ", myUsername);

@@ -41,6 +41,6 @@ router.put('/:table/:field', updater);
 router.delete('/:table/:field', deleter);
 
 router.get('/members/getall/:minAdmired/:maxAdmired', getFilters);
-router.get('/members/getall/:minAge/:maxAge', getAge);
+router.get('/members/getalls/:minAge/:maxAge', getAge);
 
 module.exports = router;

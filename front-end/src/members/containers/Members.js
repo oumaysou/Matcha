@@ -46,8 +46,8 @@ export default class Members extends React.Component {
     updateAdmired = () => {
         const minAdmired = this.state.minAdmired;
         const maxAdmired = this.state.maxAdmired;
-        // console.log("Members min ", minAdmired);
-        // console.log("Members max ", maxAdmired);
+        console.log("minAdmired ", minAdmired);
+        console.log("maxAdmired ", maxAdmired);
         axios.get(`api/members/getall/${minAdmired}/${maxAdmired}`).then(({ data }) => {
             // console.log("users ousssama "+data.usersData)
             if (data.success)
@@ -61,9 +61,9 @@ export default class Members extends React.Component {
     updateAge = () => {
         const minAge = this.state.minAge;
         const maxAge = this.state.maxAge;
-        console.log("Members min ", minAge);
-        console.log("Members max ", maxAge);
-        axios.get(`api/members/getall/${minAge}/${maxAge}`).then(({ data }) => {
+        console.log("Members age min ", minAge);
+        console.log("Members age max ", maxAge);
+        axios.get(`api/members/getalls/${minAge}/${maxAge}`).then(({ data }) => {
             // console.log("users ousssama "+data.usersData)
             if (data.success)
                 this.setState({ 
@@ -160,7 +160,7 @@ export default class Members extends React.Component {
                                                 type="text"
                                                 name="minAge"
                                                 placeholder="Min"
-                                                maxLength="3"
+                                                maxLength="2"
                                                 size="6"
                                                 onChange={this.handleInputChange}  
                                             />
@@ -169,7 +169,7 @@ export default class Members extends React.Component {
                                                 type="text"
                                                 name="maxAge" 
                                                 placeholder="Max" 
-                                                maxLength="3" 
+                                                maxLength="2" 
                                                 size="6"
                                                 onChange={this.handleInputChange}  
                                             />

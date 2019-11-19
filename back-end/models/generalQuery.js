@@ -121,7 +121,8 @@ const deleter = ({ table, field, value }) => {
 const getFilters = ({ table, minAdmired, maxAdmired, myUsername }) => {
     try {
         const users = new Promise((resolve, reject) => {
-            // console.log("minadmired" + minAdmired);
+            console.log("minadmi" + minAdmired);
+            console.log("maxadmi" + maxAdmired);
             // const sql = `SELECT * FROM ${table} ORDER BY popularity DESC`;
             // let minAdmired = 200; 
             // const sql = `SELECT * FROM ${table} WHERE popularity BETWEEN ${minAdmired} AND ${maxAdmired} ORDER BY popularity DESC`;
@@ -144,17 +145,18 @@ const getFilters = ({ table, minAdmired, maxAdmired, myUsername }) => {
 const getAge = ({ table, minAge, maxAge, myUsername }) => {
     try {
         const users = new Promise((resolve, reject) => {
-            // console.log("minadmired" + minAdmired);
+            console.log("minage sql" + minAge);
+            console.log("maxage sql" + maxAge);
             // const sql = `SELECT * FROM ${table} ORDER BY popularity DESC`;
             // let minAdmired = 200; 
             // const sql = `SELECT * FROM ${table} WHERE popularity BETWEEN ${minAdmired} AND ${maxAdmired} ORDER BY popularity DESC`;
             // SELECT * FROM users WHERE NOT username = 'roxanita' AND popularity BETWEEN 100 AND 200 ORDER BY popularity DESC
 
 
-            const sql = `SELECT * FROM ${table} WHERE NOT username = '${myUsername}' AND popularity BETWEEN ${minAge} AND ${maxAge} ORDER BY popularity DESC`;
+            const sql = `SELECT * FROM ${table} WHERE NOT username = '${myUsername}' AND YEAR(birthday) BETWEEN '${minAge}' AND '${maxAge}' ORDER BY birthday DESC`;
+
+            // SELECT * FROM users WHERE YEAR(birthday) BETWEEN '1980' AND '1980' ORDER BY birthday DESC
             // const sql = SELECT * FROM users WHERE NOT username = 'roxanita' AND birthday BETWEEN '1990-12-02' AND '1990-12-03' ORDER BY birthday DESC;
-            
-            
             
             // console.log("minadmired sql: " + minAdmired);
             // console.log("maxadmired sql: " + maxAdmired);
