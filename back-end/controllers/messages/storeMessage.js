@@ -5,6 +5,7 @@ import { inspect } from 'util';
 import { getUsernameFromToken } from '../../utils/crypt';
 import moment from 'moment';
 
+
 const storeMessage = async (req, res) => {
     const table = `messages`;
     const message = req.params.message;

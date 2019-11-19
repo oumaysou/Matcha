@@ -22,7 +22,7 @@ class Conversation extends React.Component {
             msgstored: {},
             key: 0,
             finish: false,
-            close: true
+            Clicked: '',
         };
         socket.on('chat-message', message => {
             let key = this.state.key;
@@ -31,12 +31,16 @@ class Conversation extends React.Component {
             this.setState({ allMessages: actu, key: key + 1 })
         });
     }
-    getAll = async (username) => {
-        if (!this.state.finish) {
+
+    getAll = async () => {
+        if (!this.state.finish || this.state.Clicked !== this.props.usernameClicked) {
+            let username = this.props.usernameClicked;
+            console.log("usernaaaaaaame =>>> " + username)
             await axios.get(`/api/message/getallmessages/${username}`).then(({ data }) => {
                 const { success, allMessages } = data;
                 if (success === true) {
                     let all = allMessages
+                    console.log("Message pour user " + username + " " + all)
                     let userto = username
                     let test = []
                     all = lodash.orderBy(all, ['id'], ['asn'])
@@ -49,7 +53,7 @@ class Conversation extends React.Component {
                             test.push(<MesReceived message={obj.message} key={key} />)
                             key += 1;
                         }
-                        return this.setState({ allMessages: test, finish: true, key: key + 1 })
+                        return this.setState({ allMessages: test, finish: true, key: key + 1, Clicked: username })
                     })
                 }
                 else
@@ -59,9 +63,9 @@ class Conversation extends React.Component {
         }
     }
 
-    // componentWillUnmount() {
-    //     this.socket.off();
-    // }
+    componentWillUnmount() {
+        socket.emit('disconnect')
+    }
 
     handleInputChange = (e) => {
         this.setState({ message: e.target.value })
@@ -69,12 +73,13 @@ class Conversation extends React.Component {
 
     storeMessage = (message) => {
         const username = this.props.usernameClicked
+        message = escape(message)
         axios.put(`/api/storemessage/${message}/${username}`).then(({ data }) => {
             const { success } = data;
             if (success === true)
                 console.log('Message Stored')
             else
-                console.log('nothing')
+                console.log('Request failed : the msg doesn\'t be stored')
         })
             .catch(err => console.error('Error to store msg: ' + err));
     }
@@ -88,42 +93,32 @@ class Conversation extends React.Component {
         e.preventDefault();
         let actu = this.state.allMessages;
         let key = this.state.key
-
+        let user = this.props.usernameClicked;
         this.storeMessage(this.state.message);
         if (this.state.message) {
             const msg = this.state.message
             actu.push(<MesSend message={msg} key={key} />);
             this.setState({ allMessages: actu })
             this.setState({ key: key + 1 })
-            socket.emit('send-chat-message', msg)
+            socket.emit('send-chat-message', user, msg)
         }
         this.setState({ message: "" })
     }
 
     showMessage = () => {
+        this.getAll();
         let all = this.state.allMessages;
         return all.map((msg) => {
             return msg
         })
     }
 
-    // showStoredMsg = () => {
-    //     if (this.state.close) {
-
-
-    //         })
-    //     }
-    // }
-
     render() {
-        console.log("Allmessage => " + JSON.stringify(this.state.allMessages))
-        const isClicked = this.props.clicked
-        const usernameClicked = this.props.usernameClicked
+        const isClicked = this.props.clicked;
         if (isClicked) {
-            this.getAll(usernameClicked)
             return (
                 <div className="col-sm-8 conversation">
-                    <ConvHeader username={usernameClicked} />
+                    <ConvHeader username={this.props.usernameClicked} />
                     <div className="row msg" id="conversation">
                         {this.showMessage()}
                     </div>
