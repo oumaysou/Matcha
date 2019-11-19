@@ -11,6 +11,7 @@ import Profile from './profile/containers/Profile';
 import Edit from './profile/containers/Edit';
 import Messages from './messages/containers/Messages';
 import Members from './members/containers/Members';
+import usersMap from './members/containers/Map';
 import store from './store/store';
 
 export default class App extends React.Component {
@@ -27,6 +28,7 @@ export default class App extends React.Component {
               <PrivateRoute exact path="/members/:username" component={Profile} />
               <PrivateRoute exact path="/members/:username/edit" component={Edit} />
               <PrivateRoute exact path="/messages" component={Messages} />
+              <PrivateRoute exact path="/map/:username" component={usersMap} />
               <Route component={utils.pageNotFound} />
             </Switch>
           </Template>
