@@ -1,24 +1,32 @@
-import generalQuery from '../../models/generalQuery.js';
 import { db } from '../../initDb.js';
+import multer from 'multer';
+import path from 'path';
 
-const savePictures = async (req, res) => {
-    const value = req.query;
+const savePictures = (req, res) => {
 
-    console.log(value);
+    // Set Storage engine
+    const storage = multer.diskStorage({
+        destination: 'public/img',
+        filename: function (req, file, cb){
+            cb(null,file.fieldname + "-" + Date.now() + path.extname(file.originalname))
+        }
+    })
+
+    // Init upload 
+    const upload = multer ({
+        storage : storage
+    }).single('myImage')
     
-    // const result = generalQuery.savePictures({table, field, value});
-    // if (result.affectedRows > 0) {
-    //     res.status(200).send({
-    //         success: true,
-    //         message: `${value} has been deleted successfully.`,
-    //     });
-    // }
-    // else {
-    //     res.send({
-    //         success: false,
-    //         message: `Sorry, but ${value} doesn't exist.`,
-    //     });
-    // }
+    upload(req, res, (err) =>{
+        if(err){
+            console.log('ERROR UPLOAD', err);
+        }
+        else{
+            console.log(req.file);
+        }
+    })
+
+    return false;
 };
 
 module.exports = savePictures;

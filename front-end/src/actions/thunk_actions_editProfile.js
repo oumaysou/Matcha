@@ -63,8 +63,10 @@ export const thunk_editInfosUser = (userData) => {
 // ACTION FOR SAVE PICTURES USER
 
 export const thunk_savePicturesUser = (userData) => {
+    console.log( "Before Dispatch",userData);
+    
     return function (dispatch) {
-        axios.post(`/api/pictures`, userData).then(({ data }) => {
+        axios.post('/api/pictures', userData).then(({ data }) => {
             const { success, message } = data;
             if (success) {
                 dispatch(savePicturesUser(data));
@@ -74,18 +76,6 @@ export const thunk_savePicturesUser = (userData) => {
                 NotificationManager.error(message, 'Sorry but...', 3000);
         }).catch(err => console.error('Error: ', err))
         };
-
-        // axios.post('/api/update', userData).then(({ data }) => {
-        //     const { success, message } = data;
-        //     if (success) {
-        //         dispatch(editInfosUser(data));
-        //         NotificationManager.success(message, 'Success !', 3000);
-        //     }
-        //     else
-        //         NotificationManager.error(message, 'Sorry but...', 3000);
-        // })
-        // .catch(err => console.error('Error: ', err)))
-        // };
 };
 
 // // ACTION FOR DEL PICTURE USER

@@ -10,7 +10,7 @@ class PicturesForm extends React.Component {
             username: this.props.userInfos.userData.username,
             avatar: this.props.userInfos.userData.avatar,
             photos: this.props.userInfos.photos,
-            picture: ''
+            selectedFile: null
         }
     }
 
@@ -33,15 +33,19 @@ class PicturesForm extends React.Component {
 
     handlePicturesSubmit = (e) => {
         e.preventDefault();
-        const user = Object.assign({}, this.state);
-        this.props.dispatch(thunk_savePicturesUser(user));
+        const formData = new FormData()
+        formData.append(
+            'myImage',
+            this.state.selectedFile,
+            this.state.selectedFile.filename
+            )
+        
+        this.props.dispatch(thunk_savePicturesUser(formData));
     }
 
     pictureChange = (e) => {
         e.preventDefault();
-        const name = e.target.name;
-        const value = e.target.value;
-        this.setState({ [name]: value });
+        this.setState({selectedFile: e.target.files[0]})
     }
 
 
