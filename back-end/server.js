@@ -28,9 +28,6 @@ const users = [];
 moment().locale('fr');
 
 io.on('connection', socket => {
-	// console.log("Socket ID => " + socket.id)
-	// const userConnected = socket.decoded_token.username;
-	// users.push({ username: userConnected, socketId: socket.id })
 	socket.on('send-chat-message', ((userTo, message) => {
 		socket.broadcast.emit('chat-message', message)
 	}))

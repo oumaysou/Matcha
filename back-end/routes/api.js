@@ -42,5 +42,5 @@ router.put('/:table/:field', updater);
 router.delete('/:table/:field', deleter);
 // router.get messageBy/messageTo
 router.get('/message/getallmessages/:username', getMessages)
-router.put('/storemessage/:message/:username', storeMessage)
+router.post('/storemessage', storeMessage)
 module.exports = router;

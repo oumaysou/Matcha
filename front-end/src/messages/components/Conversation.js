@@ -21,7 +21,8 @@ class Conversation extends React.Component {
             allMessages: [],
             msgstored: {},
             key: 0,
-            finish: false,
+            finish: true,
+            close: true,
             Clicked: '',
         };
         socket.on('chat-message', message => {
@@ -33,28 +34,14 @@ class Conversation extends React.Component {
     }
 
     getAll = async () => {
-        if (!this.state.finish || this.state.Clicked !== this.props.usernameClicked) {
+        if (this.state.finish || this.state.Clicked !== this.props.usernameClicked) {
             let username = this.props.usernameClicked;
-            console.log("usernaaaaaaame =>>> " + username)
             await axios.get(`/api/message/getallmessages/${username}`).then(({ data }) => {
                 const { success, allMessages } = data;
                 if (success === true) {
                     let all = allMessages
-                    console.log("Message pour user " + username + " " + all)
-                    let userto = username
-                    let test = []
-                    all = lodash.orderBy(all, ['id'], ['asn'])
-                    return all.map((obj, key) => {
-                        if (obj.messageBy !== userto) {
-                            test.push(<MesSend message={obj.message} key={key} />);
-                            key += 1;
-                        }
-                        else if (obj.messageBy === userto) {
-                            test.push(<MesReceived message={obj.message} key={key} />)
-                            key += 1;
-                        }
-                        return this.setState({ allMessages: test, finish: true, key: key + 1, Clicked: username })
-                    })
+                    let userTo = username
+                    this.mapMessages(all, userTo, username)
                 }
                 else
                     console.log("Error get all messages")
@@ -67,14 +54,30 @@ class Conversation extends React.Component {
         socket.emit('disconnect')
     }
 
+    mapMessages = (all, userTo, username) => {
+        let test = []
+        let x = 0
+        all = lodash.orderBy(all, ['id'], ['asn'])
+        all.forEach((obj, key) => {
+            x++;
+            if (obj.messageBy !== userTo) {
+                test.push(<MesSend message={obj.message} key={key} />);
+            }
+            else if (obj.messageBy === userTo) {
+                test.push(<MesReceived message={obj.message} key={key} />)
+            }
+        })
+        this.setState({ allMessages: test, key: x + 1, finish: false, Clicked: username })
+    }
+
     handleInputChange = (e) => {
         this.setState({ message: e.target.value })
     }
 
     storeMessage = (message) => {
         const username = this.props.usernameClicked
-        message = escape(message)
-        axios.put(`/api/storemessage/${message}/${username}`).then(({ data }) => {
+        let userData = { username: username, message: message }
+        axios.post(`/api/storemessage`, userData).then(({ data }) => {
             const { success } = data;
             if (success === true)
                 console.log('Message Stored')
