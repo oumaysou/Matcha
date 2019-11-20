@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "A dating web-app",
   "scripts": {
-    "start": "nodemon --exec 'babel-node server.js' --ignore client",
+    "start": "nodemon --exec 'babel-node server.js' --ignore '../front-end/'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
     "debug": "^3.0.1",
     "express": "^4.17.1",
     "express-session": "^1.15.5",
