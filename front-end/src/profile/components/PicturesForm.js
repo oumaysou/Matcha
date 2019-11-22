@@ -33,11 +33,14 @@ class PicturesForm extends React.Component {
 
     handlePicturesSubmit = (e) => {
         e.preventDefault();
+        const name = this.state.username + this.state.selectedFile.name
+        console.log(name);
+        
         const formData = new FormData()
         formData.append(
             'myImage',
             this.state.selectedFile,
-            this.state.selectedFile.filename
+            name
             )
         
         this.props.dispatch(thunk_savePicturesUser(formData));
