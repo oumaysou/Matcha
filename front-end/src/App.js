@@ -13,6 +13,7 @@ import Messages from './messages/containers/Messages';
 import Members from './members/containers/Members';
 import usersMap from './members/containers/Map';
 import store from './store/store';
+import ForgotPassword from './general/components/ForgotPassword';
 
 export default class App extends React.Component {
   render() {
@@ -22,6 +23,7 @@ export default class App extends React.Component {
           <Template location={this.props.location} >
             <Switch>
               <PublicRoute exact path="/" component={SignIn} />
+              <PublicRoute exact path="/forgotPassword" component={ForgotPassword} />
               <PublicRoute exact path="/register" component={Register} />
               <Route exact path="/activate" component={Activate} />
               <PrivateRoute exact path="/members" component={Members} />
