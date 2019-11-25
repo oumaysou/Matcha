@@ -10,7 +10,10 @@
     "concurrently": "^3.5.0"
   },
   "dependencies": {
+    "generate-password": "^1.4.2",
     "path": "^0.12.7",
+    "pigeon-maps": "^0.14.0",
+    "pigeon-marker": "^0.3.4",
     "redux-thunk": "^2.3.0",
     "serve-favicon": "^2.5.0"
   }
