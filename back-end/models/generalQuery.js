@@ -53,7 +53,7 @@ const getAll = ({ table }) => {
 const insert = ({ table, userData }) => {
     try {
         const result = new Promise((resolve, reject) => {
-            const sql = `INSERT INTO ${table} SET ?`;
+            const sql = `INSERT INTO ${table} SET ?`;           
             db.query(sql, userData, (err, data) => {
                 if (err)
                     return resolve(err);
@@ -68,6 +68,12 @@ const insert = ({ table, userData }) => {
 
 const update = ({ table, field, value, where, whereValue }) => {
     try {
+        console.log("table : ", table);
+        console.log("field : ", field);
+        console.log("value : ", value);
+        console.log("where : ", where);
+        console.log("whereValue : ", whereValue);
+        
         const user = new Promise((resolve, reject) => {
             const sql = `UPDATE ${table} SET ${field} = ? WHERE ${where} = ?`;
             db.query(sql, [value, whereValue], (err, row) => {

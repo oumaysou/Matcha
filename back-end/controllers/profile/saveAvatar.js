@@ -6,7 +6,7 @@ import Jimp from 'jimp';
 import mmm from 'mmmagic';
 import fs from 'fs';
 
-const savePictures = (req, res) => {   
+const saveAvatar = (req, res) => {   
     const Magic = mmm.Magic;
 
     // Set Storage engine
@@ -24,7 +24,7 @@ const savePictures = (req, res) => {
         fileFilter: function(req, file, cb){
             checkFileType(file,cb);
         }
-    }).single('myImage')
+    }).single('myAvatar')
     
     function checkFileType(file, cb){
         const filetypes = /jpeg|jpg|png|gif/;
@@ -63,13 +63,16 @@ const savePictures = (req, res) => {
                     );
                 img.resize(300, Jimp.AUTO).write(req.file.path);
                 
-                const userData = {
-                    photo: req.file.path,
-                    photoBy: (req.file.path.split('/').pop()).split('.').shift()
-                }
-                console.log(userData);
-                
-                generalQuery.insert({ table: 'photos', userData }).then((success) => {
+
+                const userName = (req.file.path.split('/').pop()).split('.').shift();
+                    
+                generalQuery.update({ 
+                    table: 'users', 
+                    field : 'avatar', 
+                    value: req.file.path, 
+                    where: 'username', 
+                    whereValue: userName 
+                }).then((success) => {
                     if (success) {
                         res.status(200).send({
                             success: true,
@@ -91,4 +94,4 @@ const savePictures = (req, res) => {
     })
 }
 
-module.exports = savePictures;
+module.exports = saveAvatar;

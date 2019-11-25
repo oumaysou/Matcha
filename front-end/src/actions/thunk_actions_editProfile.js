@@ -1,4 +1,4 @@
-import { GETINFOSUSER, EDITUSER, SAVEPICTURES, GETALLTAGS } from '../constantes';
+import { GETINFOSUSER, EDITUSER, SAVEPICTURES, SAVEAVATAR, GETALLTAGS } from '../constantes';
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 // import Cookies from 'universal-cookie';
@@ -20,6 +20,13 @@ export const editInfosUser = (data) => {
 export const savePicturesUser = (data) => {
     return {
         type: SAVEPICTURES,
+        data: data
+    };
+};
+
+export const saveAvatarUser = (data) => {
+    return {
+        type: SAVEAVATAR,
         data: data
     };
 };
@@ -62,14 +69,28 @@ export const thunk_editInfosUser = (userData) => {
 
 // ACTION FOR SAVE PICTURES USER
 
-export const thunk_savePicturesUser = (userData) => {
-    console.log( "Before Dispatch",userData);
-    
+export const thunk_savePicturesUser = (userData) => {   
     return function (dispatch) {
         axios.post('/api/pictures', userData).then(({ data }) => {
             const { success, message } = data;
             if (success) {
                 dispatch(savePicturesUser(data));
+                NotificationManager.success(message, 'Success !', 3000);
+            }
+            else
+                NotificationManager.error(message, 'Sorry but...', 3000);
+        }).catch(err => console.error('Error: ', err))
+        };
+};
+
+// ACTION FOR SAVE AVATAR USER
+
+export const thunk_saveAvatarUser = (userData) => {
+    return function (dispatch) {
+        axios.post('/api/avatar', userData).then(({ data }) => {
+            const { success, message } = data;
+            if (success) {
+                dispatch(saveAvatarUser(data));
                 NotificationManager.success(message, 'Success !', 3000);
             }
             else

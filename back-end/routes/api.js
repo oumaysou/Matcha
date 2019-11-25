@@ -6,6 +6,7 @@ import createUser from '../controllers/users/createUser';
 import signIn from '../controllers/users/signIn';
 import activateUser from '../controllers/users/activate';
 import savePictures from '../controllers/profile/savePictures';
+import saveAvatar from '../controllers/profile/saveAvatar';
 import getProfile from '../controllers/profile/getProfile';
 import getMembers from '../controllers/members/getMembers';
 import { setLike, getLike, UnsetLike } from '../controllers/profile/like';
@@ -34,6 +35,7 @@ router.get('/like/get/:username', getLike);
 router.get('/like/Unset/:username', UnsetLike);
 
 router.post('/pictures', savePictures);
+router.post('/avatar', saveAvatar);
 
 router.get('/:table', getAll);
 router.get('/:table/:field/:value', getter);
