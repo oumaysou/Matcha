@@ -17,13 +17,11 @@ class Conversation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            message: '',
             allMessages: [],
-            msgstored: {},
             key: 0,
             finish: true,
-            close: true,
             Clicked: '',
+            inputchat: ''
         };
         socket.on('chat-message', message => {
             let key = this.state.key;
@@ -70,8 +68,9 @@ class Conversation extends React.Component {
         this.setState({ allMessages: test, key: x + 1, finish: false, Clicked: username })
     }
 
-    handleInputChange = (e) => {
-        this.setState({ message: e.target.value })
+    handleInputChanges = (e) => {
+        e.preventDefault()
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     storeMessage = (message) => {
@@ -97,15 +96,16 @@ class Conversation extends React.Component {
         let actu = this.state.allMessages;
         let key = this.state.key
         let user = this.props.usernameClicked;
-        this.storeMessage(this.state.message);
-        if (this.state.message) {
-            const msg = this.state.message
+        let msg = this.state.inputchat;
+        msg = msg.trim();
+        if (msg) {
+            this.storeMessage(msg);
             actu.push(<MesSend message={msg} key={key} />);
             this.setState({ allMessages: actu })
             this.setState({ key: key + 1 })
             socket.emit('send-chat-message', user, msg)
         }
-        this.setState({ message: "" })
+        this.setState({ inputchat: '' })
     }
 
     showMessage = () => {
@@ -128,7 +128,7 @@ class Conversation extends React.Component {
 
                     <div className="row reply">
                         <div className="col-sm-11 col-xs-11 reply-main">
-                            <input className="inputchat" name="inputchat" onKeyDown={this.onKey} value={this.state.message} onChange={this.handleInputChange} />
+                            <input type="text" className="inputchat" name="inputchat" onKeyDown={this.onKey} value={this.state.inputchat} onChange={this.handleInputChanges} />
                         </div>
                         <div className="col-sm-1 col-xs-1 reply-send" onClick={this.onClick} >
                             <i className="fa fa-send fa-2x" aria-hidden="true"></i>
