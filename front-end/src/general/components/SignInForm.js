@@ -29,6 +29,7 @@ export default class SignInForm extends React.Component {
                     onChange={this.handleInputChange}
                     className="form-group inputForm"
                 />
+                <a href="/forgotPassword">Forgot your password ?</a>
                 <SubmitForm
                     value="Log in"
                     onChange={this.handleInputChange}

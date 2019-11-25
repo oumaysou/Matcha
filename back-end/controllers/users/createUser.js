@@ -2,7 +2,7 @@ import TokenGenerator from 'uuid-token-generator';
 import { errorsMsg } from '../../utils/checking.js';
 import { hashPwd } from '../../utils/crypt.js';
 import sendMail from '../../utils/sendMail.js';
-import getLocation from '../../utils/geolocation.js';
+import { getCity, getLocation } from '../../utils/geolocation.js';
 import generalQuery from '../../models/generalQuery.js';
 
 const createUser = async (req, res) => {
@@ -34,6 +34,8 @@ const createUser = async (req, res) => {
         if (!user[0]) {
             const confirmToken = new TokenGenerator(128, TokenGenerator.BASE62).generate();
             const location = await getLocation();
+            const city = await getCity();
+            console.log('location =' + location + ', city = ' + city);
 
             const userData = {
                 username,
@@ -45,7 +47,8 @@ const createUser = async (req, res) => {
                 gender,
                 orientation,
                 confirmToken,
-                location
+                location,
+                city
             };
 
             const data = await generalQuery.insert({ table: 'users', userData });
