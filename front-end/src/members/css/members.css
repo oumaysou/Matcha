@@ -2,3 +2,74 @@
     max-height: 90vh;
     overflow-y: scroll;
 }
+
+.dropdown-tag {
+    position: relative;
+    display: inline-block;
+    background: #FF5252;
+    /* width: 200px; */
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+    margin: 0 3px;
+    padding: 3px 8px;
+    cursor: pointer;
+}
+
+.ul-tag {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    top:45px;
+    right:0px;
+    width: 200px;
+    background-color: white;
+    font-weight:bold;
+    position: absolute;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.li-tag a {
+    color: #FF5252;
+    text-decoration: none;
+}
+
+.li-tag:hover a {
+    color: black;
+}
+
+.li-tag {
+    padding: 8px 16px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.li-tag:last-child {
+    border-bottom: none;
+}
+
+.li-tag:hover {
+    background-color: #f9f9f9;
+    color: white;
+}
+
+.button-tag {
+    width:178px;
+    /* height:18px; */
+    background-color:#FF5252;
+    /* padding:12px; */
+    border-radius:5px;
+    /* font-weight:bold; */
+    color: white;
+    text-align: center;
+}
+
+.button-tag:before {
+    content:"";
+    position:absolute;
+    border: 8px solid;
+    border-color: white transparent transparent transparent;
+    right:8px;
+    top:10px;
+}

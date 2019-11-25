@@ -2,7 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import UserCard from '../components/UserCard';
 import utils from '../../general/components/utils';
-// import { ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
+
+// import Slider, { Range } from 'rc-slider';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+import 'rc-tooltip/assets/bootstrap.css';
+import Tooltip from 'rc-tooltip';
+
+// import { Dropdown } from 'react-bootstrap';
 // import { MenuItem } from 'react-bootstrap';
 
 
@@ -25,35 +32,45 @@ export default class Members extends React.Component {
             maxAdmired: '',
             minAge: '',
             maxAge: '',
+            myLocation: '',
+            displayMenu: false,
             finish: false
         };
         // this.getAllUserCard = this.getAllUserCard.bind(this);
         // this.getAdmired = this.getAdmired.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.showDropdownMenu = this.showDropdownMenu.bind(this);
+        this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
         // this.handleChange = this.handleChange.bind(this);
         // this.sortByPriceDesc = this.sortByPriceDesc.bind(this);
     }
     
     // TENGO QUE REVISAR EL CUMPLEANOS BUSCARLO DONDE ESTA IMPRIMIENDO PARA EL CALCULO
 
-    componentWillMount() {
-        axios.get('api/users/getall').then(({ data }) => {
+    
+
+    componentWillMount = async () => {
+        await axios.get('api/users/getall').then(({ data }) => {
             if (data.success)
-                this.setState({ users: data.usersData, finish: true })
+                this.setState({ 
+                    users: data.usersData,
+                    myLocation: data.myLocation,
+                    finish: true 
+                })
         }).catch(err => console.error('Error: ', err));
     }
 
     updateAdmired = () => {
         const minAdmired = this.state.minAdmired;
         const maxAdmired = this.state.maxAdmired;
-        console.log("minAdmired ", minAdmired);
-        console.log("maxAdmired ", maxAdmired);
+        // console.log("minAdmired ", minAdmired);
+        // console.log("maxAdmired ", maxAdmired);
         axios.get(`api/members/getall/${minAdmired}/${maxAdmired}`).then(({ data }) => {
             // console.log("users ousssama "+data.usersData)
             if (data.success)
                 this.setState({ 
                     users: data.usersData,
-                    finish: true 
+                    finish: true
                 })
         }).catch(err => console.error('Error: ', err));
     }
@@ -61,8 +78,8 @@ export default class Members extends React.Component {
     updateAge = () => {
         const minAge = this.state.minAge;
         const maxAge = this.state.maxAge;
-        console.log("Members age min ", minAge);
-        console.log("Members age max ", maxAge);
+        // console.log("Members age min ", minAge);
+        // console.log("Members age max ", maxAge);
         axios.get(`api/members/getalls/${minAge}/${maxAge}`).then(({ data }) => {
             // console.log("users ousssama "+data.usersData)
             if (data.success)
@@ -71,6 +88,35 @@ export default class Members extends React.Component {
                     finish: true 
                 })
         }).catch(err => console.error('Error: ', err));
+    }
+
+    updateTag = (event) => {
+        // const latitude = location.split(',')[0];
+        // const longitude = location.split(',')[1];
+        // console.log("ok");
+        // console.log('2: ', name);
+        this.setState({
+            name: event.target.name,
+            // location: data.myLocation
+        });
+        // console.log(event.target.getAttribute('name'));
+        // console.log(latitude);
+        // console.log(longitude);
+        // console.log(this.props.users);
+        // console.log(this.users[0].member)
+        console.log("1", this.state.myLocation);
+        const latitude = this.state.myLocation.split(',')[0];
+        const longitude = this.state.myLocation.split(',')[1];
+        console.log(latitude);
+        console.log(longitude);
+
+        // SELECT latitude, longitude, SQRT(
+        // POW(69.1 * (latitude - [startlat]), 2) +
+        // POW(69.1 * ([startlng] - longitude) * COS(latitude / 57.3), 2)) AS distance
+        // FROM TableName HAVING distance < 25 ORDER BY distance; 
+
+        // console.log("2", event.target.location);
+
     }
 
     getAllUserCard() {
@@ -91,6 +137,20 @@ export default class Members extends React.Component {
             return <div className='text-center'><p>There is no users yet</p></div>;
     }
 
+    showDropdownMenu = (event) => {
+        event.preventDefault();
+        this.setState({ displayMenu: true }, () => {
+        document.addEventListener('click', this.hideDropdownMenu);
+        });
+      }
+    
+      hideDropdownMenu = () => {
+        this.setState({ displayMenu: false }, () => {
+          document.removeEventListener('click', this.hideDropdownMenu);
+        });
+    
+      }
+
     // handleChange(event) {
     //     this.setState({
     //         value: event.target.value
@@ -108,7 +168,7 @@ export default class Members extends React.Component {
         event.preventDefault();
         // console.log(event);
 
-        // console.log(event.target.name);
+        console.log(event.target.name);
         // console.log(event.target.value);
         
         this.setState({
@@ -118,6 +178,28 @@ export default class Members extends React.Component {
     }
 
     render() {
+        // console.log("oumaysou MDF => " + this.state.myLocation)
+        // console.log("oumaysou MDF => " + JSON.stringify(this.state.users[0]))
+        const createSliderWithTooltip = Slider.createSliderWithTooltip;
+        const Range = createSliderWithTooltip(Slider.Range);
+        const Handle = Slider.Handle;
+
+        const handle = (props) => {
+        const { value, dragging, index, ...restProps } = props;
+
+        return (
+            <Tooltip
+                prefixCls="rc-slider-tooltip"
+                overlay={value}
+                visible={dragging}
+                placement="top"
+                key={index}
+            >
+            <Handle value={value} {...restProps} />
+            </Tooltip>
+            );
+        };
+        const wrapperStyle = { width: 100, margin: 15, marginTop: 0};
         // const { minAdmired, maxAdmired } = this.state;
         if (this.state.finish) {
             return (
@@ -126,8 +208,21 @@ export default class Members extends React.Component {
                         <div className='container-fluid'>
                             {/* <div className='row col-md-6 col-sm-12 col-xs-12 filters'> */}
                                     <div id='filter-basic'>
-                                        {/* <h3 className="title">Filters</h3> */}
-                                        <form className="tag">
+                                        <form className="dropdown-tag">
+                                            <div className="button-tag" onClick={this.showDropdownMenu}>Search a tag</div>
+                                            { this.state.displayMenu ? (
+                                                <ul onClick={this.showDropdownMenu} className="ul-tag">
+                                                    {/* <li "><a className="active" href="#Create Page">Create Page</a></li> */}
+                                                    <li onClick={this.updateTag} name="soccerTag" className="li-tag"><a href="#Soccer">Soccer</a></li>
+                                                    <li onClick={this.updateTag} name="beachTag" className="li-tag"><a href="#Beach">Beach</a></li>
+                                                    <li onClick={this.updateTag} name="dateTag" className="li-tag"><a href="#Date">Date</a></li>
+                                                    <li onClick={this.updateTag} name="computerTag" className="li-tag"><a href="#Computer">Computer</a></li>
+                                                    <li onClick={this.updateTag} name="moneyTag" className="li-tag"><a href="#Money">Money</a></li>
+                                                    <li onClick={this.updateTag} name="sportTag" className="li-tag"><a href="#Sport">Sport</a></li>
+                                                </ul>
+                                            ): (null)}
+                                        </form>
+                                        <form className="tag" style={{display: "none"}}>
                                             <input type="text" placeholder="Search a tag" />
                                             <button className="filterButton">></button>
                                         </form>
@@ -175,8 +270,8 @@ export default class Members extends React.Component {
                                             />
                                             <button className="filterButton" onClick={this.updateAge}>></button>
                                         </form>
-                                        <form onSubmit={this.handleSubmit} className="admired">
-                                            <p>Around you (km):</p>
+                                        <form onSubmit={this.handleSubmit} style={{display: "none"}} className="admired">
+                                            <p>Around you:</p>
                                             <input 
                                                 type="text" 
                                                 name="must admired" 
@@ -196,7 +291,27 @@ export default class Members extends React.Component {
                                             />
                                             <button className="filterButton" onClick={this.updateAdmired}>></button>
                                         </form>
-                                         {/* <MenuItem onClick={this.updateAdmired}>Min Admired</MenuItem> */}
+                                        <form className="admired">
+                                            <p>Around you:</p>
+                                            <Slider 
+                                                style={wrapperStyle} 
+                                                min={10} 
+                                                defaultValue={10} 
+                                                marks={{ 10: 10, 50: 25, 100: 50 }}
+                                                // handle={handle}
+                                                railStyle={{ backgroundColor: 'grey'}}
+                                                dotStyle={{ borderColor: 'grey' }}
+                                                step={null} 
+                                                activeDotStyle={{borderColor: '#FF5252'}}
+                                                trackStyle={{backgroundColor: '#FF5252'}}
+                                                handleStyle={{borderColor: '#FF5252'}}
+                                            />
+                                        </form>
+
+    {/* <Slider dots step={20} defaultValue={100} onAfterChange={log} 
+    dotStyle={{ borderColor: 'orange' }} activeDotStyle={{ borderColor: 'yellow' }} /> */}
+
+                                        {/* <MenuItem onClick={this.updateAdmired}>Min Admired</MenuItem> */}
                                         {/*<MenuItem onClick={this.updateAdmired}>Max Admired</MenuItem>
                                         <button onClick={this.sortByPriceAsc}>Age: Low to High</button>
                                         <MenuItem onClick={console.log("ok")}>Age: High to Low</MenuItem>
@@ -205,9 +320,27 @@ export default class Members extends React.Component {
                                       
                                     {/* </div> */}
                                 </div>
+                                <div style={{display: "none"}}>
+                                    <div style={wrapperStyle}>
+                                    <p>Slider with custom handle</p>
+                                    <Slider min={0} max={20} defaultValue={3} handle={handle} />
+                                    </div>
+                                    <div style={wrapperStyle}>
+                                    <p>Reversed Slider with custom handle</p>
+                                    <Slider min={0} max={20} reverse defaultValue={3} handle={handle} />
+                                    </div>
+                                    <div style={wrapperStyle}>
+                                    <p>Slider with fixed values</p>
+                                    <Slider min={20} defaultValue={20} marks={{ 20: 20, 40: 40, 100: 100 }} step={null} />
+                                    </div>
+                                    <div style={wrapperStyle}>
+                                    <p>Range with custom tooltip</p>
+                                    <Range min={0} max={20} defaultValue={[3, 10]} tipFormatter={value => `${value}%`} />
+                                    </div>
+                                </div>
                             </div>
                         <div className='row'>
-                            <div id='listing-members' className='col'>
+                            <div id='listing-member'>
                                 {this.getAllUserCard()}
                             </div>
                         </div>

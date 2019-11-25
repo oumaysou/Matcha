@@ -8,6 +8,7 @@ const getMembers = async (req, res) => {
 
     const allMembers = await generalQuery.getAll({table: 'users'});
     const index = allMembers.findIndex(member => member.username === myUsername);
+    let myLocation = allMembers[index].location;
     allMembers.splice(index, 1);
 
     if (!allMembers[0]) {
@@ -34,7 +35,8 @@ const getMembers = async (req, res) => {
 
     return res.send({
         success: true,
-        usersData
+        usersData,
+        myLocation
     });
 };
 

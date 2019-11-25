@@ -153,7 +153,7 @@ const getAge = ({ table, minAge, maxAge, myUsername }) => {
             // SELECT * FROM users WHERE NOT username = 'roxanita' AND popularity BETWEEN 100 AND 200 ORDER BY popularity DESC
 
 
-            const sql = `SELECT * FROM ${table} WHERE NOT username = '${myUsername}' AND YEAR(birthday) BETWEEN '${minAge}' AND '${maxAge}' ORDER BY birthday DESC`;
+            const sql = `SELECT * FROM ${table} WHERE NOT username = '${myUsername}' AND YEAR(birthday) BETWEEN '${minAge}' AND '${maxAge}' ORDER BY birthday ASC`;
 
             // SELECT * FROM users WHERE YEAR(birthday) BETWEEN '1980' AND '1980' ORDER BY birthday DESC
             // const sql = SELECT * FROM users WHERE NOT username = 'roxanita' AND birthday BETWEEN '1990-12-02' AND '1990-12-03' ORDER BY birthday DESC;

@@ -23,7 +23,7 @@
     display: flex;
     /* justify-content: center; */
     align-items: center;
-    margin: 0 25px 0 25px;
+    margin: 5px 25px 5px 25px;
 }
 
 #filter-basic .admired {
@@ -76,3 +76,4 @@
 #filter-basic .filterButton:hover {
     opacity: 50%;
 }
+
