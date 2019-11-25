@@ -12,6 +12,8 @@ import getMatches from '../controllers/messages/getMatches';
 import updateUser from '../controllers/users/updateUser';
 import getMessages from '../controllers/messages/getMessages';
 import storeMessage from '../controllers/messages/storeMessage';
+import getUsers from '../controllers/users/getUsers';
+import passwordReset from '../controllers/users/passwordReset';
 
 const router = express.Router();
 
@@ -30,6 +32,8 @@ router.post('/update', updateUser);
 router.post('/users/signin', signIn);
 router.post('/users/activate', activateUser);
 router.get('/users/profile/:username', getProfile);
+router.get('/users/getUsers', getUsers);
+router.get('/users/passwordReset/:email', passwordReset);
 
 router.get('/like/set/:username', setLike);
 router.get('/like/get/:username', getLike);

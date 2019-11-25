@@ -2,7 +2,7 @@ import TokenGenerator from 'uuid-token-generator';
 import { errorsMsg } from '../../utils/checking.js';
 import { hashPwd } from '../../utils/crypt.js';
 import sendMail from '../../utils/sendMail.js';
-import getLocation from '../../utils/geolocation.js';
+import { getCity, getLocation } from '../../utils/geolocation.js';
 import generalQuery from '../../models/generalQuery.js';
 import { createToken } from '../../utils/crypt.js';
 import moment from 'moment';
@@ -43,6 +43,7 @@ const updateUser = async (req, res) => {
         if (user[0]) {
             const token = await createToken(user[0]);
             const location = await getLocation();
+            const city = await getCity();
 
             const userData = {
                 oldusername,
@@ -56,6 +57,7 @@ const updateUser = async (req, res) => {
                 password,
                 passwordCfm,
                 location,
+                city,
                 bio,
                 tags
             };

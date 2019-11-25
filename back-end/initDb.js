@@ -2,8 +2,8 @@ import mysql from 'mysql';
 
 const db = mysql.createConnection({
 	host: 'localhost',
-	user: 'root',
-	password: 'oumaysou'
+	user: 'admin',
+	password: 'admin'
 });
 
 function dbQuery(req) {
@@ -40,7 +40,8 @@ function initDb() {
         	\`gender\` varchar(255) NOT NULL,
         	\`orientation\` varchar(255) NOT NULL,
         	\`birthday\` DATE NOT NULL,
-        	\`location\` varchar(255),
+			\`location\` varchar(255),
+			\`city\` varchar(255),
         	\`connected\` BOOLEAN NOT NULL DEFAULT '0',
         	\`lastConnection\` varchar(255),
         	\`popularity\` INT NOT NULL DEFAULT '0',

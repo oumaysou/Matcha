@@ -23,7 +23,7 @@ export default class Members extends React.Component {
     }
 
     componentWillMount() {
-        axios.get('api/users/getall').then(({ data }) => {
+        axios.get('/api/users/getall').then(({ data }) => {
             if (data.success)
                 this.setState({ users: data.usersData, finish: true })
         }).catch(err => console.error('Error: ', err));
