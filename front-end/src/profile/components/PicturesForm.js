@@ -1,6 +1,6 @@
 import React from 'react';
 import SubmitForm from '../../general/components/SubmitForm';
-import { thunk_savePicturesUser, thunk_saveAvatarUser } from '../../actions/thunk_actions_editProfile';
+import { thunk_savePicturesUser, thunk_saveAvatarUser, thunk_delPictureUser } from '../../actions/thunk_actions_editProfile';
 import { connect } from 'react-redux';
 import { NotificationManager } from 'react-notifications';
 
@@ -16,8 +16,10 @@ class PicturesForm extends React.Component {
         }
     }
 
-    delPicture(e) {
-        console.log(e.target.id);
+    delPicture = (e) => {
+        let picture = e.target.id;      
+        
+        this.props.dispatch(thunk_delPictureUser(picture));
     }
 
     renderPictures() {
@@ -30,7 +32,7 @@ class PicturesForm extends React.Component {
                 const picSrc = picture.split('/').pop();
                 return <div key={index} className='text-center'>
                             <img src={process.env.PUBLIC_URL + '/img/' + picSrc} alt={'picture'+index} className="picture" />
-                            <p id={index} className="redCross" onClick={this.delPicture}>X</p>
+                            <p id={picture} className="redCross" onClick={this.delPicture}>X</p>
                         </div>
             })
         }
@@ -40,24 +42,25 @@ class PicturesForm extends React.Component {
 
     handlePicturesSubmit = (e) => {
         e.preventDefault();
-
-        const nbPictures = this.state.photos.length;
-        if (nbPictures < 4){
-            const ext = this.state.selectedFile.name.split('.').pop()
-            const name = this.state.username + '.' + ext
-            
-            const formData = new FormData()
-            formData.append(
-                'myImage',
-                this.state.selectedFile,
-                name
-                )
-            
-            this.props.dispatch(thunk_savePicturesUser(formData));
-        }
-        else{
-            const message = "You have already too many pictures"
-            NotificationManager.error(message, 'Sorry but...', 3000);
+        if(this.state.selectedFile){
+            const nbPictures = this.state.photos.length;
+            if (nbPictures < 4){
+                const ext = this.state.selectedFile.name.split('.').pop()
+                const name = this.state.username + '.' + ext
+                
+                const formData = new FormData()
+                formData.append(
+                    'myImage',
+                    this.state.selectedFile,
+                    name
+                    )
+                
+                this.props.dispatch(thunk_savePicturesUser(formData));
+            }
+            else{
+                const message = "You have already too many pictures"
+                NotificationManager.error(message, 'Sorry but...', 3000);
+            }
         }
     }
 
@@ -71,14 +74,15 @@ class PicturesForm extends React.Component {
         const ext = this.state.selectedAvatar.name.split('.').pop()
         const name = this.state.username + '.' + ext
         
-        const formData = new FormData()
-        formData.append(
+        const avatarSrc = this.state.avatar.split('/').pop();
+        const oldPath = { oldPath: "../front-end/public/img/" + avatarSrc };
+        const userData = new FormData()
+        userData.append(
             'myAvatar',
             this.state.selectedAvatar,
             name
-            )
-        
-        this.props.dispatch(thunk_saveAvatarUser(formData));
+            )        
+        this.props.dispatch(thunk_saveAvatarUser(userData, oldPath));
     }
 
     avatarChange = (e) => {

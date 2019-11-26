@@ -65,7 +65,7 @@ const saveAvatar = (req, res) => {
                 
 
                 const userName = (req.file.path.split('/').pop()).split('.').shift();
-                    
+                
                 generalQuery.update({ 
                     table: 'users', 
                     field : 'avatar', 
@@ -77,7 +77,6 @@ const saveAvatar = (req, res) => {
                         res.status(200).send({
                             success: true,
                             message: "Picture saved",
-                            data: userData
                         });
                     }
                     else {                     
@@ -94,4 +93,17 @@ const saveAvatar = (req, res) => {
     })
 }
 
-module.exports = saveAvatar;
+const delAvatar = (req, res) => {
+    fs.unlink(req.body.oldPath, (err) => {
+        if (err) {
+            return res.send({
+            success: false,
+            message: "Something went wrong with your picture",
+        });}
+        res.status(200).send({
+            success: true,
+            message: "Picture Deleted",
+        });
+      });
+}
+module.exports = { saveAvatar, delAvatar };

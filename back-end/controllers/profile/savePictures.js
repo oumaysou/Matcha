@@ -91,4 +91,4 @@ const savePictures = (req, res) => {
     })
 }
 
-module.exports = savePictures;
+module.exports = { savePictures };

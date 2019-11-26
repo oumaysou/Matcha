@@ -67,13 +67,7 @@ const insert = ({ table, userData }) => {
 };
 
 const update = ({ table, field, value, where, whereValue }) => {
-    try {
-        console.log("table : ", table);
-        console.log("field : ", field);
-        console.log("value : ", value);
-        console.log("where : ", where);
-        console.log("whereValue : ", whereValue);
-        
+    try {        
         const user = new Promise((resolve, reject) => {
             const sql = `UPDATE ${table} SET ${field} = ? WHERE ${where} = ?`;
             db.query(sql, [value, whereValue], (err, row) => {
@@ -89,6 +83,8 @@ const update = ({ table, field, value, where, whereValue }) => {
 };
 
 const deleter = ({ table, field, value }) => {
+    console.log("DELETER");
+    
     try {
         const result = new Promise((resolve, reject) => {
             const sql = `DELETE FROM ${table} WHERE ${field} = ?`;
