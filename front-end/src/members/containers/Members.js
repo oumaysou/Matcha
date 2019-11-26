@@ -33,6 +33,7 @@ export default class Members extends React.Component {
             minAge: '',
             maxAge: '',
             myLocation: '',
+            val: 0,
             displayMenu: false,
             finish: false
         };
@@ -93,22 +94,13 @@ export default class Members extends React.Component {
     updateTag = (event) => {
         // const latitude = location.split(',')[0];
         // const longitude = location.split(',')[1];
-        // console.log("ok");
-        // console.log('2: ', name);
+
         this.setState({
             name: event.target.name,
             // location: data.myLocation
         });
-        // console.log(event.target.getAttribute('name'));
-        // console.log(latitude);
-        // console.log(longitude);
-        // console.log(this.props.users);
-        // console.log(this.users[0].member)
         console.log("1", this.state.myLocation);
-        const latitude = this.state.myLocation.split(',')[0];
-        const longitude = this.state.myLocation.split(',')[1];
-        console.log(latitude);
-        console.log(longitude);
+        
 
         // SELECT latitude, longitude, SQRT(
         // POW(69.1 * (latitude - [startlat]), 2) +
@@ -137,6 +129,40 @@ export default class Members extends React.Component {
             return <div className='text-center'><p>There is no users yet</p></div>;
     }
 
+    getPosition = (value) => {
+        const myLat = this.state.myLocation.split(',')[0];
+        const myLong = this.state.myLocation.split(',')[1];
+
+        console.log(value) // maybe a string or a object
+        this.setState({val: value})
+    
+        console.log(myLat);
+        console.log(myLong);
+
+        axios.get(`api/members/getdistances/${myLat}/${myLong}/${value}`).then(({ data }) => {
+            // console.log("coco", data.usersData)
+            if (data.success)
+                this.setState({ 
+                    users: data.usersData,
+                    finish: true 
+                })
+        }).catch(err => console.error('Error: ', err));
+    }
+
+    updateMatcha = () => {
+        // event.preventDefault();
+        
+        console.log("ok1");
+    }
+
+    // updateMatchaAfter = (event) => {
+    //     event.preventDefault();
+    //     this.setState({displayMenu: false}, () => {
+    //         document.removeEventListener('click', this.updateMatchaAfter);
+    //     });
+    //     console.log("ok2");
+    // }
+
     showDropdownMenu = (event) => {
         event.preventDefault();
         this.setState({ displayMenu: true }, () => {
@@ -144,12 +170,12 @@ export default class Members extends React.Component {
         });
       }
     
-      hideDropdownMenu = () => {
-        this.setState({ displayMenu: false }, () => {
-          document.removeEventListener('click', this.hideDropdownMenu);
-        });
-    
-      }
+    hideDropdownMenu = () => {
+    this.setState({ displayMenu: false }, () => {
+        document.removeEventListener('click', this.hideDropdownMenu);
+    });
+
+    }
 
     // handleChange(event) {
     //     this.setState({
@@ -222,10 +248,6 @@ export default class Members extends React.Component {
                                                 </ul>
                                             ): (null)}
                                         </form>
-                                        <form className="tag" style={{display: "none"}}>
-                                            <input type="text" placeholder="Search a tag" />
-                                            <button className="filterButton">></button>
-                                        </form>
                                         <form onSubmit={this.handleSubmit} className="admired">
                                             <p>Must Admired:</p>
                                             <input 
@@ -291,25 +313,29 @@ export default class Members extends React.Component {
                                             />
                                             <button className="filterButton" onClick={this.updateAdmired}>></button>
                                         </form>
-                                        <form className="admired">
+                                        <form onSubmit={this.handleSubmit} className="admired">
                                             <p>Around you:</p>
                                             <Slider 
                                                 style={wrapperStyle} 
-                                                min={10} 
-                                                defaultValue={10} 
-                                                marks={{ 10: 10, 50: 25, 100: 50 }}
-                                                // handle={handle}
+                                                min={0} 
+                                                defaultValue={0} 
+                                                marks={{ 0:0 , 20:20, 50:50, 100:100 }}
+                                                handle={handle}
                                                 railStyle={{ backgroundColor: 'grey'}}
                                                 dotStyle={{ borderColor: 'grey' }}
                                                 step={null} 
                                                 activeDotStyle={{borderColor: '#FF5252'}}
                                                 trackStyle={{backgroundColor: '#FF5252'}}
                                                 handleStyle={{borderColor: '#FF5252'}}
+                                                onChange={this.getPosition}
                                             />
                                         </form>
+                                        <form onSubmit={this.handleSubmit} className="button-tag">
+                                            <button className="filterButton" onClick={this.updateMatcha}>Matcha!</button>
+                                        </form>
 
-    {/* <Slider dots step={20} defaultValue={100} onAfterChange={log} 
-    dotStyle={{ borderColor: 'orange' }} activeDotStyle={{ borderColor: 'yellow' }} /> */}
+                                        {/* <Slider dots step={20} defaultValue={100} onAfterChange={log} 
+                                        dotStyle={{ borderColor: 'orange' }} activeDotStyle={{ borderColor: 'yellow' }} /> */}
 
                                         {/* <MenuItem onClick={this.updateAdmired}>Min Admired</MenuItem> */}
                                         {/*<MenuItem onClick={this.updateAdmired}>Max Admired</MenuItem>

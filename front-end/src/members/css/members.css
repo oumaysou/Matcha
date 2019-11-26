@@ -66,6 +66,7 @@
 }
 
 .button-tag:before {
+    outline: none;
     content:"";
     position:absolute;
     border: 8px solid;

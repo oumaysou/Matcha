@@ -183,12 +183,6 @@ const UnsetLike = async (myUsername, username) => {
     return result.affectedRows > 0 ? true : false;
 }
 
-
-
-
-
-
-
 module.exports = {
     whoBlockedMe,
     getBlockedByMe,

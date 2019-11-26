@@ -12,6 +12,7 @@ import { setLike, getLike, UnsetLike } from '../controllers/profile/like';
 import getMatches from '../controllers/messages/getMatches';
 import updateUser from '../controllers/users/updateUser';
 import getAge from '../controllers/members/getAge'
+import getDistance from '../controllers/members/getDistance'
 
 const router = express.Router();
 
@@ -42,5 +43,6 @@ router.delete('/:table/:field', deleter);
 
 router.get('/members/getall/:minAdmired/:maxAdmired', getFilters);
 router.get('/members/getalls/:minAge/:maxAge', getAge);
+router.get('/members/getdistances/:myLat/:myLong/:myKm', getDistance);
 
 module.exports = router;

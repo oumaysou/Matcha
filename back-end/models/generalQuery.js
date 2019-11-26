@@ -172,5 +172,27 @@ const getAge = ({ table, minAge, maxAge, myUsername }) => {
     }
 }
 
+const getDistance = ({ table, myLat, myLong, minMax }) => {
+    try {
+        const users = new Promise((resolve, reject) => {
+            console.log("latitud sql", myLat);
+            console.log("magnitud sql", myLong);
+            console.log("minmax sql", minMax);
+            const sql = `SELECT *, SUBSTRING_INDEX(location, ',', 1), SUBSTRING_INDEX(location, ',', -1), SQRT(
+                POW(69.1 * (SUBSTRING_INDEX(location, ',', 1) - ${myLat}), 2) +
+                POW(69.1 * (${myLong} - SUBSTRING_INDEX(location, ',', -1)) * COS(SUBSTRING_INDEX(location, ',', 1) / 57.3), 2)) AS distance
+                FROM ${table} HAVING distance < ${minMax} ORDER BY distance`;
+            db.query(sql, (err, rows) => {
+                if (err)
+                    return reject(err);
+                return resolve(rows);
+            })
+        });
+        // console.log("getdiss", JSON.stringify(users));
+        return users;
+    } catch (err) {
+        console.error('Cannot connect to the database db_matcha.\n');
+    }
+}
 
-module.exports = { get, getId, getAll, insert, update, deleter, getFilters, getAge };
+module.exports = { get, getId, getAll, insert, update, deleter, getFilters, getAge, getDistance };
