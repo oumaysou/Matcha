@@ -100,8 +100,4 @@ const deleter = ({ table, field, value }) => {
     }
 };
 
-<<<<<<< HEAD
-module.exports = { get, getBis, getId, getAll, insert, update, deleter };
-=======
 module.exports = { get, getId, getAll, insert, update, deleter };
->>>>>>> qfadene

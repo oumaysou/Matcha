@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/visitedBy.css';
 
 export default class UsersVisitedBy extends React.Component {
     render() {
@@ -9,7 +10,7 @@ export default class UsersVisitedBy extends React.Component {
                 return (
                     <tr key={index}>
                         <td><img src={process.env.PUBLIC_URL + '/img/' + avatar} alt="avatar" className="avatar-likedby" /></td>
-                        <td><h5>{user.username}</h5></td>
+                        <td><a href={'/members/' + user.username} className="a-visitedBy">{user.username}</a></td>
                         <td><p>{user.date}</p></td>
                     </tr>
                 );

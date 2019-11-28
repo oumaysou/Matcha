@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
     "google-map-react": "^0.34.0",
+    "http-proxy-middleware": "^0.20.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "moment": "^2.22.0",
@@ -27,7 +28,11 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": {
+    "/api/*": {
+      "target": "http://[::1]:5000"
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",

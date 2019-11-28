@@ -8,9 +8,9 @@ import moment from 'moment';
 
 const storeMessage = async (req, res) => {
     const table = `messages`;
-    const message = req.params.message;
+    const message = req.body.message;
     const messageBy = getUsernameFromToken(req);
-    const messageTo = req.params.username;
+    const messageTo = req.body.username;
     const time = moment().format('YYYY:MM:DD HH:mm:ss');
     const userData = {
         message,
@@ -18,7 +18,7 @@ const storeMessage = async (req, res) => {
         messageTo,
         time
     };
-
+    console.log(JSON.stringify((req.body)))
     const result = await generalQuery.insert({ table, userData });
     if (result.affectedRows > 0) {
         res.status(200).send({

@@ -93,6 +93,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #000;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .sideBar-time {
@@ -108,8 +109,8 @@
 }
 
 @media screen and (max-width: 700px) {
-    .sideBar {
-      height: calc(90% - 50px);
+    img {
+      display: none;
     }
     .sideBar-body {
       height: 80px;
@@ -139,6 +140,10 @@
     .sideBar-time {
       padding: 10px !important;
     }
+    .startconversation {
+      display: none;
+    }
+
     .time-meta {
       text-align: right;
       font-size: 14px;

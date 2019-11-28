@@ -11,18 +11,17 @@ import io from 'socket.io-client';
 import axios from 'axios';
 import lodash from 'lodash';
 
-const socket = io("http://localhost:5000");
+const socket = io("http://127.0.0.1:5000/");
 
 class Conversation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            message: '',
             allMessages: [],
-            msgstored: {},
             key: 0,
-            finish: false,
+            finish: true,
             Clicked: '',
+            inputchat: ''
         };
         socket.on('chat-message', message => {
             let key = this.state.key;
@@ -33,28 +32,14 @@ class Conversation extends React.Component {
     }
 
     getAll = async () => {
-        if (!this.state.finish || this.state.Clicked !== this.props.usernameClicked) {
+        if (this.state.finish || this.state.Clicked !== this.props.usernameClicked) {
             let username = this.props.usernameClicked;
-            console.log("usernaaaaaaame =>>> " + username)
             await axios.get(`/api/message/getallmessages/${username}`).then(({ data }) => {
                 const { success, allMessages } = data;
                 if (success === true) {
                     let all = allMessages
-                    console.log("Message pour user " + username + " " + all)
-                    let userto = username
-                    let test = []
-                    all = lodash.orderBy(all, ['id'], ['asn'])
-                    return all.map((obj, key) => {
-                        if (obj.messageBy !== userto) {
-                            test.push(<MesSend message={obj.message} key={key} />);
-                            key += 1;
-                        }
-                        else if (obj.messageBy === userto) {
-                            test.push(<MesReceived message={obj.message} key={key} />)
-                            key += 1;
-                        }
-                        return this.setState({ allMessages: test, finish: true, key: key + 1, Clicked: username })
-                    })
+                    let userTo = username
+                    this.mapMessages(all, userTo, username)
                 }
                 else
                     console.log("Error get all messages")
@@ -67,14 +52,31 @@ class Conversation extends React.Component {
         socket.emit('disconnect')
     }
 
-    handleInputChange = (e) => {
-        this.setState({ message: e.target.value })
+    mapMessages = (all, userTo, username) => {
+        let test = []
+        let x = 0
+        all = lodash.orderBy(all, ['id'], ['asn'])
+        all.forEach((obj, key) => {
+            x++;
+            if (obj.messageBy !== userTo) {
+                test.push(<MesSend message={obj.message} key={key} />);
+            }
+            else if (obj.messageBy === userTo) {
+                test.push(<MesReceived message={obj.message} key={key} />)
+            }
+        })
+        this.setState({ allMessages: test, key: x + 1, finish: false, Clicked: username })
+    }
+
+    handleInputChanges = (e) => {
+        e.preventDefault()
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     storeMessage = (message) => {
         const username = this.props.usernameClicked
-        message = escape(message)
-        axios.put(`/api/storemessage/${message}/${username}`).then(({ data }) => {
+        let userData = { username: username, message: message }
+        axios.post(`/api/storemessage`, userData).then(({ data }) => {
             const { success } = data;
             if (success === true)
                 console.log('Message Stored')
@@ -94,15 +96,16 @@ class Conversation extends React.Component {
         let actu = this.state.allMessages;
         let key = this.state.key
         let user = this.props.usernameClicked;
-        this.storeMessage(this.state.message);
-        if (this.state.message) {
-            const msg = this.state.message
+        let msg = this.state.inputchat;
+        msg = msg.trim();
+        if (msg) {
+            this.storeMessage(msg);
             actu.push(<MesSend message={msg} key={key} />);
             this.setState({ allMessages: actu })
             this.setState({ key: key + 1 })
             socket.emit('send-chat-message', user, msg)
         }
-        this.setState({ message: "" })
+        this.setState({ inputchat: '' })
     }
 
     showMessage = () => {
@@ -125,7 +128,7 @@ class Conversation extends React.Component {
 
                     <div className="row reply">
                         <div className="col-sm-11 col-xs-11 reply-main">
-                            <input className="inputchat" name="inputchat" onKeyDown={this.onKey} value={this.state.message} onChange={this.handleInputChange} />
+                            <input type="text" className="inputchat" name="inputchat" onKeyDown={this.onKey} value={this.state.inputchat} onChange={this.handleInputChanges} />
                         </div>
                         <div className="col-sm-1 col-xs-1 reply-send" onClick={this.onClick} >
                             <i className="fa fa-send fa-2x" aria-hidden="true"></i>
