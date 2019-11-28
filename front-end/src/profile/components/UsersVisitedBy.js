@@ -5,9 +5,10 @@ export default class UsersVisitedBy extends React.Component {
         const visitedBy = this.props.visitedBy;
         if (visitedBy) {
             return visitedBy.map((user, index) => {
+                let avatar = user.avatar.split('/').pop();
                 return (
                     <tr key={index}>
-                        <td><img src={user.avatar} alt="avatar" className="avatar-likedby" /></td>
+                        <td><img src={process.env.PUBLIC_URL + '/img/' + avatar} alt="avatar" className="avatar-likedby" /></td>
                         <td><h5>{user.username}</h5></td>
                         <td><p>{user.date}</p></td>
                     </tr>

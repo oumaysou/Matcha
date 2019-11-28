@@ -6,6 +6,13 @@ const deleter = async (req, res) => {
     const field = req.params.field;
     const value = req.query.value;
 
+    console.log(" ~~~~~~~~~~~~~ VALUE ~~~~~~~~~~~~~~~~~~", value);
+    console.log(" ~~~~~~~~~~~~~ field ~~~~~~~~~~~~~~~~~~", field);
+    console.log(" ~~~~~~~~~~~~~ table ~~~~~~~~~~~~~~~~~~", table);
+    console.log("~~~ Body ~~~", req.body);
+    
+    
+
     const result = generalQuery.deleter({table, field, value});
     if (result.affectedRows > 0) {
         res.status(200).send({

@@ -47,7 +47,7 @@ const createUser = async (req, res) => {
                 confirmToken,
                 location
             };
-
+            
             const data = await generalQuery.insert({ table: 'users', userData });
             if (data.affectedRows > 0) {
                 const subject = "Confirm your account";
@@ -60,8 +60,12 @@ const createUser = async (req, res) => {
                     data: userData
                 });
             }
-            else
-                console.error("Something went wrong with the function generalQuery.insert().");
+            else {
+                return res.send({
+                    success: false,
+                    message: "Something went wrong,try tu use an other email",
+                });
+            }
         }
         else {
             return res.send({

@@ -8,7 +8,7 @@ const activateUser = async (req, res) => {
     if (email && confirmToken) {
         let user = await generalQuery.get({table: 'users', field: 'email', value: email});
 
-        if (user[0] && confirmToken === user[0].confirmToken) {
+        if (user[0] && confirmToken === user[0].confirmToken) {   
             const token = await createToken(user[0]);
             const fields = [];
             fields['activated'] = 1;

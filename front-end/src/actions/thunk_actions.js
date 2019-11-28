@@ -7,21 +7,21 @@ import Cookies from 'universal-cookie';
 export const register = (data) => {
     return {
         type: REGISTER,
-        data
+        data: data
     };
 };
 
 export const signIn = (data) => {
     return {
         type: SIGNIN,
-        data
+        data: data
     };
 };
 
 export const getallMatches = (data) => {
     return {
         type: GETALLMATCHES,
-        data
+        data: data
     };
 };
 
@@ -36,9 +36,10 @@ export const getallMatches = (data) => {
 export const usernameclicked = (data) => {
     return {
         type: USERNAMECLICKED,
-        data
+        data: data
     };
 };
+
 
 // ACTION FOR REGISTER
 
@@ -83,7 +84,7 @@ export const thunk_signIn = (dataSign) => {
 
 export const thunk_getallMatches = () => {
     return function (dispatch) {
-        return axios.get(`api/matches/getall`).then(({ data }) => {
+        return axios.get(`/api/matches/getall`).then(({ data }) => {
             if (data.success) {
                 dispatch(getallMatches(data.matches));
             }
@@ -103,7 +104,7 @@ export const thunk_usernameClicked = (usernameClicked) => {
 
 export const thunk_getMessages = (users) => {
     return function (dispatch) {
-        return axios.get(`api/matches/getall`, users).then(({ data }) => {
+        return axios.get(`/api/matches/getall`, users).then(({ data }) => {
             if (data.success) {
                 dispatch(getallMatches(data.matches));
             }

@@ -10,7 +10,7 @@ class RadioForm extends Component {
 
 
   render() {
-    const { label, name, text } = this.props;
+    const { label, name, text, checked } = this.props;
 
     return (
       <div className="radio-inline">
@@ -19,6 +19,7 @@ class RadioForm extends Component {
             type="radio"
             name={name}
             id={label}
+            checked={checked}
             onChange={this.handleChange}
           />
           {text}

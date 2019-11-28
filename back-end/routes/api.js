@@ -5,6 +5,8 @@ import deleter from '../controllers/general/deleter';
 import createUser from '../controllers/users/createUser';
 import signIn from '../controllers/users/signIn';
 import activateUser from '../controllers/users/activate';
+import { savePictures, delPicture } from '../controllers/profile/savePictures';
+import { saveAvatar, delAvatar } from '../controllers/profile/saveAvatar';
 import getProfile from '../controllers/profile/getProfile';
 import getMembers from '../controllers/members/getMembers';
 import { setLike, getLike, UnsetLike } from '../controllers/profile/like';
@@ -35,9 +37,13 @@ router.get('/like/set/:username', setLike);
 router.get('/like/get/:username', getLike);
 router.get('/like/Unset/:username', UnsetLike);
 
+router.post('/pictures', savePictures);
+router.post('/delpicture', delPicture);
+router.post('/avatar', saveAvatar);
+router.delete('/delavatar', delAvatar);
+
 router.get('/:table', getAll);
-router.get('/:table/:field', getter);
-// router.get('/:table/:field/:fieldBis', getterBis);
+router.get('/:table/:field/:value', getter);
 router.put('/:table/:field', updater);
 router.delete('/:table/:field', deleter);
 // router.get messageBy/messageTo
