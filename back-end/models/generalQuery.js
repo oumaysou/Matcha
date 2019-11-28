@@ -195,4 +195,36 @@ const getDistance = ({ table, myLat, myLong, minMax }) => {
     }
 }
 
-module.exports = { get, getId, getAll, insert, update, deleter, getFilters, getAge, getDistance };
+const getMatch = ({ table, myLat, myLong, minMax, myMinAge, myMaxAge, myMinPopularity, myMaxPopularity, oSex, myUsername, Change }) => {
+
+    console.log("table sql", table);
+    console.log("latitud sql", myLat);
+    console.log("longitud sql", myLong);
+    console.log("minmax sql", minMax);
+    // console.log("age sql", myAge);
+    // console.log("popu sql", myPopularity);
+    console.log("sex sql", oSex);
+    console.log("MINAGE//MAXAGE//MINPOP//MAXPOP", myMinAge, myMaxAge, myMinPopularity, myMaxPopularity);
+    console.log("sex sql", Change);
+
+    try {
+        const users = new Promise((resolve, reject) => {
+            console.log("latitud sql", myLat);
+            console.log("magnitud sql", myLong);
+            console.log("minmax sql", minMax);
+            const sql = `SELECT *, SUBSTRING_INDEX(location, ',', 1), SUBSTRING_INDEX(location, ',', -1), SQRT( POW(69.1 * (SUBSTRING_INDEX(location, ',', 1) - ${myLat}), 2) + POW(69.1 * (${myLong} - SUBSTRING_INDEX(location, ',', -1)) * COS(SUBSTRING_INDEX(location, ',', 1) / 57.3), 2)) AS distance FROM users WHERE NOT username = '${myUsername}' AND orientation = '${oSex}' AND orientation = '${oSex}' AND popularity BETWEEN ${myMinPopularity} AND ${myMaxPopularity} AND YEAR(birthday) BETWEEN ${myMinAge} AND ${myMaxAge} AND gender = '${Change}' HAVING distance < ${minMax}`;
+            db.query(sql, (err, rows) => {
+                if (err)
+                    return reject(err);
+                return resolve(rows);
+            })
+        });
+        // console.log("getdiss", JSON.stringify(users));
+        return users;
+    } catch (err) {
+        console.error('Cannot connect to the database db_matcha.\n');
+    }
+}
+    
+
+module.exports = { get, getId, getAll, insert, update, deleter, getFilters, getAge, getDistance, getMatch };

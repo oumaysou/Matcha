@@ -33,6 +33,10 @@ export default class Members extends React.Component {
             minAge: '',
             maxAge: '',
             myLocation: '',
+            myAge: '',
+            myPopularity: '',
+            myOrientation: '',
+            myGender: '',
             val: 0,
             displayMenu: false,
             finish: false
@@ -56,6 +60,10 @@ export default class Members extends React.Component {
                 this.setState({ 
                     users: data.usersData,
                     myLocation: data.myLocation,
+                    myOrientation: data.myOrientation,
+                    myPopularity: data.myPopularity,
+                    myAge: data.myAge,
+                    myGender: data.myGender,
                     finish: true 
                 })
         }).catch(err => console.error('Error: ', err));
@@ -150,7 +158,25 @@ export default class Members extends React.Component {
     }
 
     updateMatcha = () => {
-        // event.preventDefault();
+        const myLat = this.state.myLocation.split(',')[0];
+        const myLong = this.state.myLocation.split(',')[1];
+        const oSex = this.state.myOrientation;
+        const myAge = this.state.myAge;
+        const myPopularity = this.state.myPopularity;
+        const myGender = this.state.myGender;
+
+        console.log("OSEX ", oSex);
+        console.log("OSEX ", myAge);
+        console.log("OSEX ", myPopularity);
+        console.log("OSEX ", myGender);
+        axios.get(`api/members/getmatch/${myLat}/${myLong}/${myAge}/${oSex}/${myPopularity}/${myGender}`).then(({ data }) => {
+            console.log(data.usersData)
+            if (data.success)
+                this.setState({ 
+                    users: data.usersData,
+                    finish: true
+                })
+        }).catch(err => console.error('Error: ', err));
         
         console.log("ok1");
     }
@@ -194,7 +220,7 @@ export default class Members extends React.Component {
         event.preventDefault();
         // console.log(event);
 
-        console.log(event.target.name);
+        // console.log(event.target.name);
         // console.log(event.target.value);
         
         this.setState({
