@@ -5,38 +5,41 @@ import Logout from '../components/Logout';
 import '../css/header.css';
 
 export default class UserNavbar extends React.Component {
-    render() {
+	render() {
 		const profile = `/members/${this.props.username}`;
 		const map = `/map/${this.props.username}`;
 
-        return (
-            <Navbar collapseOnSelect fixedTop>
-        		<Navbar.Header>
-        			<Navbar.Brand>
-        				<Link to="/members">Matcha</Link>
-        			</Navbar.Brand>
-        			<Navbar.Toggle />
-        		</Navbar.Header>
-        		<Navbar.Collapse className="text-center">
-        			<Nav pullRight>
-        				<NavItem eventKey={1} href={map}>
+		return (
+			<Navbar collapseOnSelect fixedTop>
+				<Navbar.Header>
+					<Navbar.Brand>
+						<Link to="/members">Matcha</Link>
+					</Navbar.Brand>
+					<Navbar.Toggle />
+				</Navbar.Header>
+				<Navbar.Collapse className="text-center">
+					<Nav pullRight>
+						<NavItem eventKey={1} onClick={this.props.onClick}>
+							Notifications <i className="fa fa-bell"></i>
+						</NavItem>
+						<NavItem eventKey={1} href={map}>
 							Map <i className="fa fa-globe"></i>
 						</NavItem>
 						<NavItem eventKey={2} href='/members'>
-        					Members <i className="fa fa-users"></i>
-        				</NavItem>
-                        <NavItem eventKey={3} href='/messages'>
-                            Messages <i className="fa fa-comments"></i>
-        				</NavItem>
-        				<NavItem eventKey={4} href={profile}>
-        					My profile <i className="fa fa-user"></i>
-        				</NavItem>
+							Members <i className="fa fa-users"></i>
+						</NavItem>
+						<NavItem eventKey={3} href='/messages'>
+							Messages <i className="fa fa-comments"></i>
+						</NavItem>
+						<NavItem eventKey={4} href={profile}>
+							My profile <i className="fa fa-user"></i>
+						</NavItem>
 
-                        <Logout />
+						<Logout />
 
-                    </Nav>
-        		</Navbar.Collapse>
-        	</Navbar>
-        );
-    }
+					</Nav>
+				</Navbar.Collapse>
+			</Navbar>
+		);
+	}
 }

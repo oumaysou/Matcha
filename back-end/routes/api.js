@@ -14,6 +14,7 @@ import getMessages from '../controllers/messages/getMessages';
 import storeMessage from '../controllers/messages/storeMessage';
 import getUsers from '../controllers/users/getUsers';
 import passwordReset from '../controllers/users/passwordReset';
+import getMymsg from '../controllers/messages/getMymsg';
 
 const router = express.Router();
 
@@ -38,13 +39,17 @@ router.get('/users/passwordReset/:email', passwordReset);
 router.get('/like/set/:username', setLike);
 router.get('/like/get/:username', getLike);
 router.get('/like/Unset/:username', UnsetLike);
+router.get('/messageToMe/getMyMsg', getMymsg)
 
-router.get('/:table', getAll);
-router.get('/:table/:field', getter);
+// router.get('/:table', getAll);
+// router.get('/:table/:field', getter);
 // router.get('/:table/:field/:fieldBis', getterBis);
 router.put('/:table/:field', updater);
 router.delete('/:table/:field', deleter);
 // router.get messageBy/messageTo
+
 router.get('/message/getallmessages/:username', getMessages)
 router.post('/storemessage', storeMessage)
+
+
 module.exports = router;
