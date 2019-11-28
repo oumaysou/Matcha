@@ -61,7 +61,7 @@ export const thunk_getInfosUser = (username) => {
 
 export const thunk_editInfosUser = (userData) => {
     return function (dispatch) {
-        axios.post('/api/update', userData).then(({ data }) => {
+        return axios.post('/api/update', userData).then(({ data }) => {
             const { success, message } = data;
             if (success) {
                 dispatch(editInfosUser(data));
@@ -78,11 +78,11 @@ export const thunk_editInfosUser = (userData) => {
 
 export const thunk_savePicturesUser = (userData) => {   
     return function (dispatch) {
-        axios.post('/api/pictures', userData).then(({ data }) => {
+        return axios.post('/api/pictures', userData).then(({ data }) => {
             const { success, message } = data;
             if (success) {
                 dispatch(savePicturesUser(data));
-                NotificationManager.success(message, 'Success !', 3000);
+                window.location.reload();
             }
             else
                 NotificationManager.error(message, 'Sorry but...', 3000);
@@ -94,7 +94,7 @@ export const thunk_savePicturesUser = (userData) => {
 
 export const thunk_saveAvatarUser = (userData, oldPath) => {
     return function (dispatch) {
-        axios.post('/api/avatar', userData).then(({ data }) => {
+        return axios.post('/api/avatar', userData).then(({ data }) => {
             const { success, message } = data;
             if (success) {
                 axios.delete('/api/delavatar', oldPath)
@@ -109,12 +109,19 @@ export const thunk_saveAvatarUser = (userData, oldPath) => {
 // // ACTION FOR DEL PICTURE USER
 
 export const thunk_delPictureUser = (picture) => {
-    console.log(picture);
+    let pic =  {
+        path: picture
+    }
     return function (dispatch) {
-        axios.delete(`/api/photos/photo`, picture).then(({ data }) => {
-            if (data.success) {
+        return axios.post(`/api/delpicture`, pic).then(({ data }) => {
+            const { success, message } = data;
+            if (success) {
                 dispatch(delPictureUser(data));
-            }}).catch(err => console.error('Error: ', err));
+                window.location.reload();
+            }
+            else
+                NotificationManager.error(message, 'Sorry but...', 3000);
+            }).catch(err => console.error('Error: ', err));
     };
 };
 

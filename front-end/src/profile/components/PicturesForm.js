@@ -12,21 +12,22 @@ class PicturesForm extends React.Component {
             avatar: this.props.userInfos.userData.avatar,
             photos: this.props.userInfos.photos,
             selectedFile: null,
-            selectedAvatar: null
+            selectedAvatar: null,
+            picClicked: this.props.picClicked || false
         }
     }
 
     delPicture = (e) => {
         let picture = e.target.id;      
         
-        this.props.dispatch(thunk_delPictureUser(picture));
+        this.props.dispatch(thunk_delPictureUser(picture))
     }
 
     renderPictures() {
         const pictures = [...this.state.photos];
-        for (var index = pictures.length; index < 4; index++){
-            pictures.push(process.env.PUBLIC_URL + '/img/default-profile_picture.jpg');
-        }
+        // for (var index = pictures.length; index < 4; index++){
+        //     pictures.push(process.env.PUBLIC_URL + '/img/default-profile_picture.jpg');
+        // }
         if (pictures.lenth !== 0) {
             return pictures.map((picture, index) => {
                 const picSrc = picture.split('/').pop();
@@ -55,7 +56,7 @@ class PicturesForm extends React.Component {
                     name
                     )
                 
-                this.props.dispatch(thunk_savePicturesUser(formData));
+                this.props.dispatch(thunk_savePicturesUser(formData))
             }
             else{
                 const message = "You have already too many pictures"
@@ -162,6 +163,7 @@ class PicturesForm extends React.Component {
 const mapStateToProps = (state) => {
     return {
         userInfos: state.userInfos || {},
+        picClicked: state.picClicked
     };
 };
 

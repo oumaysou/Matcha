@@ -91,4 +91,34 @@ const savePictures = (req, res) => {
     })
 }
 
-module.exports = { savePictures };
+const delPicture = (req, res) => {
+    // console.log(req.body);
+    // console.log(req.query);
+    // console.log(req.params);
+    
+    const value = req.body.path;
+    
+    generalQuery.deleter({ table: 'photos', field: 'photo', value }).then((success) => {
+        if (success) {
+            fs.unlink(value, (err) => {
+                if (err) {console.log('Error delete file');}
+                else
+                {
+                    res.status(200).send({
+                        success: true,
+                        message: "Picture deleted",
+                    });
+                }
+            })
+            
+        }
+        else {                     
+            return res.send({
+                success: false,
+                message: "Something went wrong with your picture",
+            });
+        }
+    })
+}
+
+module.exports = { savePictures, delPicture };

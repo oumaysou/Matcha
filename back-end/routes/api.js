@@ -35,6 +35,7 @@ router.get('/like/get/:username', getLike);
 router.get('/like/Unset/:username', UnsetLike);
 
 router.post('/pictures', savePictures);
+router.post('/delpicture', delPicture);
 router.post('/avatar', saveAvatar);
 router.delete('/delavatar', delAvatar);
 

@@ -42,6 +42,14 @@ export default class Info extends React.Component {
         }).catch(err => console.error('Error: ', err));
     }
 
+    renderTags() {
+        const tags = [...this.props.profile.tags];
+
+        return tags.map((tag, index) => {
+            return <Tags key={index} tag={tag}/>
+        })
+    }
+
     render() {
         return (
             <div className="col-md-6 col-sm-12 col-xs-12">
@@ -76,7 +84,7 @@ export default class Info extends React.Component {
                                     <tr>
                                         <td><b>Tags</b></td>
                                         <td>
-                                            <Tags tags={this.state.tags} />
+                                            {this.renderTags()}
                                         </td>
                                     </tr>
                                 </tbody>
