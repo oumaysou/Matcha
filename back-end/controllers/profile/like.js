@@ -45,7 +45,7 @@ const getLike = async (req, res) => {
     const likedMe = whoLikedMe.includes(username) ? true : false;
     const likedByMe = whoILike.includes(username) ? true : false;
 
-    return res.send({ success: true, likedMe, likedByMe, showOnce: true });
+    return res.send({ success: true, likedMe, likedByMe, showOnce: true, whoLikedMe });
 }
 
 const getMatch = async (loginsArray, blockedFilter) => {

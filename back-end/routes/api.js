@@ -12,6 +12,11 @@ import getMembers from '../controllers/members/getMembers';
 import { setLike, getLike, UnsetLike } from '../controllers/profile/like';
 import getMatches from '../controllers/messages/getMatches';
 import updateUser from '../controllers/users/updateUser';
+import getMessages from '../controllers/messages/getMessages';
+import storeMessage from '../controllers/messages/storeMessage';
+import getUsers from '../controllers/users/getUsers';
+import passwordReset from '../controllers/users/passwordReset';
+import getMymsg from '../controllers/messages/getMymsg';
 
 const router = express.Router();
 
@@ -23,16 +28,20 @@ const router = express.Router();
 
 router.get('/users/getall', getMembers);
 router.get('/matches/getall', getMatches);
+// router.get('/messages/getall', getMessages);
 
 router.post('/users', createUser);
 router.post('/update', updateUser);
 router.post('/users/signin', signIn);
 router.post('/users/activate', activateUser);
 router.get('/users/profile/:username', getProfile);
+router.get('/users/getUsers', getUsers);
+router.get('/users/passwordReset/:email', passwordReset);
 
 router.get('/like/set/:username', setLike);
 router.get('/like/get/:username', getLike);
 router.get('/like/Unset/:username', UnsetLike);
+router.get('/messageToMe/getMyMsg', getMymsg)
 
 router.post('/pictures', savePictures);
 router.post('/delpicture', delPicture);
@@ -43,5 +52,10 @@ router.get('/:table', getAll);
 router.get('/:table/:field/:value', getter);
 router.put('/:table/:field', updater);
 router.delete('/:table/:field', deleter);
+// router.get messageBy/messageTo
+
+router.get('/message/getallmessages/:username', getMessages)
+router.post('/storemessage', storeMessage)
+
 
 module.exports = router;

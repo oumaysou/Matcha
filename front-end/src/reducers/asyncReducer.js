@@ -1,7 +1,8 @@
 import { REGISTER, SIGNIN, GETALLMATCHES, USERNAMECLICKED, GETINFOSUSER, EDITUSER, SAVEPICTURES, DELPICTURE, SAVEAVATAR, GETALLTAGS } from '../constantes';
 
 const initialeState = {
-    clicked: false
+    clicked: false,
+    username: ""
 }
 
 const reducer = (state = initialeState, action) => {

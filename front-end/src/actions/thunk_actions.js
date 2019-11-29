@@ -70,7 +70,6 @@ export const thunk_signIn = (dataSign) => {
                 dispatch(signIn(userData));
                 const cookies = new Cookies();
                 cookies.set('token', userData.token, { path: '/' });
-                NotificationManager.success(message, 'Success !', 6000);
             }
             else {
                 NotificationManager.error(message, 'Sorry but...', 6000);
