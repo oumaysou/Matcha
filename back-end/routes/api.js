@@ -71,6 +71,6 @@ router.get('/members/getall/:minAdmired/:maxAdmired', getFilters);
 router.get('/members/getalls/:minAge/:maxAge', getAge);
 router.get('/members/getdistances/:myLat/:myLong/:myKm', getDistance);
 router.get('/members/getmatch/:myLat/:myLong/:myAge/:oSex/:myPopularity/:myGender', getMatch);
-router.get('/members/updatetag/:nam', updateTag);
+router.get('/updatetag/:nam', updateTag);
 
 module.exports = router;

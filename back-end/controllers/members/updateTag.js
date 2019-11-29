@@ -32,7 +32,7 @@ const updateTag = async (req, res) => {
     // console.log("getfilters max: ", maxAdmired);
     // const minAdmired = req.params.minAdmired;
     // const allMembers = await generalQuery.getFilters({table: 'users', minAdmired: minAdmiredA});
-    const allMembers = await generalQuery.updateTag({tags: 'tags', tagName, myUsername});
+    const allMembers = await generalQuery.updateTag({table: 'users', tags: 'tags', tagName, myUsername});
     if (!allMembers[0]) {
         return res.send({
             success: false,

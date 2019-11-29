@@ -211,25 +211,14 @@ const getMatch = ({ table, myLat, myLong, minMax, myMinAge, myMaxAge, myMinPopul
     }
 }
 
-const updateTag = ({ tags, tagName, myUsername }) => {
+const updateTag = ({ table, tags, tagName, myUsername }) => {
     try {
         const users = new Promise((resolve, reject) => {
             console.log("tagname sql", tagName);
-            // const sql = `SELECT * FROM ${table} ORDER BY popularity DESC`;
-            // let minAdmired = 200; 
-            // const sql = `SELECT * FROM ${table} WHERE popularity BETWEEN ${minAdmired} AND ${maxAdmired} ORDER BY popularity DESC`;
-            // SELECT * FROM users WHERE NOT username = 'roxanita' AND popularity BETWEEN 100 AND 200 ORDER BY popularity DESC
 
+            // SELECT * FROM users, tags WHERE NOT taggedBy = 'rororororo' AND tag = 'soccer' AND taggedBy = username 
+            const sql = `SELECT * FROM ${table}, ${tags} WHERE NOT taggedBy = '${myUsername}' AND  tag = '${tagName}' AND taggedBy = username`;
 
-            const sql = `SELECT * FROM ${tags} WHERE NOT taggetBy = '${myUsername}' AND  tag = '${tagName}' ORDER BY id ASC`;
-            // SELECT * FROM `tags` WHERE NOT taggedBy = 'rororororo' AND tag = 'soccer' ORDER BY id ASC
-
-
-            // SELECT * FROM users WHERE YEAR(birthday) BETWEEN '1980' AND '1980' ORDER BY birthday DESC
-            // const sql = SELECT * FROM users WHERE NOT username = 'roxanita' AND birthday BETWEEN '1990-12-02' AND '1990-12-03' ORDER BY birthday DESC;
-            
-            // console.log("minadmired sql: " + minAdmired);
-            // console.log("maxadmired sql: " + maxAdmired);
             db.query(sql, (err, rows) => {
                 if (err)
                     return reject(err);

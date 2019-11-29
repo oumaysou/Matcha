@@ -39,14 +39,9 @@ function initDb() {
         	\`activated\` BOOLEAN NOT NULL DEFAULT '0',
         	\`gender\` varchar(255) NOT NULL,
         	\`orientation\` varchar(255) NOT NULL,
-<<<<<<< HEAD
 			\`birthday\` DATE NOT NULL,
-        	\`location\` varchar(255),
-=======
-        	\`birthday\` DATE NOT NULL,
 			\`location\` varchar(255),
 			\`city\` varchar(255),
->>>>>>> 809e3b79d20a964d77609e2f4094b1de63f94ccb
         	\`connected\` BOOLEAN NOT NULL DEFAULT '0',
         	\`lastConnection\` varchar(255),
         	\`popularity\` INT NOT NULL DEFAULT '0',

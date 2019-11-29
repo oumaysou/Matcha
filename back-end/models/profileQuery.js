@@ -183,8 +183,6 @@ const UnsetLike = async (myUsername, username) => {
     return result.affectedRows > 0 ? true : false;
 }
 
-<<<<<<< HEAD
-=======
 const getMessages = async (myUsername, username) => {
 
     const msgS = await generalQuery.getBis({ table: 'messages', field: 'messageBy', value: myUsername, fieldBis: 'messageTo', valueBis: username })
@@ -199,7 +197,6 @@ const getMymsgQ = async (myUsername) => {
     return allMessages;
 }
 
->>>>>>> 809e3b79d20a964d77609e2f4094b1de63f94ccb
 module.exports = {
     whoBlockedMe,
     getBlockedByMe,

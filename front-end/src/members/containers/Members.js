@@ -111,7 +111,7 @@ export default class Members extends React.Component {
         console.log(id);
         console.log(nam);
         //     id: event.currentTarget.dataset.id,
-        axios.get(`api/members/updatetag/${nam}`).then(({ data }) => {
+        axios.get(`api/updatetag/${nam}`).then(({ data }) => {
             // console.log("users ousssama "+data.usersData)
             if (data.success)
                 this.setState({ 
@@ -285,7 +285,7 @@ export default class Members extends React.Component {
                                             { this.state.displayMenu ? (
                                                 <ul onClick={this.showDropdownMenu} className="ul-tag">
                                                     {/* <li "><a className="active" href="#Create Page">Create Page</a></li> */}
-                                                    <li onClick={this.updateTag} data-id="1" data-name="soccer" className="li-tag"><a href="#Soccer">Soccer</a></li>
+                                                    <li onClick={this.updateTag}  data-id="1" data-name="soccer" className="li-tag"><a href="#Soccer">Soccer</a></li>
                                                     <li onClick={this.updateTag} data-id="2" data-name="beach" className="li-tag"><a href="#Beach">Beach</a></li>
                                                     <li onClick={this.updateTag} data-id="3" data-name="date" className="li-tag"><a href="#Date">Date</a></li>
                                                     <li onClick={this.updateTag} data-id="4" data-name="computer" className="li-tag"><a href="#Computer">Computer</a></li>
