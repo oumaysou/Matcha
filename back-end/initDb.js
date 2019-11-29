@@ -72,7 +72,22 @@ function initDb() {
         	\`id\` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         	\`tag\` varchar(255) NOT NULL,
         	\`taggedBy\` varchar(255) NOT NULL
-        );`)
+		);`)
+		
+		dbQuery(`DROP Table IF EXISTS \`tagslist\``)
+
+		dbQuery(`CREATE TABLE IF NOT EXISTS \`tagslist\` (
+			\`id\` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+			\`tagName\` varchar(255) NOT NULL
+		  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;`)
+
+		dbQuery(`INSERT INTO \`tagslist\` (\`tagName\`) VALUES
+		('soccer'),
+		('beach'),
+		('date'),
+		('computer'),
+		('money'),
+		('sport')`)
 
 		dbQuery(`CREATE TABLE IF NOT EXISTS \`blocks\` (
         	\`id\` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,

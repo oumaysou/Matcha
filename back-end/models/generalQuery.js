@@ -51,6 +51,8 @@ const getAll = ({ table }) => {
 }
 
 const insert = ({ table, userData }) => {
+    console.log(userData);
+    
     try {
         const result = new Promise((resolve, reject) => {
             const sql = `INSERT INTO ${table} SET ?`;           
