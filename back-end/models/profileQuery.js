@@ -191,6 +191,12 @@ const getMessages = async (myUsername, username) => {
     return allMessages;
 }
 
+const getMymsgQ = async (myUsername) => {
+
+    const allMessages = await generalQuery.get({ table: 'messages', field: 'messageTo', value: myUsername })
+    return allMessages;
+}
+
 module.exports = {
     whoBlockedMe,
     getBlockedByMe,
@@ -204,5 +210,6 @@ module.exports = {
     setNewLike,
     getPhotos,
     setNewPhoto,
-    getMessages
+    getMessages,
+    getMymsgQ
 }
