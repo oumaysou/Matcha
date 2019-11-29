@@ -13,12 +13,9 @@
     "nodemon": "^1.19.4",
     "generate-password": "^1.4.2",
     "path": "^0.12.7",
-<<<<<<< HEAD
     "rc-slider": "^8.7.1",
-=======
     "pigeon-maps": "^0.14.0",
     "pigeon-marker": "^0.3.4",
->>>>>>> 809e3b79d20a964d77609e2f4094b1de63f94ccb
     "redux-thunk": "^2.3.0",
     "serve-favicon": "^2.5.0",
     "util": "^0.12.1"
