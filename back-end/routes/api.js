@@ -5,6 +5,8 @@ import deleter from '../controllers/general/deleter';
 import createUser from '../controllers/users/createUser';
 import signIn from '../controllers/users/signIn';
 import activateUser from '../controllers/users/activate';
+import { savePictures, delPicture } from '../controllers/profile/savePictures';
+import { saveAvatar, delAvatar } from '../controllers/profile/saveAvatar';
 import getProfile from '../controllers/profile/getProfile';
 import getMembers from '../controllers/members/getMembers';
 import getFilters from '../controllers/members/getFilters';
@@ -16,6 +18,11 @@ import getDistance from '../controllers/members/getDistance'
 import getMatch from '../controllers/members/getMatch'
 import updateTag from '../controllers/members/updateTag'
 
+import getMessages from '../controllers/messages/getMessages';
+import storeMessage from '../controllers/messages/storeMessage';
+import getUsers from '../controllers/users/getUsers';
+import passwordReset from '../controllers/users/passwordReset';
+import getMymsg from '../controllers/messages/getMymsg';
 
 const router = express.Router();
 
@@ -27,22 +34,38 @@ const router = express.Router();
 
 router.get('/users/getall', getMembers);
 router.get('/matches/getall', getMatches);
+// router.get('/messages/getall', getMessages);
 
 router.post('/users', createUser);
 router.post('/update', updateUser);
 router.post('/users/signin', signIn);
 router.post('/users/activate', activateUser);
 router.get('/users/profile/:username', getProfile);
+router.get('/users/getUsers', getUsers);
+router.get('/users/passwordReset/:email', passwordReset);
 
 router.get('/like/set/:username', setLike);
 router.get('/like/get/:username', getLike);
 router.get('/like/Unset/:username', UnsetLike);
+router.get('/messageToMe/getMyMsg', getMymsg)
+
+router.post('/pictures', savePictures);
+router.post('/delpicture', delPicture);
+router.post('/avatar', saveAvatar);
+router.delete('/delavatar', delAvatar);
 
 router.get('/:table', getAll);
-router.get('/:table/:field', getter);
+router.get('/:table/:field/:value', getter);
+// router.get('/:table', getAll);
+// router.get('/:table/:field', getter);
 // router.get('/:table/:field/:fieldBis', getterBis);
 router.put('/:table/:field', updater);
 router.delete('/:table/:field', deleter);
+// router.get messageBy/messageTo
+
+router.get('/message/getallmessages/:username', getMessages)
+router.post('/storemessage', storeMessage)
+
 
 router.get('/members/getall/:minAdmired/:maxAdmired', getFilters);
 router.get('/members/getalls/:minAge/:maxAge', getAge);

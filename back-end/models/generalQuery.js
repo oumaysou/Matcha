@@ -1,4 +1,3 @@
-import mysql from 'mysql';
 import { db } from '../initDb.js';
 
 const get = ({ table, field, value }) => {
@@ -17,23 +16,6 @@ const get = ({ table, field, value }) => {
         console.error('Cannot connect to the database db_matcha.\n');
     }
 };
-
-// const getBis = ({table, field, value, fieldBis, valueBis}) => {
-//     try {
-//         const user = new Promise((resolve, reject) => {
-//             const sql = `SELECT * FROM ${table} WHERE ${field} = ? AND ${fieldBis} = ?`;
-//             db.query(sql, [value, valueBis], (err, row) => {
-//                 if (err)
-//                     return reject(err);
-//                 return resolve(row);
-//             })
-//         })
-//         return user;
-
-//     } catch(err) {
-//         console.error('Cannot connect to the database db_matcha.\n');
-//     }
-// };
 
 const getId = ({ table, field, value, fieldBis, valueBis }) => {
     try {
@@ -70,9 +52,11 @@ const getAll = ({ table }) => {
 }
 
 const insert = ({ table, userData }) => {
+    console.log(userData);
+    
     try {
         const result = new Promise((resolve, reject) => {
-            const sql = `INSERT INTO ${table} SET ?`;
+            const sql = `INSERT INTO ${table} SET ?`;           
             db.query(sql, userData, (err, data) => {
                 if (err)
                     return resolve(err);
@@ -86,7 +70,7 @@ const insert = ({ table, userData }) => {
 };
 
 const update = ({ table, field, value, where, whereValue }) => {
-    try {
+    try {        
         const user = new Promise((resolve, reject) => {
             const sql = `UPDATE ${table} SET ${field} = ? WHERE ${where} = ?`;
             db.query(sql, [value, whereValue], (err, row) => {
@@ -102,13 +86,14 @@ const update = ({ table, field, value, where, whereValue }) => {
 };
 
 const deleter = ({ table, field, value }) => {
+    console.log("DELETER");
+    
     try {
         const result = new Promise((resolve, reject) => {
             const sql = `DELETE FROM ${table} WHERE ${field} = ?`;
             db.query(sql, value, (err, row) => {
                 if (err)
                     reject(err);
-                console.log(JSON.stringify(row))
                 resolve(row);
             })
         });

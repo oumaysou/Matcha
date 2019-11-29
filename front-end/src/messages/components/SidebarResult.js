@@ -32,7 +32,7 @@ class SidebarResult extends React.Component {
                                 <span className="name-meta">{username}</span>
                             </div>
                             <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                <span className="time-meta pull-right">18:18</span>
+                                <span className="time-meta pull-right">chat now</span>
                             </div>
                         </div>
                     </div>

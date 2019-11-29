@@ -6,7 +6,7 @@ import sendMail from '../../utils/sendMail.js';
 
 const signIn = async (req, res) => {
     const { username, password } = req.body;
-    let user = await generalQuery.get({table: 'users', field: 'username', value: username});
+    let user = await generalQuery.get({ table: 'users', field: 'username', value: username });
     if (!user[0]) {
         return res.send({
             success: false,
@@ -14,7 +14,7 @@ const signIn = async (req, res) => {
         });
     }
     else {
-        const checkPassword = await comparePassword({password, hash: user[0].password});
+        const checkPassword = await comparePassword({ password, hash: user[0].password });
         if (!checkPassword) {
             return res.send({
                 success: false,
@@ -33,6 +33,12 @@ const signIn = async (req, res) => {
             });
         }
         else {
+            if (user[0].connected) {
+                return res.send({
+                    success: false,
+                    message: `You are already connected!`,
+                });
+            }
             const updatedLastConnection = await generalQuery.update({
                 table: 'users',
                 field: 'lastConnection',
@@ -49,7 +55,7 @@ const signIn = async (req, res) => {
             });
 
             if (updatedLastConnection.affectedRows > 0 && updatedConnected.affectedRows > 0) {
-                user = await generalQuery.get({table: 'users', field: 'username', value: username});
+                user = await generalQuery.get({ table: 'users', field: 'username', value: username });
                 return res.send({
                     success: true,
                     message: `Welcome ${user[0].firstName} !`,

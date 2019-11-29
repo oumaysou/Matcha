@@ -1,7 +1,8 @@
-import { REGISTER, SIGNIN, GETALLMATCHES, USERNAMECLICKED } from '../constantes';
+import { REGISTER, SIGNIN, GETALLMATCHES, USERNAMECLICKED, GETINFOSUSER, EDITUSER, SAVEPICTURES, DELPICTURE, SAVEAVATAR, GETALLTAGS } from '../constantes';
 
 const initialeState = {
-    clicked: false
+    clicked: false,
+    username: ""
 }
 
 const reducer = (state = initialeState, action) => {
@@ -28,6 +29,33 @@ const reducer = (state = initialeState, action) => {
                 usernameClicked: action.data,
                 clicked: true
 
+            };
+        case GETINFOSUSER:
+            return {
+                ...state,
+                userInfos: action.data
+            };
+        case GETALLTAGS:
+            return {
+                ...state,
+                allTags: action.data
+            };
+        case EDITUSER:
+            return {
+                ...state,
+                updated: true
+            };
+        case SAVEPICTURES:
+            return {
+                ...state
+            };
+        case DELPICTURE:
+        return {
+            ...state
+        };
+        case SAVEAVATAR:
+            return {
+                ...state
             };
         default: return state
     }

@@ -1,6 +1,24 @@
 import ipInfo from 'ipinfo';
 
-const getLocation = async (callback) => {
+const getCity = async (callback) => {
+    const city = new Promise((resolve, reject) => {
+        ipInfo((err, cLoc) => {
+            let city = "";
+
+            if (!err) {
+                city = cLoc.city;
+                resolve(city);
+            }
+            else {
+                city = "";
+                reject(err);
+            }
+        })
+    })
+    return city;
+}
+
+const getLocation = async (callback) => {
     const location = new Promise((resolve, reject) => {
         ipInfo((err, cLoc) => {
             let tab = [];
@@ -22,4 +40,7 @@ const getLocation = async (callback) => {
     return location;
 }
 
-module.exports = getLocation;
+module.exports = {
+    getCity, 
+    getLocation
+}

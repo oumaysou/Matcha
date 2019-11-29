@@ -183,6 +183,23 @@ const UnsetLike = async (myUsername, username) => {
     return result.affectedRows > 0 ? true : false;
 }
 
+<<<<<<< HEAD
+=======
+const getMessages = async (myUsername, username) => {
+
+    const msgS = await generalQuery.getBis({ table: 'messages', field: 'messageBy', value: myUsername, fieldBis: 'messageTo', valueBis: username })
+    const msgR = await generalQuery.getBis({ table: 'messages', field: 'messageBy', value: username, fieldBis: 'messageTo', valueBis: myUsername })
+    let allMessages = msgS.concat(msgR)
+    return allMessages;
+}
+
+const getMymsgQ = async (myUsername) => {
+
+    const allMessages = await generalQuery.get({ table: 'messages', field: 'messageTo', value: myUsername })
+    return allMessages;
+}
+
+>>>>>>> 809e3b79d20a964d77609e2f4094b1de63f94ccb
 module.exports = {
     whoBlockedMe,
     getBlockedByMe,
@@ -195,5 +212,7 @@ module.exports = {
     whoILike,
     setNewLike,
     getPhotos,
-    setNewPhoto
+    setNewPhoto,
+    getMessages,
+    getMymsgQ
 }

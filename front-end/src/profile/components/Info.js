@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import moment from 'moment';
 import Tags from './Tag';
 import '../css/info.css';
@@ -13,7 +13,7 @@ export default class Info extends React.Component {
             orientation: '',
             latitude: '',
             longitude: '',
-            address: '',
+            cityName: '',
             lastConnection: '',
             tags: ''
         }
@@ -25,21 +25,30 @@ export default class Info extends React.Component {
             gender,
             orientation,
             location,
+            city,
             lastConnection
         } = this.props.profile;
 
         const age = moment().diff(birthday, 'years');
         const latitude = location.split(',')[0];
         const longitude = location.split(',')[1];
-        this.setState({ age, birthday, gender, orientation, latitude, longitude, lastConnection })
+        const cityName = city;
+        this.setState({ age, birthday, gender, orientation, latitude, longitude, cityName, lastConnection })
     }
 
     componentDidMount() {
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&key=AIzaSyAHaj67ZsG8UrjwBp1RH9isMQdUK8TS97Y `;
-        axios.get(url).then((data) => {
-            // console.log(JSON.stringify(data))
-            return this.setState({ address: data.data.results[0].formatted_address });
-        }).catch(err => console.error('Error: ', err));
+        // const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&key=AIzaSyAHaj67ZsG8UrjwBp1RH9isMQdUK8TS97Y `;
+        // axios.get(url).then((data) => {
+        //     return this.setState({ address: data.data.results[0].formatted_address });
+        // }).catch(err => console.error('Error: ', err));
+    }
+
+    renderTags() {
+        const tags = [...this.props.profile.tags];
+
+        return tags.map((tag, index) => {
+            return <Tags key={index} tag={tag}/>
+        })
     }
 
     render() {
@@ -66,8 +75,8 @@ export default class Info extends React.Component {
                                         <td>{this.state.orientation}</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Address</b></td>
-                                        <td>{this.state.address}</td>
+                                        <td><b>City</b></td>
+                                        <td>{this.state.cityName}</td>
                                     </tr>
                                     <tr>
                                         <td><b>Last connection</b></td>
@@ -76,7 +85,7 @@ export default class Info extends React.Component {
                                     <tr>
                                         <td><b>Tags</b></td>
                                         <td>
-                                            <Tags tags={this.state.tags} />
+                                            {this.renderTags()}
                                         </td>
                                     </tr>
                                 </tbody>

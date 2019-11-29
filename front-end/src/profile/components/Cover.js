@@ -19,15 +19,15 @@ export default class Cover extends React.Component {
     }
 
     render() {
-        const { username, firstName, lastName, popularity, avatar } = this.props.profile;
-
+        const { username, firstName, lastName, popularity } = this.props.profile;
+        const avatar = this.props.profile.avatar.split('/').pop();
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 text-center">
                         <div className="panel panel-default">
                             <div className="userpic">
-                                <img src={avatar} alt="avatar" id="avatar" />
+                                <img src={process.env.PUBLIC_URL + '/img/' + avatar} alt="avatar" id="avatar" />
                             </div>
                             <h3 className="name">{firstName} {lastName}</h3>
                             <h5>{username}</h5>

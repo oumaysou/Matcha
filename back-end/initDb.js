@@ -39,8 +39,14 @@ function initDb() {
         	\`activated\` BOOLEAN NOT NULL DEFAULT '0',
         	\`gender\` varchar(255) NOT NULL,
         	\`orientation\` varchar(255) NOT NULL,
+<<<<<<< HEAD
 			\`birthday\` DATE NOT NULL,
         	\`location\` varchar(255),
+=======
+        	\`birthday\` DATE NOT NULL,
+			\`location\` varchar(255),
+			\`city\` varchar(255),
+>>>>>>> 809e3b79d20a964d77609e2f4094b1de63f94ccb
         	\`connected\` BOOLEAN NOT NULL DEFAULT '0',
         	\`lastConnection\` varchar(255),
         	\`popularity\` INT NOT NULL DEFAULT '0',
@@ -71,7 +77,22 @@ function initDb() {
         	\`id\` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         	\`tag\` varchar(255) NOT NULL,
         	\`taggedBy\` varchar(255) NOT NULL
-        );`)
+		);`)
+		
+		dbQuery(`DROP Table IF EXISTS \`tagslist\``)
+
+		dbQuery(`CREATE TABLE IF NOT EXISTS \`tagslist\` (
+			\`id\` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+			\`tagName\` varchar(255) NOT NULL
+		  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;`)
+
+		dbQuery(`INSERT INTO \`tagslist\` (\`tagName\`) VALUES
+		('soccer'),
+		('beach'),
+		('date'),
+		('computer'),
+		('money'),
+		('sport')`)
 
 		dbQuery(`CREATE TABLE IF NOT EXISTS \`blocks\` (
         	\`id\` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -89,7 +110,8 @@ function initDb() {
         	\`id\` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         	\`message\` varchar(255) NOT NULL,
         	\`messageBy\` varchar(255) NOT NULL,
-        	\`messageTo\` varchar(255) NOT NULL
+        	\`messageTo\` varchar(255) NOT NULL,
+			\`time\` DATE NOT NULL
         );`)
 
 	});

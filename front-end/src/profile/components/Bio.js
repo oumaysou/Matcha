@@ -10,12 +10,14 @@ export default class Bio extends React.Component {
     }
 
     componentDidMount() {
-        if (!this.props.biography)
+        if (!this.props.profile.bio)
             this.setState({open: false});
         else
-            this.setState({biography: this.props.biography});
+            this.setState({biography: this.props.profile.bio});
     }
     render() {
+        console.log(this.props.profile.bio);
+        
         return (
             <div className="container">
                 <div className="panel panel-default">
@@ -24,7 +26,7 @@ export default class Bio extends React.Component {
                             <a data-toggle="collapse" href="#bio">Biography</a>
                         </h4>
                     </div>
-                    <div id="bio" className="panel-collapse collapse {this.state.open}">
+                    <div id="bio" className="panel-collapse">
                         <div className="panel-body text-center">
                             {this.state.biography}
                         </div>

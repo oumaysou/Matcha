@@ -1,7 +1,19 @@
 .inputForm {
-    margin: 5vh 5vw;
+    margin: 1vh 5vw;
 }
 
 input[type="file"] {
     display: inline-flex !important;
+}
+
+.pannel{
+    padding: 20px;
+}
+
+.mb5{
+    margin-bottom: 5vh;
+}
+
+.block{
+    display: block;
 }

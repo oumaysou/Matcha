@@ -22,6 +22,7 @@ export default class Profile extends React.Component {
             orientation: '',
             lastConnection: '',
             location: '',
+            city: '',
             bio: '',
             avatar: '',
             birthday: '',
@@ -47,6 +48,7 @@ export default class Profile extends React.Component {
                     orientation: data.userData.orientation,
                     lastConnection: data.userData.lastConnection,
                     location: data.userData.location,
+                    city: data.userData.city,
                     birthday: data.userData.birthday,
                     avatar: data.userData.avatar,
                     bio: data.userData.bio,
@@ -76,6 +78,7 @@ export default class Profile extends React.Component {
         this.LoadOnce();
         if (this.state.finish) {
             return (
+                
                 <div id='profile'>
                     <Cover profile={this.state} />
                     <Bio profile={this.state} />
