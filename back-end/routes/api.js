@@ -14,6 +14,7 @@ import updateUser from '../controllers/users/updateUser';
 import getAge from '../controllers/members/getAge'
 import getDistance from '../controllers/members/getDistance'
 import getMatch from '../controllers/members/getMatch'
+import updateTag from '../controllers/members/updateTag'
 
 
 const router = express.Router();
@@ -47,5 +48,6 @@ router.get('/members/getall/:minAdmired/:maxAdmired', getFilters);
 router.get('/members/getalls/:minAge/:maxAge', getAge);
 router.get('/members/getdistances/:myLat/:myLong/:myKm', getDistance);
 router.get('/members/getmatch/:myLat/:myLong/:myAge/:oSex/:myPopularity/:myGender', getMatch);
+router.get('/members/updatetag/:nam', updateTag);
 
 module.exports = router;

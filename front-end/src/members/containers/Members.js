@@ -46,6 +46,7 @@ export default class Members extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.showDropdownMenu = this.showDropdownMenu.bind(this);
         this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
+        this.updateTag = this.updateTag.bind(this);
         // this.handleChange = this.handleChange.bind(this);
         // this.sortByPriceDesc = this.sortByPriceDesc.bind(this);
     }
@@ -102,13 +103,32 @@ export default class Members extends React.Component {
     updateTag = (event) => {
         // const latitude = location.split(',')[0];
         // const longitude = location.split(',')[1];
+        const id = event.currentTarget.dataset.id
+        const nam = event.currentTarget.dataset.name
+        // this.setState({
 
-        this.setState({
-            name: event.target.name,
-            // location: data.myLocation
-        });
-        console.log("1", this.state.myLocation);
+
+        console.log(id);
+        console.log(nam);
+        //     id: event.currentTarget.dataset.id,
+        axios.get(`api/members/updatetag/${nam}`).then(({ data }) => {
+            // console.log("users ousssama "+data.usersData)
+            if (data.success)
+                this.setState({ 
+                    users: data.usersData,
+                    finish: true 
+                })
+        }).catch(err => console.error('Error: ', err));
+
+        // });
+
+        // console.log(this.id);
         
+
+        // console.log("1", this.state.name);
+        // console.log(event.target.name);
+        // console.log(this.state.name);
+        // console.log(event.target.value);
 
         // SELECT latitude, longitude, SQRT(
         // POW(69.1 * (latitude - [startlat]), 2) +
@@ -265,12 +285,12 @@ export default class Members extends React.Component {
                                             { this.state.displayMenu ? (
                                                 <ul onClick={this.showDropdownMenu} className="ul-tag">
                                                     {/* <li "><a className="active" href="#Create Page">Create Page</a></li> */}
-                                                    <li onClick={this.updateTag} name="soccerTag" className="li-tag"><a href="#Soccer">Soccer</a></li>
-                                                    <li onClick={this.updateTag} name="beachTag" className="li-tag"><a href="#Beach">Beach</a></li>
-                                                    <li onClick={this.updateTag} name="dateTag" className="li-tag"><a href="#Date">Date</a></li>
-                                                    <li onClick={this.updateTag} name="computerTag" className="li-tag"><a href="#Computer">Computer</a></li>
-                                                    <li onClick={this.updateTag} name="moneyTag" className="li-tag"><a href="#Money">Money</a></li>
-                                                    <li onClick={this.updateTag} name="sportTag" className="li-tag"><a href="#Sport">Sport</a></li>
+                                                    <li onClick={this.updateTag} data-id="1" data-name="soccer" className="li-tag"><a href="#Soccer">Soccer</a></li>
+                                                    <li onClick={this.updateTag} data-id="2" data-name="beach" className="li-tag"><a href="#Beach">Beach</a></li>
+                                                    <li onClick={this.updateTag} data-id="3" data-name="date" className="li-tag"><a href="#Date">Date</a></li>
+                                                    <li onClick={this.updateTag} data-id="4" data-name="computer" className="li-tag"><a href="#Computer">Computer</a></li>
+                                                    <li onClick={this.updateTag} data-id="5" data-name="money" className="li-tag"><a href="#Money">Money</a></li>
+                                                    <li onClick={this.updateTag} data-id="6" data-name="sport" className="li-tag"><a href="#Sport">Sport</a></li>
                                                 </ul>
                                             ): (null)}
                                         </form>

@@ -212,7 +212,7 @@ const getMatch = ({ table, myLat, myLong, minMax, myMinAge, myMaxAge, myMinPopul
             console.log("latitud sql", myLat);
             console.log("magnitud sql", myLong);
             console.log("minmax sql", minMax);
-            const sql = `SELECT *, SUBSTRING_INDEX(location, ',', 1), SUBSTRING_INDEX(location, ',', -1), SQRT( POW(69.1 * (SUBSTRING_INDEX(location, ',', 1) - ${myLat}), 2) + POW(69.1 * (${myLong} - SUBSTRING_INDEX(location, ',', -1)) * COS(SUBSTRING_INDEX(location, ',', 1) / 57.3), 2)) AS distance FROM users WHERE NOT username = '${myUsername}' AND orientation = '${oSex}' AND orientation = '${oSex}' AND popularity BETWEEN ${myMinPopularity} AND ${myMaxPopularity} AND YEAR(birthday) BETWEEN ${myMinAge} AND ${myMaxAge} AND gender = '${Change}' HAVING distance < ${minMax}`;
+            const sql = `SELECT *, SUBSTRING_INDEX(location, ',', 1), SUBSTRING_INDEX(location, ',', -1), SQRT( POW(69.1 * (SUBSTRING_INDEX(location, ',', 1) - ${myLat}), 2) + POW(69.1 * (${myLong} - SUBSTRING_INDEX(location, ',', -1)) * COS(SUBSTRING_INDEX(location, ',', 1) / 57.3), 2)) AS distance FROM users WHERE NOT username = '${myUsername}' AND orientation = '${oSex}' AND popularity BETWEEN ${myMinPopularity} AND ${myMaxPopularity} AND YEAR(birthday) BETWEEN ${myMinAge} AND ${myMaxAge} AND gender = '${Change}' HAVING distance < ${minMax}`;
             db.query(sql, (err, rows) => {
                 if (err)
                     return reject(err);
@@ -225,6 +225,36 @@ const getMatch = ({ table, myLat, myLong, minMax, myMinAge, myMaxAge, myMinPopul
         console.error('Cannot connect to the database db_matcha.\n');
     }
 }
-    
 
-module.exports = { get, getId, getAll, insert, update, deleter, getFilters, getAge, getDistance, getMatch };
+const updateTag = ({ tags, tagName, myUsername }) => {
+    try {
+        const users = new Promise((resolve, reject) => {
+            console.log("tagname sql", tagName);
+            // const sql = `SELECT * FROM ${table} ORDER BY popularity DESC`;
+            // let minAdmired = 200; 
+            // const sql = `SELECT * FROM ${table} WHERE popularity BETWEEN ${minAdmired} AND ${maxAdmired} ORDER BY popularity DESC`;
+            // SELECT * FROM users WHERE NOT username = 'roxanita' AND popularity BETWEEN 100 AND 200 ORDER BY popularity DESC
+
+
+            const sql = `SELECT * FROM ${tags} WHERE NOT taggetBy = '${myUsername}' AND  tag = '${tagName}' ORDER BY id ASC`;
+            // SELECT * FROM `tags` WHERE NOT taggedBy = 'rororororo' AND tag = 'soccer' ORDER BY id ASC
+
+
+            // SELECT * FROM users WHERE YEAR(birthday) BETWEEN '1980' AND '1980' ORDER BY birthday DESC
+            // const sql = SELECT * FROM users WHERE NOT username = 'roxanita' AND birthday BETWEEN '1990-12-02' AND '1990-12-03' ORDER BY birthday DESC;
+            
+            // console.log("minadmired sql: " + minAdmired);
+            // console.log("maxadmired sql: " + maxAdmired);
+            db.query(sql, (err, rows) => {
+                if (err)
+                    return reject(err);
+                return resolve(rows);
+            })
+        });
+        return users;
+    } catch (err) {
+        console.error('Cannot connect to the database db_matcha.\n');
+    }
+}
+
+module.exports = { get, getId, getAll, insert, update, deleter, getFilters, getAge, getDistance, getMatch, updateTag };

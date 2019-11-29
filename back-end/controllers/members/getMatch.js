@@ -18,9 +18,9 @@ const getMatch = async (req, res) => {
     let myGender = req.params.myGender;
     let myGenderMale = "male";
     let myGenderFemale = "Female";
-    let mysexGayA;
-    let mysexGayB;
-    let mysexBi;
+    // let mysexGayA;
+    // let mysexGayB;
+    // let mysexBi;
     let Change;
 
 
