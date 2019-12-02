@@ -6,6 +6,8 @@ import utils from '../../general/components/utils';
 import Map from 'pigeon-maps'
 import Marker from 'pigeon-marker'
 
+import '../css/map.css'
+
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoicGlnZW9uLW1hcHMiLCJhIjoiY2l3eW01Y2E2MDA4dzJ6cWh5dG9pYWlwdiJ9.cvdCf-7PymM1Y3xp5j71NQ'
 
 const mapbox = (mapboxId, accessToken) => (x, y, z, dpr) => {
@@ -29,29 +31,6 @@ const providers = {
   light: mapbox('light-v9', MAPBOX_ACCESS_TOKEN),
   dark: mapbox('dark-v9', MAPBOX_ACCESS_TOKEN)
 }
-
-function isMapBox (provider) {
-  return provider === 'streets' || provider === 'satellite' || provider === 'outdoors' || provider === 'light' || provider === 'dark'
-}
-
-const MapboxAttribution = () => (
-  <span className='map-attribution'>
-    <span>© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a></span>{' | '}
-    <span>© <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a></span>{' | '}
-  </span>
-)
-
-const StamenAttribution = () => (
-  <span className='map-attribution'>
-    Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.
-  </span>
-)
-
-const WikimediaAttribution = () => (
-  <span className='map-attribution'>
-    Map tiles by <a href='https://foundation.wikimedia.org/w/index.php?title=Maps_Terms_of_Use#Where_does_the_map_data_come_from.3F'>Wikimedia</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>
-  </span>
-)
 
 export default class usersMap extends Component {
   constructor (props) {
@@ -151,52 +130,30 @@ export default class usersMap extends Component {
     }
 
   render () {
-    if (this.state.loaded === true)
-    {
-      const { center, zoom, provider, animate, metaWheelZoom, twoFingerDrag, zoomSnap, mouseEvents, touchEvents, minZoom, maxZoom } = this.state
-      return (
-        <div className="text-center">
-            <h3>Map</h3>
-            <hr style={{width: 600}}/>
-            <div style={{maxWidth: 800, margin: '0 auto'}}>
-                <Map
-                    limitBounds='edge'
-                    center={center}
-                    zoom={zoom}
-                    provider={providers[provider]}
-                    dprs={[1, 2]}
-                    onBoundsChanged={this.handleBoundsChange}
-                    onClick={this.handleClick}
-                    animate={animate}
-                    metaWheelZoom={metaWheelZoom}
-                    twoFingerDrag={twoFingerDrag}
-                    zoomSnap={zoomSnap}
-                    mouseEvents={mouseEvents}
-                    touchEvents={touchEvents}
-                    minZoom={minZoom}
-                    maxZoom={maxZoom}
-                    attribution={
-                    isMapBox(provider)
-                        ? <MapboxAttribution />
-                        : provider === 'stamen'
-                        ? <StamenAttribution />
-                        : provider === 'wikimedia'
-                            ? <WikimediaAttribution />
-                            : null}
-                    defaultWidth={800}
-                    height={800}
-                    boxClassname="pigeon-filters">
-                    {this.getAllMarkers()}
-                    {this.getMarkerUser()}
-                    {isMapBox(provider) && <span className='mapbox-wordmark' />}
-                </Map>
-            </div>
-        </div>
-      )
-    }
-    else
-    {
-      return <utils.loading />;
-    }
+    const { center, zoom, provider, animate, metaWheelZoom, twoFingerDrag, zoomSnap, mouseEvents, touchEvents, minZoom, maxZoom } = this.state
+    return (
+    <div className="div-map">
+        <Map
+            limitBounds='edge'
+            center={center}
+            zoom={zoom}
+            provider={providers[provider]}
+            dprs={[1, 2]}
+            onBoundsChanged={this.handleBoundsChange}
+            onClick={this.handleClick}
+            animate={animate}
+            metaWheelZoom={metaWheelZoom}
+            twoFingerDrag={twoFingerDrag}
+            zoomSnap={zoomSnap}
+            mouseEvents={mouseEvents}
+            touchEvents={touchEvents}
+            minZoom={minZoom}
+            maxZoom={maxZoom}
+            boxClassname="pigeon-filters">
+            {this.getAllMarkers()}
+            {this.getMarkerUser()}
+        </Map>
+    </div>
+    )
   }
 }

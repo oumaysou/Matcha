@@ -8,6 +8,7 @@ import LikedBy from '../components/LikedBy';
 import VisitedBy from '../components/VisitedBy';
 import utils from '../../general/components/utils';
 import '../css/profile.css';
+import GetLocation from '../../geolocation/getLocation';
 
 export default class Profile extends React.Component {
     constructor(props) {
@@ -95,6 +96,7 @@ export default class Profile extends React.Component {
                             </div>
                         </div>
                     </div>
+                    <GetLocation />
                 </div>
             );
         }
