@@ -2,8 +2,8 @@ import mysql from 'mysql';
 
 const db = mysql.createConnection({
 	host: 'localhost',
-	user: 'admin',
-	password: 'admin'
+	user: 'root',
+	password: '123456'
 });
 
 function dbQuery(req) {
@@ -39,7 +39,7 @@ function initDb() {
         	\`activated\` BOOLEAN NOT NULL DEFAULT '0',
         	\`gender\` varchar(255) NOT NULL,
         	\`orientation\` varchar(255) NOT NULL,
-        	\`birthday\` DATE NOT NULL,
+			\`birthday\` DATE NOT NULL,
 			\`location\` varchar(255),
 			\`city\` varchar(255),
         	\`connected\` BOOLEAN NOT NULL DEFAULT '0',
@@ -72,7 +72,22 @@ function initDb() {
         	\`id\` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
         	\`tag\` varchar(255) NOT NULL,
         	\`taggedBy\` varchar(255) NOT NULL
-        );`)
+		);`)
+		
+		dbQuery(`DROP Table IF EXISTS \`tagslist\``)
+
+		dbQuery(`CREATE TABLE IF NOT EXISTS \`tagslist\` (
+			\`id\` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+			\`tagName\` varchar(255) NOT NULL
+		  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;`)
+
+		dbQuery(`INSERT INTO \`tagslist\` (\`tagName\`) VALUES
+		('soccer'),
+		('beach'),
+		('date'),
+		('computer'),
+		('money'),
+		('sport')`)
 
 		dbQuery(`CREATE TABLE IF NOT EXISTS \`blocks\` (
         	\`id\` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,

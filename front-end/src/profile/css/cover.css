@@ -4,6 +4,18 @@
     padding: 3vh 0;
 }
 
+.picture{
+    width: 15vmin;
+    height: 15vmin;
+    margin: 1vmin;
+}
+
+.picList{
+    display: flex;
+    justify-content: space-around;
+}
+
+
 #like-btn, #edit-btn {
     display: inline-block;
     margin: 3vh 0;

@@ -1,29 +1,57 @@
-#listing-members .card {
+* {
     margin: 0;
+    padding: 0;
 }
 
-#listing-members .card-body {
-    height: 18vh;
+#listing-member {
+    margin: 10px;
+    
+}
+
+#listing-member .card-body {
+    border: 1px solid #e0e0e0;
+    /* height: 18vh; */
     margin: 10px 0;
+    padding: 30px 0 5px;
+    border-bottom: 50px solid rgb(255, 116, 116);
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
-#listing-members .card-body a {
-    color: #ff5151;
+#listing-member .card-body a {
+    color: black;
     text-decoration: none;
 }
 
-#listing-members .card-body img {
-    width: 100px;
-    height: 100px;
+#listing-member .card-body img {
+    width: 150px;
+    height: 150px;
+    margin: -10px;
 }
 
-#listing-members .card-img-top {
+#listing-member .card-img-top {
     width: 100px;
     border-radius: 50%;
     height: 18vh;
 }
 
-#listing-members .like-btn {
+#listing-member .like-btn {
     margin: 0 auto;
     width: 15rem;
+}
+
+.card-title-a {
+    /* position: absolute; */
+    /* bottom: 30px; */
+    /* left: 200px; */
+    margin: 30px 0 0;
+}
+
+.card-title-b {
+    color: #FF5252;
+    margin: 10px;
+}
+
+.card-title-c {
+    margin: 5px;
 }

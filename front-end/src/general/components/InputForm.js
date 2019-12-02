@@ -9,7 +9,7 @@ export default class InputForm extends React.Component {
             name: this.props.name,
             placeholder: this.props.placeholder,
             className: this.props.className,
-            classNameChat: this.props.classNameChat
+            classNameChat: this.props.classNameChat,
         }
     }
 

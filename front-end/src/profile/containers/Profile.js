@@ -79,6 +79,7 @@ export default class Profile extends React.Component {
         this.LoadOnce();
         if (this.state.finish) {
             return (
+                
                 <div id='profile'>
                     <Cover profile={this.state} />
                     <Bio profile={this.state} />
