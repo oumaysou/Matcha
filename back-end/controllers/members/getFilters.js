@@ -24,13 +24,13 @@ const getFilters = async (req, res) => {
     else if (minAdmired > maxAdmired) {
         return res.send({
             success: false,
-            message: "verify your Admired filter",
+            message: "Your Admired filter",
         });
     }
     else if (req.params.minAdmired === '1' || req.params.maxAdmired === '0') {
         return res.send({
             success: false,
-            message: "verify your Admired filter",
+            message: "Your Admired filter",
         });
     }
     else if (req.params.minAdmired.charCodeAt(0) < '48' || req.params.minAdmired.charCodeAt(0) > '57') {

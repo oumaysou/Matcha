@@ -45,13 +45,13 @@ const getAge = async (req, res) => {
     else if (minAge > maxAge) {
         return res.send({
             success: false,
-            message: "verify your age filter",
+            message: "Your age filter",
         });
     }
     else if (req.params.minAge === '0' && req.params.maxAge === '0') {
         return res.send({
             success: false,
-            message: "verify your age filter",
+            message: "Your age filter",
         });
     }
     else if (req.params.minAge.charCodeAt(0) < '48' || req.params.minAge.charCodeAt(0) > '57') {
