@@ -23,6 +23,7 @@ import storeMessage from '../controllers/messages/storeMessage';
 import getUsers from '../controllers/users/getUsers';
 import passwordReset from '../controllers/users/passwordReset';
 import getMymsg from '../controllers/messages/getMymsg';
+import removeAll from '../controllers/general/removeAll'
 
 const router = express.Router();
 
@@ -59,8 +60,8 @@ router.delete('/delavatar', delAvatar);
 // router.get('/:table', getAll);
 // router.get('/:table/:field', getter);
 // router.get('/:table/:field/:fieldBis', getterBis);
-router.put('/:table/:field', updater);
-router.delete('/:table/:field', deleter);
+// router.put('/:table/:field', updater);
+// router.delete('/:table/:field', deleter);
 // router.get messageBy/messageTo
 
 router.get('/message/getallmessages/:username', getMessages)
@@ -72,5 +73,6 @@ router.get('/members/getalls/:minAge/:maxAge', getAge);
 router.get('/members/getdistances/:myLat/:myLong/:myKm', getDistance);
 router.get('/members/getmatch/:myLat/:myLong/:myAge/:oSex/:myPopularity/:myGender', getMatch);
 router.get('/updatetag/:nam', updateTag);
+router.delete('/deleteAll', removeAll);
 
 module.exports = router;

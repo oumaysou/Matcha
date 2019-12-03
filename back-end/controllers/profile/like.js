@@ -1,4 +1,5 @@
 import profileQuery from '../../models/profileQuery';
+import generalQuery from '../../models/generalQuery'
 import { getUsernameFromToken } from '../../utils/crypt';
 import userTools from '../../utils/userTools';
 
@@ -44,8 +45,9 @@ const getLike = async (req, res) => {
     const whoILike = await profileQuery.whoILike(myUsername);
     const likedMe = whoLikedMe.includes(username) ? true : false;
     const likedByMe = whoILike.includes(username) ? true : false;
-
-    return res.send({ success: true, likedMe, likedByMe, showOnce: true, whoLikedMe });
+    const notif = await generalQuery.get({ table: 'users', field: 'username', value: myUsername })
+    const notifLike = notif[0].notifLike;
+    return res.send({ success: true, likedMe, likedByMe, showOnce: true, whoLikedMe, notifLike });
 }
 
 const getMatch = async (loginsArray, blockedFilter) => {

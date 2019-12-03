@@ -28,10 +28,10 @@ export default class Header extends React.Component {
     getLike = async () => {
         let user = this.state.username;
         await axios.get(`/api/like/get/${user}`).then(({ data }) => {
+            console.log("Ici => ", JSON.stringify(data))
             if (data.success) {
-                return data.whoLikedMe.map(user => {
-                    return NotificationManager.success(`${user} vous a Liké`, 'Success', 9000)
-                })
+                if (data.notifLike > 0)
+                    return NotificationManager.success(`vous avez ${data.notifLike} Like`, 'Success', 9000)
             }
             else if (!data.success)
                 console.log("Error getLike Header.js wow")
@@ -78,12 +78,23 @@ export default class Header extends React.Component {
         }
     }
 
+    removeAll = async () => {
+        let user = this.state.username;
+        await axios.delete('api/deleteAll', user).then(({ data }) => {
+            if (data.success)
+                console.log("All notif deleted")
+            else
+                console.log('Error')
+        });
+    }
+
     notif = () => {
         if (this.state.once) {
             this.getLike();
             this.getMsg();
             this.getVisit();
-            this.setState({ once: false })
+            this.setState({ once: false });
+            this.removeAll();
         }
     }
 
