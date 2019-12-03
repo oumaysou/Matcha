@@ -7,6 +7,7 @@ import '../css/header.css';
 export default class UserNavbar extends React.Component {
 	render() {
 		const profile = `/members/${this.props.username}`;
+		const map = `/map/${this.props.username}`;
 
 		return (
 			<Navbar collapseOnSelect fixedTop>
