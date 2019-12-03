@@ -60,7 +60,7 @@ router.delete('/delavatar', delAvatar);
 // router.get('/:table', getAll);
 // router.get('/:table/:field', getter);
 // router.get('/:table/:field/:fieldBis', getterBis);
-// router.put('/:table/:field', updater);
+router.put('/:table/:field', updater);
 // router.delete('/:table/:field', deleter);
 // router.get messageBy/messageTo
 
