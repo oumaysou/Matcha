@@ -3,6 +3,11 @@ import axios from 'axios';
 import UserCard from '../components/UserCard';
 import utils from '../../general/components/utils';
 
+import { NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
+
+
 // import Slider, { Range } from 'rc-slider';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -28,10 +33,10 @@ export default class Members extends React.Component {
             orientation: '',
             birthday: '',
             avatar: '',
-            minAdmired: '',
-            maxAdmired: '',
-            minAge: '',
-            maxAge: '',
+            minAdmired: '1',
+            maxAdmired: '0',
+            minAge: '0',
+            maxAge: '0',
             myLocation: '',
             myAge: '',
             myPopularity: '',
@@ -39,7 +44,9 @@ export default class Members extends React.Component {
             myGender: '',
             val: 0,
             displayMenu: false,
-            finish: false
+            finish: false,
+            message: '',
+            // success: '',
         };
         // this.getAllUserCard = this.getAllUserCard.bind(this);
         // this.getAdmired = this.getAdmired.bind(this);
@@ -82,6 +89,9 @@ export default class Members extends React.Component {
                     users: data.usersData,
                     finish: true
                 })
+            else if (!data.success) {
+                NotificationManager.warning(data.message, 'Verify !', 3000);
+            }
         }).catch(err => console.error('Error: ', err));
     }
 
@@ -97,6 +107,9 @@ export default class Members extends React.Component {
                     users: data.usersData,
                     finish: true 
                 })
+            else if (!data.success) {
+                NotificationManager.warning(data.message, 'Verify !', 3000);
+            }
         }).catch(err => console.error('Error: ', err));
     }
 
@@ -297,21 +310,29 @@ export default class Members extends React.Component {
                                         <form onSubmit={this.handleSubmit} className="admired">
                                             <p>Must Admired:</p>
                                             <input 
-                                                type="text"
+                                                type="number"
+                                                required = "required"
                                                 name="minAdmired"
                                                 placeholder="Min"
-                                                maxLength="5"
-                                                size="6"
+                                                maxLength = "5"
+                                                min="0"
+                                                max="9999"
+                                                // maxLength="3"
+                                                // size="6"
                                                 // value={this.state}
                                                 onChange={this.handleInputChange}  
                                             />
                                             <p className="line">-</p>
                                             <input 
-                                                type="text" 
+                                                type="number" 
+                                                required = "required"
                                                 name="maxAdmired"
                                                 placeholder="Max"
-                                                maxLength="5"
-                                                size="6"
+                                                maxLength = "5"
+                                                min="0"
+                                                max="9999"
+                                                // maxLength="3"
+                                                // size="6"
                                                 // value={this.state}
                                                 onChange={this.handleInputChange}
                                             />
@@ -320,20 +341,26 @@ export default class Members extends React.Component {
                                         <form onSubmit={this.handleSubmit} className="admired">
                                             <p>Age:</p>
                                             <input 
-                                                type="text"
+                                                type="number"
+                                                required = "required"
                                                 name="minAge"
                                                 placeholder="Min"
-                                                maxLength="2"
-                                                size="6"
+                                                maxLength = "5"
+                                                min="0"
+                                                max="99"
+                                                // size="6"
                                                 onChange={this.handleInputChange}  
                                             />
                                             <p className="line">-</p>
                                             <input 
-                                                type="text"
+                                                type="number"
+                                                required = "required"
                                                 name="maxAge" 
                                                 placeholder="Max" 
-                                                maxLength="2" 
-                                                size="6"
+                                                maxLength = "5"
+                                                min="0"
+                                                max="99"
+                                                // size="6"
                                                 onChange={this.handleInputChange}  
                                             />
                                             <button className="filterButton" onClick={this.updateAge}>></button>
