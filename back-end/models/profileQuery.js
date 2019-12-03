@@ -54,6 +54,16 @@ const setNewVisit = async (myUsername, username) => {
     const date = moment().format('L LT');
     const userData = { visit: username, visitedBy: myUsername, date };
     const result = await generalQuery.insert({ table: 'visits', userData });
+    const tableMe = await generalQuery.get({ table: 'users', field: 'username', value: username })
+    // console.log("\n\n\n\n" + JSON.stringify(visitr))
+    // const newVisit = visit[0] ? 1 : 0;
+    const notif = await generalQuery.update({
+        table: 'users',
+        field: 'notifVisit',
+        value: tableMe[0].notifVisit + 1,
+        where: 'username',
+        whereValue: username
+    })
     return result.affectedRows > 0 ? true : false;
 }
 
@@ -107,6 +117,8 @@ const setNewLike = async (myUsername, username) => {
 
     if (!likedByMe.includes(username)) {
         result = await generalQuery.insert({ table: '`likes`', userData });
+        const oldNotifLike = await generalQuery.get({ table: 'users', field: 'username', value: myUsername })
+        const notifLike = oldNotifLike[0].notifLike + 1;
         const popularity = await userTools.setPopularity(myUsername, username, 'add');
 
         result = await generalQuery.update({
@@ -115,6 +127,13 @@ const setNewLike = async (myUsername, username) => {
             value: popularity,
             where: 'username',
             whereValue: myUsername
+        });
+        const updateLikeNotif = await generalQuery.update({
+            table: 'users',
+            field: 'notifLike',
+            value: notifLike,
+            where: 'username',
+            whereValue: username
         });
     }
     else {
@@ -156,6 +175,8 @@ const UnsetLike = async (myUsername, username) => {
 
     if (!likedByMe.includes(username)) {
         result = null;
+        const oldNotifLike = await generalQuery.get({ table: 'users', field: 'username', value: myUsername })
+        const notifLike = oldNotifLike[0].notifLike - 1;
         const popularity = await userTools.setPopularity(myUsername, username, 'add');
 
         result = await generalQuery.update({
@@ -164,6 +185,13 @@ const UnsetLike = async (myUsername, username) => {
             value: popularity,
             where: 'username',
             whereValue: myUsername
+        });
+        const updateLikeNotif = await generalQuery.update({
+            table: 'users',
+            field: 'notifLike',
+            value: notifLike,
+            where: 'username',
+            whereValue: username
         });
     }
     else {

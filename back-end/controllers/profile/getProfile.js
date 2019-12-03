@@ -22,9 +22,9 @@ const getProfile = async (req, res) => {
     const visitedBy = await profileQuery.whoVisitedMe(user.username);
 
 
-    const likedBy = await profileQuery.whoLikedMe(user.username);
-
-
+    const likedBy = await profileQuery.whoLikedMe(myUsername);
+    const likedByMe = await profileQuery.whoILike(myUsername);
+    // console.log("\n\n\n=>" + likedBy + "<=\n\n\n")
     if (myUsername !== username) {
 
         const blockedByMe = await profileQuery.getBlockedByMe(myUsername);
@@ -44,6 +44,7 @@ const getProfile = async (req, res) => {
                 tags,
                 visitedBy,
                 likedBy,
+                likedByMe,
                 userData: user
             });
         }
@@ -63,7 +64,8 @@ const getProfile = async (req, res) => {
             tags,
             visitedBy,
             likedBy,
-            userData: user
+            userData: user,
+            likedByMe,
         });
     }
 };

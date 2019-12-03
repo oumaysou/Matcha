@@ -18,7 +18,7 @@ const storeMessage = async (req, res) => {
         messageTo,
         time
     };
-    console.log(JSON.stringify((req.body)))
+    // console.log(JSON.stringify((req.body)))
     const result = await generalQuery.insert({ table, userData });
     if (result.affectedRows > 0) {
         res.status(200).send({

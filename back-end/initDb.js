@@ -3,7 +3,7 @@ import mysql from 'mysql';
 const db = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: '123456'
+	password: 'oumaysou'
 });
 
 function dbQuery(req) {
@@ -46,7 +46,10 @@ function initDb() {
         	\`lastConnection\` varchar(255),
         	\`popularity\` INT NOT NULL DEFAULT '0',
         	\`avatar\` varchar(255) NOT NULL DEFAULT 'https://www.bigmouthvoices.com/profile_picture/large/default-profile_picture.jpg',
-        	\`bio\` varchar(255)
+			\`bio\` varchar(255),
+			\`notifMsg\` INT NOT NULL DEFAULT '0',
+			\`notifLike\` INT NOT NULL DEFAULT '0',
+			\`notifVisit\` INT NOT NULL DEFAULT '0'
         );`)
 
 		dbQuery(`CREATE TABLE IF NOT EXISTS \`likes\` (
@@ -73,7 +76,7 @@ function initDb() {
         	\`tag\` varchar(255) NOT NULL,
         	\`taggedBy\` varchar(255) NOT NULL
 		);`)
-		
+
 		dbQuery(`DROP Table IF EXISTS \`tagslist\``)
 
 		dbQuery(`CREATE TABLE IF NOT EXISTS \`tagslist\` (

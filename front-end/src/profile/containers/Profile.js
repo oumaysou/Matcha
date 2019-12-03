@@ -55,6 +55,7 @@ export default class Profile extends React.Component {
                     bio: data.userData.bio,
                     photos: data.photos,
                     likedBy: data.likedBy,
+                    likedByMe: data.likedByMe,
                     visitedBy: data.visitedBy,
                     tags: data.tags,
                     finish: true
@@ -79,7 +80,7 @@ export default class Profile extends React.Component {
         this.LoadOnce();
         if (this.state.finish) {
             return (
-                
+
                 <div id='profile'>
                     <Cover profile={this.state} />
                     <Bio profile={this.state} />
