@@ -404,7 +404,7 @@ export default class Members extends React.Component {
                                             />
                                         </form>
                                         <form onSubmit={this.handleSubmit} className="button-tag">
-                                            <button className="filterButton" onClick={this.updateMatcha}>Matcha!</button>
+                                            <button className="filterButton-a" onClick={this.updateMatcha}>Matcha!</button>
                                         </form>
 
                                         {/* <Slider dots step={20} defaultValue={100} onAfterChange={log} 

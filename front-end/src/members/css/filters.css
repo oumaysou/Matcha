@@ -9,6 +9,7 @@
     flex-flow: row wrap;
     border: 1px solid #e0e0e0;
     margin: 25px 0;
+    padding: 10px 0;
     /* height: 30px;
     border-radius: 9px;
     background-color: #fcfcfc; */
@@ -82,3 +83,20 @@
     opacity: 50%;
 }
 
+#filter-basic .filterButton-a {
+    margin: 0 3px;
+    padding-bottom: 5px;
+    padding: 3px 8px;
+    background: #FF5252;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+    outline: none;
+}
+
+
+#filter-basic .filterButton-a:hover {
+    opacity: 50%;
+}
