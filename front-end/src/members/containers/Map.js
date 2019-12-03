@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
-import utils from '../../general/components/utils';
 
-import Map from 'pigeon-maps'
-import Marker from 'pigeon-marker'
+import Map from 'pigeon-maps';
+import Marker from 'pigeon-marker';
+
+import { Redirect } from 'react-router-dom';
 
 import '../css/map.css'
 
@@ -32,13 +33,13 @@ const providers = {
   dark: mapbox('dark-v9', MAPBOX_ACCESS_TOKEN)
 }
 
-export default class usersMap extends Component {
-  constructor (props) {
+export default class UsersMap extends Component {
+  constructor(props) {
     super(props)
 
     this.state = {
       center: [],
-      zoom: 14,
+      zoom: 12,
       provider: 'wikimedia',
       metaWheelZoom: false,
       twoFingerDrag: false,
@@ -52,54 +53,67 @@ export default class usersMap extends Component {
       dragAnchor: [48.8565, 2.3475],
       loaded: false,
       user: [],
-      allUsers: []
+      allUsers: [],
+      redirect: false,
+      username: ""
     }
   }
 
-    componentWillMount() {
-        const profileUser = this.props.match.params.username;
-        const decoded = utils.decodedCookie();
-        if (decoded) {
-            axios.get(`/api/users/profile/${profileUser}`).then(({ data }) => {
-                this.setState({
-                    center : [parseFloat(data.userData.location.split(',')[0]), parseFloat(data.userData.location.split(',')[1])],
-                    loaded : true,
-                    user : data.userData
-                })
-        }).catch(err => console.error('Error: ', err));
-        }
-        axios.get(`/api/users/getall`).then(({ data }) => {
-        if (data.success)
-            this.setState({ allUsers: data.usersData, finish: true })
-        }).catch(err => console.error('Error: ', err));
-    }
+  componentWillMount() {
+    const profileUser = this.props.username;
+    axios.get(`/api/users/profile/${profileUser}`).then(({ data }) => {
+      this.setState({
+        center: [parseFloat(data.userData.location.split(',')[0]), parseFloat(data.userData.location.split(',')[1])],
+        user: data.userData,
+        loaded: true
+      })
+    }).catch(err => console.error('Error: ', err));
+    axios.get(`/api/users/getall`).then(({ data }) => {
+      if (data.success)
+        this.setState({
+          allUsers: data.usersData,
+        })
+    }).catch(err => console.error('Error: ', err));
+  }
 
-    getMarkerUser() {
-        const user = this.state.user;
-        return  <Marker 
-                    key={0} 
-                    anchor={[parseFloat(user.location.split(',')[0]), parseFloat(user.location.split(',')[1])]} 
-                    payload={user.username}
-                    onClick={this.handleMarkerClick}
-                />
-    }
+  setRedirect = (username) => {
+    this.setState({
+      redirect: true,
+      username: username
+    })
+  }
 
-    getAllMarkers() {
-        const users = this.state.allUsers;
-        if (users[0]) {
-            return users.map((user, index) => {
-                return  <Marker 
-                            key={index} 
-                            anchor={[parseFloat(user.member.location.split(',')[0]), parseFloat(user.member.location.split(',')[1])]} 
-                            payload={user.member.username}
-                            onClick={this.handleMarkerClick}
-                        />
-            })
-        }
-        else
-            return (0);
+  renderRedirect = (username) => {
+    if (this.state.redirect) {
+      return <Redirect to={'/members/' + this.state.username} />
     }
+  }
 
+  getMarkerUser() {
+    const user = this.state.user;
+    return <Marker
+      key={0}
+      anchor={[parseFloat(user.location.split(',')[0]), parseFloat(user.location.split(',')[1])]}
+      payload={user.username}
+      onClick={this.handleMarkerClick}
+    />
+  }
+
+  getAllMarkers() {
+    const users = this.props.users;
+    if (users[0]) {
+      return users.map((user, index) => {
+        return <Marker
+          key={index}
+          anchor={[parseFloat(user.member.location.split(',')[0]), parseFloat(user.member.location.split(',')[1])]}
+          payload={user.member.username}
+          onClick={this.handleMarkerClick}
+        />
+      })
+    }
+    else
+      return (0);
+  }
 
   zoomIn = () => {
     this.setState({
@@ -124,17 +138,17 @@ export default class usersMap extends Component {
     console.log('Map clicked!', latLng, pixel)
   }
 
-    handleMarkerClick = ({ event, payload, anchor}) => {
-        let path = `/members/` + payload;
-        this.props.history.push(path);
-    }
+  handleMarkerClick = ({ event, payload, anchor }) => {
+    this.setRedirect(payload);
+  }
 
-  render () {
+  render() {
     const { center, zoom, provider, animate, metaWheelZoom, twoFingerDrag, zoomSnap, mouseEvents, touchEvents, minZoom, maxZoom } = this.state
-    return (
-    <div className="div-map">
-        <Map
-            limitBounds='edge'
+    if (this.state.loaded === true) {
+      return (
+        <div className="div-map">
+          {this.renderRedirect()}
+          <Map
             center={center}
             zoom={zoom}
             provider={providers[provider]}
@@ -148,12 +162,15 @@ export default class usersMap extends Component {
             mouseEvents={mouseEvents}
             touchEvents={touchEvents}
             minZoom={minZoom}
-            maxZoom={maxZoom}
-            boxClassname="pigeon-filters">
-            {this.getAllMarkers()}
+            maxZoom={maxZoom}>
             {this.getMarkerUser()}
-        </Map>
-    </div>
-    )
+            {this.getAllMarkers()}
+          </Map>
+        </div>
+      )
+    }
+    else {
+      return (<div>Loading map...</div>)
+    }
   }
 }

@@ -7,7 +7,6 @@ import '../css/header.css';
 export default class UserNavbar extends React.Component {
 	render() {
 		const profile = `/members/${this.props.username}`;
-		const map = `/map/${this.props.username}`;
 
 		return (
 			<Navbar collapseOnSelect fixedTop>
@@ -21,9 +20,6 @@ export default class UserNavbar extends React.Component {
 					<Nav pullRight>
 						<NavItem eventKey={1} onClick={this.props.onClick}>
 							Notifications <i className="fa fa-bell"></i>
-						</NavItem>
-						<NavItem eventKey={1} href={map}>
-							Map <i className="fa fa-globe"></i>
 						</NavItem>
 						<NavItem eventKey={2} href='/members'>
 							Members <i className="fa fa-users"></i>

@@ -45,7 +45,8 @@ const getMembers = async (req, res) => {
         myOrientation,
         myGender,
         myAge,
-        myPopularity
+        myPopularity,
+        myUsername
     });
 };
 

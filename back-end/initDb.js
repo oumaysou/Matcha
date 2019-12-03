@@ -2,8 +2,8 @@ import mysql from 'mysql';
 
 const db = mysql.createConnection({
 	host: 'localhost',
-	user: 'root',
-	password: 'oumaysou'
+	user: 'admin',
+	password: 'admin'
 });
 
 function dbQuery(req) {
