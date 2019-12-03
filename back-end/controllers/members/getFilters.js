@@ -9,16 +9,40 @@ const getFilters = async (req, res) => {
     const myUsername = getUsernameFromToken(req);
     let minAdmired = req.params.minAdmired;
     let maxAdmired = req.params.maxAdmired;
-    // console.log("getfilters min: ", minAdmired);
+    console.log("getfilters min: ", minAdmired);
     // console.log("gedsadsa: ", myUsername);
-    // console.log("getfilters max: ", maxAdmired);
+    console.log("getfilters max: ", maxAdmired);
     // const minAdmired = req.params.minAdmired;
     // const allMembers = await generalQuery.getFilters({table: 'users', minAdmired: minAdmiredA});
     const allMembers = await generalQuery.getFilters({table: 'users', minAdmired, maxAdmired, myUsername});
-    if (!allMembers[0]) {
+    if (!allMembers) {
         return res.send({
             success: false,
             message: "There is no member yet"
+        });
+    }
+    else if (minAdmired > maxAdmired) {
+        return res.send({
+            success: false,
+            message: "verify your Admired filter",
+        });
+    }
+    else if (req.params.minAdmired === '1' || req.params.maxAdmired === '0') {
+        return res.send({
+            success: false,
+            message: "verify your Admired filter",
+        });
+    }
+    else if (req.params.minAdmired.charCodeAt(0) < '48' || req.params.minAdmired.charCodeAt(0) > '57') {
+        return res.send({
+            success: false,
+            message: "Not valid Age filter",
+        });
+    }
+    else if (req.params.maxAdmired.charCodeAt(0) < '48' || req.params.maxAdmired.charCodeAt(0) > '57') {
+        return res.send({
+            success: false,
+            message: "Not valid Age filter",
         });
     }
     // console.log("\n\n\n ALL " + JSON.stringify(allMembers))

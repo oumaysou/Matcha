@@ -3,6 +3,11 @@ import axios from 'axios';
 import UserCard from '../components/UserCard';
 import utils from '../../general/components/utils';
 
+import { NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
+
+
 // import Slider, { Range } from 'rc-slider';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -30,10 +35,10 @@ export default class Members extends React.Component {
             orientation: '',
             birthday: '',
             avatar: '',
-            minAdmired: '',
-            maxAdmired: '',
-            minAge: '',
-            maxAge: '',
+            minAdmired: '1',
+            maxAdmired: '0',
+            minAge: '0',
+            maxAge: '0',
             myLocation: '',
             myAge: '',
             myPopularity: '',
@@ -41,7 +46,9 @@ export default class Members extends React.Component {
             myGender: '',
             val: 0,
             displayMenu: false,
-            finish: false
+            finish: false,
+            message: '',
+            // success: '',
         };
         // this.getAllUserCard = this.getAllUserCard.bind(this);
         // this.getAdmired = this.getAdmired.bind(this);
@@ -85,6 +92,9 @@ export default class Members extends React.Component {
                     users: data.usersData,
                     finish: true
                 })
+            else if (!data.success) {
+                NotificationManager.warning(data.message, 'Verify !', 3000);
+            }
         }).catch(err => console.error('Error: ', err));
     }
 
@@ -100,6 +110,9 @@ export default class Members extends React.Component {
                     users: data.usersData,
                     finish: true
                 })
+            else if (!data.success) {
+                NotificationManager.warning(data.message, 'Verify !', 3000);
+            }
         }).catch(err => console.error('Error: ', err));
     }
 
@@ -282,108 +295,122 @@ export default class Members extends React.Component {
                     <div className='container-fluid'>
                         <div className='container-fluid'>
                             {/* <div className='row col-md-6 col-sm-12 col-xs-12 filters'> */}
-                            <div id='filter-basic'>
-                                <form className="dropdown-tag">
-                                    <div className="button-tag" onClick={this.showDropdownMenu}>Search a tag</div>
-                                    {this.state.displayMenu ? (
-                                        <ul onClick={this.showDropdownMenu} className="ul-tag">
-                                            {/* <li "><a className="active" href="#Create Page">Create Page</a></li> */}
-                                            <li onClick={this.updateTag} data-id="1" data-name="soccer" className="li-tag"><a href="#Soccer">Soccer</a></li>
-                                            <li onClick={this.updateTag} data-id="2" data-name="beach" className="li-tag"><a href="#Beach">Beach</a></li>
-                                            <li onClick={this.updateTag} data-id="3" data-name="date" className="li-tag"><a href="#Date">Date</a></li>
-                                            <li onClick={this.updateTag} data-id="4" data-name="computer" className="li-tag"><a href="#Computer">Computer</a></li>
-                                            <li onClick={this.updateTag} data-id="5" data-name="money" className="li-tag"><a href="#Money">Money</a></li>
-                                            <li onClick={this.updateTag} data-id="6" data-name="sport" className="li-tag"><a href="#Sport">Sport</a></li>
-                                        </ul>
-                                    ) : (null)}
-                                </form>
-                                <form onSubmit={this.handleSubmit} className="admired">
-                                    <p>Must Admired:</p>
-                                    <input
-                                        type="text"
-                                        name="minAdmired"
-                                        placeholder="Min"
-                                        maxLength="5"
-                                        size="6"
-                                        // value={this.state}
-                                        onChange={this.handleInputChange}
-                                    />
-                                    <p className="line">-</p>
-                                    <input
-                                        type="text"
-                                        name="maxAdmired"
-                                        placeholder="Max"
-                                        maxLength="5"
-                                        size="6"
-                                        // value={this.state}
-                                        onChange={this.handleInputChange}
-                                    />
-                                    <button className="filterButton" onClick={this.updateAdmired}>></button>
-                                </form>
-                                <form onSubmit={this.handleSubmit} className="admired">
-                                    <p>Age:</p>
-                                    <input
-                                        type="text"
-                                        name="minAge"
-                                        placeholder="Min"
-                                        maxLength="2"
-                                        size="6"
-                                        onChange={this.handleInputChange}
-                                    />
-                                    <p className="line">-</p>
-                                    <input
-                                        type="text"
-                                        name="maxAge"
-                                        placeholder="Max"
-                                        maxLength="2"
-                                        size="6"
-                                        onChange={this.handleInputChange}
-                                    />
-                                    <button className="filterButton" onClick={this.updateAge}>></button>
-                                </form>
-                                <form onSubmit={this.handleSubmit} style={{ display: "none" }} className="admired">
-                                    <p>Around you:</p>
-                                    <input
-                                        type="text"
-                                        name="must admired"
-                                        placeholder="Min"
-                                        maxLength="3"
-                                        size="10"
-                                        onChange={this.handleInputChange}
-                                    />
-                                    <p className="line">-</p>
-                                    <input
-                                        type="text"
-                                        name="must admired"
-                                        placeholder="Max"
-                                        maxLength="3"
-                                        size="10"
-                                        onChange={this.handleInputChange}
-                                    />
-                                    <button className="filterButton" onClick={this.updateAdmired}>></button>
-                                </form>
-                                <form onSubmit={this.handleSubmit} className="admired">
-                                    <p>Around you:</p>
-                                    <Slider
-                                        style={wrapperStyle}
-                                        min={0}
-                                        defaultValue={0}
-                                        marks={{ 0: 0, 20: 20, 50: 50, 100: 100 }}
-                                        handle={handle}
-                                        railStyle={{ backgroundColor: 'grey' }}
-                                        dotStyle={{ borderColor: 'grey' }}
-                                        step={null}
-                                        activeDotStyle={{ borderColor: '#FF5252' }}
-                                        trackStyle={{ backgroundColor: '#FF5252' }}
-                                        handleStyle={{ borderColor: '#FF5252' }}
-                                        onChange={this.getPosition}
-                                    />
-                                </form>
-                                <form onSubmit={this.handleSubmit} className="button-tag">
-                                    <button className="filterButton" onClick={this.updateMatcha}>Matcha!</button>
-                                </form>
+                                    <div id='filter-basic'>
+                                        <form className="dropdown-tag">
+                                            <div className="button-tag" onClick={this.showDropdownMenu}>Search a tag</div>
+                                            { this.state.displayMenu ? (
+                                                <ul onClick={this.showDropdownMenu} className="ul-tag">
+                                                    {/* <li "><a className="active" href="#Create Page">Create Page</a></li> */}
+                                                    <li onClick={this.updateTag}  data-id="1" data-name="soccer" className="li-tag"><a href="#Soccer">Soccer</a></li>
+                                                    <li onClick={this.updateTag} data-id="2" data-name="beach" className="li-tag"><a href="#Beach">Beach</a></li>
+                                                    <li onClick={this.updateTag} data-id="3" data-name="date" className="li-tag"><a href="#Date">Date</a></li>
+                                                    <li onClick={this.updateTag} data-id="4" data-name="computer" className="li-tag"><a href="#Computer">Computer</a></li>
+                                                    <li onClick={this.updateTag} data-id="5" data-name="money" className="li-tag"><a href="#Money">Money</a></li>
+                                                    <li onClick={this.updateTag} data-id="6" data-name="sport" className="li-tag"><a href="#Sport">Sport</a></li>
+                                                </ul>
+                                            ): (null)}
+                                        </form>
+                                        <form onSubmit={this.handleSubmit} className="admired">
+                                            <p>Must Admired:</p>
+                                            <input 
+                                                type="number"
+                                                required = "required"
+                                                name="minAdmired"
+                                                placeholder="Min"
+                                                maxLength = "5"
+                                                min="0"
+                                                max="9999"
+                                                // maxLength="3"
+                                                // size="6"
+                                                // value={this.state}
+                                                onChange={this.handleInputChange}  
+                                            />
+                                            <p className="line">-</p>
+                                            <input 
+                                                type="number" 
+                                                required = "required"
+                                                name="maxAdmired"
+                                                placeholder="Max"
+                                                maxLength = "5"
+                                                min="0"
+                                                max="9999"
+                                                // maxLength="3"
+                                                // size="6"
+                                                // value={this.state}
+                                                onChange={this.handleInputChange}
+                                            />
+                                            <button className="filterButton" onClick={this.updateAdmired}>></button>
+                                        </form>
+                                        <form onSubmit={this.handleSubmit} className="admired">
+                                            <p>Age:</p>
+                                            <input 
+                                                type="number"
+                                                required = "required"
+                                                name="minAge"
+                                                placeholder="Min"
+                                                maxLength = "5"
+                                                min="0"
+                                                max="99"
+                                                // size="6"
+                                                onChange={this.handleInputChange}  
+                                            />
+                                            <p className="line">-</p>
+                                            <input 
+                                                type="number"
+                                                required = "required"
+                                                name="maxAge" 
+                                                placeholder="Max" 
+                                                maxLength = "5"
+                                                min="0"
+                                                max="99"
+                                                // size="6"
+                                                onChange={this.handleInputChange}  
+                                            />
+                                            <button className="filterButton" onClick={this.updateAge}>></button>
+                                        </form>
+                                        <form onSubmit={this.handleSubmit} style={{display: "none"}} className="admired">
+                                            <p>Around you:</p>
+                                            <input 
+                                                type="text" 
+                                                name="must admired" 
+                                                placeholder="Min" 
+                                                maxLength="3" 
+                                                size="10"
+                                                onChange={this.handleInputChange}      
+                                            />
+                                            <p className="line">-</p>
+                                            <input 
+                                                type="text" 
+                                                name="must admired" 
+                                                placeholder="Max" 
+                                                maxLength="3" 
+                                                size="10"
+                                                onChange={this.handleInputChange}  
+                                            />
+                                            <button className="filterButton" onClick={this.updateAdmired}>></button>
+                                        </form>
+                                        <form onSubmit={this.handleSubmit} className="admired">
+                                            <p>Around you:</p>
+                                            <Slider 
+                                                style={wrapperStyle} 
+                                                min={0} 
+                                                defaultValue={0} 
+                                                marks={{ 0:0 , 20:20, 50:50, 100:100 }}
+                                                handle={handle}
+                                                railStyle={{ backgroundColor: 'grey'}}
+                                                dotStyle={{ borderColor: 'grey' }}
+                                                step={null} 
+                                                activeDotStyle={{borderColor: '#FF5252'}}
+                                                trackStyle={{backgroundColor: '#FF5252'}}
+                                                handleStyle={{borderColor: '#FF5252'}}
+                                                onChange={this.getPosition}
+                                            />
+                                        </form>
+                                        <form onSubmit={this.handleSubmit} className="button-tag">
+                                            <button className="filterButton-a" onClick={this.updateMatcha}>Matcha!</button>
+                                        </form>
 
-                                {/* <Slider dots step={20} defaultValue={100} onAfterChange={log} 
+                                        {/* <Slider dots step={20} defaultValue={100} onAfterChange={log} 
                                         dotStyle={{ borderColor: 'orange' }} activeDotStyle={{ borderColor: 'yellow' }} /> */}
 
                                 {/* <MenuItem onClick={this.updateAdmired}>Min Admired</MenuItem> */}

@@ -48,10 +48,10 @@ const createUser = async (req, res) => {
                 orientation,
                 confirmToken,
                 location,
-                city
             };
-            
+            console.log("data 1", userData);
             const data = await generalQuery.insert({ table: 'users', userData });
+            console.log("data 2", data);
             if (data.affectedRows > 0) {
                 const subject = "Confirm your account";
                 const indication = "Please click this link to confirm your account :";
