@@ -24,7 +24,7 @@ export default class Cover extends React.Component {
         const { username } = this.props.profile;
         await axios.get(`/api/like/Unset/${username}`).then(({ data }) => {
             if (data.success) {
-                console.log("Unset");
+                this.setState({ text: 'UnliKe' })
             }
             else if (!data.success) {
                 NotificationManager.error(data.message, 'Sorry but...', 6000);
@@ -54,7 +54,7 @@ export default class Cover extends React.Component {
             const urlEdit = `/members/${username}/edit`;
             theRightBtn = <Link to={urlEdit}><button id='edit-btn' className="btn btn-primary text-center">Edit</button></Link>
         }
-        if (this.props.profile.likedByMe.includes(username))
+        else if (this.props.profile.likedByMe.includes(username))
             theRightBtn = <button id='like-btn' className="btn btn-primary text-center" onClick={this.UnsetLike}>Unlike <i className="fa fa-thumbs-down"></i></button>;
         else if (this.props.profile.likedBy.includes(username))
             theRightBtn = <button id='like-btn' className="btn btn-primary text-center" onClick={this.setLike}>Like Back <i className="fa fa-heart"></i></button>;

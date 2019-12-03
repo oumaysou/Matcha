@@ -195,6 +195,8 @@ const UnsetLike = async (myUsername, username) => {
         });
     }
     else {
+        const oldNotifLike = await generalQuery.get({ table: 'users', field: 'username', value: myUsername })
+        const notifLike = oldNotifLike[0].notifLike - 1;
         const likeId = await getLikeId(myUsername, username);
         const likeId1 = likeId[0].id;
         result = await generalQuery.deleter({ table: '`likes`', field: 'id', value: likeId1 });
@@ -206,6 +208,13 @@ const UnsetLike = async (myUsername, username) => {
             value: popularity,
             where: 'username',
             whereValue: myUsername
+        });
+        const updateLikeNotif = await generalQuery.update({
+            table: 'users',
+            field: 'notifLike',
+            value: notifLike,
+            where: 'username',
+            whereValue: username
         });
     }
     return result.affectedRows > 0 ? true : false;
