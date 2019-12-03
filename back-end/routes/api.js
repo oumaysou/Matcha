@@ -49,6 +49,7 @@ router.get('/like/set/:username', setLike);
 router.get('/like/get/:username', getLike);
 router.get('/like/Unset/:username', UnsetLike);
 router.get('/messageToMe/getMyMsg', getMymsg)
+router.delete('/deleteAll', removeAll);
 
 router.post('/pictures', savePictures);
 router.post('/delpicture', delPicture);
@@ -61,7 +62,7 @@ router.delete('/delavatar', delAvatar);
 // router.get('/:table/:field', getter);
 // router.get('/:table/:field/:fieldBis', getterBis);
 router.put('/:table/:field', updater);
-// router.delete('/:table/:field', deleter);
+router.delete('/:table/:field', deleter);
 // router.get messageBy/messageTo
 
 router.get('/message/getallmessages/:username', getMessages)
@@ -73,6 +74,5 @@ router.get('/members/getalls/:minAge/:maxAge', getAge);
 router.get('/members/getdistances/:myLat/:myLong/:myKm', getDistance);
 router.get('/members/getmatch/:myLat/:myLong/:myAge/:oSex/:myPopularity/:myGender', getMatch);
 router.get('/updatetag/:nam', updateTag);
-router.delete('/deleteAll', removeAll);
 
 module.exports = router;

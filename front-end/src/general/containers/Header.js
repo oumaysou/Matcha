@@ -79,8 +79,7 @@ export default class Header extends React.Component {
     }
 
     removeAll = async () => {
-        let user = this.state.username;
-        await axios.delete('api/deleteAll', user).then(({ data }) => {
+        await axios.delete('/api/deleteAll').then(({ data }) => {
             if (data.success)
                 console.log("All notif deleted")
             else
