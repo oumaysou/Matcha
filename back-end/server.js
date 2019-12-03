@@ -21,6 +21,7 @@ initDb();
 
 const server = http.createServer(app);
 const io = socketIo.listen(server);
+io.set('heartbeat timeout', 60000);
 // { origins: 'localhost:* http://localhost:* http://www.localhost:*' }
 
 app.use(bodyParser.json());
@@ -34,7 +35,6 @@ app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	next();
 });
-
 
 const users = [];
 

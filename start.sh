@@ -1,1 +1,1 @@
-cd front-end && npm i && cd ../back-end && npm i & .. && npm run dev
+cd front-end && npm i && cd ../back-end && npm i && cd  .. && npm run dev
