@@ -40,7 +40,7 @@ export default class Header extends React.Component {
 
     getMsg = async () => {
         await axios.get('/api/messageToMe/getMyMsg').then(({ data }) => {
-            if (data.success) {
+            if (data.success && data.nbMsg) {
                 NotificationManager.success(`Vous avec reçu ${data.nbMsg} nouveaux messages`, 'Success', 9000)
             }
             else if (!data.success)
