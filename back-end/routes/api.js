@@ -54,9 +54,9 @@ router.delete('/deleteAll', removeAll);
 router.post('/pictures', savePictures);
 router.post('/delpicture', delPicture);
 router.post('/avatar', saveAvatar);
-router.delete('/delavatar', delAvatar);
+router.post('/delavatar', delAvatar);
 
-// router.get('/:table', getAll);
+router.get('/:table', getAll);
 // router.get('/:table/:field/:value', getter);
 // router.get('/:table', getAll);
 // router.get('/:table/:field', getter);

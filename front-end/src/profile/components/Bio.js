@@ -15,9 +15,7 @@ export default class Bio extends React.Component {
         else
             this.setState({biography: this.props.profile.bio});
     }
-    render() {
-        console.log(this.props.profile.bio);
-        
+    render() {       
         return (
             <div className="container">
                 <div className="panel panel-default">

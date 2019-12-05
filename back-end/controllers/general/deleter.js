@@ -4,14 +4,7 @@ import { db } from '../../initDb.js';
 const deleter = async (req, res) => {
     const table = req.params.table;
     const field = req.params.field;
-    const value = req.query.value;
-
-    console.log(" ~~~~~~~~~~~~~ VALUE ~~~~~~~~~~~~~~~~~~", value);
-    console.log(" ~~~~~~~~~~~~~ field ~~~~~~~~~~~~~~~~~~", field);
-    console.log(" ~~~~~~~~~~~~~ table ~~~~~~~~~~~~~~~~~~", table);
-    console.log("~~~ Body ~~~", req.body);
-    
-    
+    const value = req.query.value; 
 
     const result = generalQuery.deleter({table, field, value});
     if (result.affectedRows > 0) {

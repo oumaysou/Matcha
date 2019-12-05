@@ -21,7 +21,7 @@ class EditForm extends React.Component {
             gender: this.props.userInfos.userData.gender,
             orientation: this.props.userInfos.userData.orientation,
             location: this.props.userInfos.userData.location,
-            birthday: moment(this.props.userInfos.userData.birthday).format('L'),
+            birthday: this.props.userInfos.userData.birthday,
             avatar: this.props.userInfos.userData.avatar,
             bio: this.props.userInfos.userData.bio || '',
             photos: [],
@@ -74,12 +74,7 @@ class EditForm extends React.Component {
     handleInfosSubmit = (e) => {
         e.preventDefault();
         const user = Object.assign({}, this.state);
-        this.props.dispatch(thunk_editInfosUser(user));
-    }
-
-    handlePicturesSubmit = (e) => {
-        e.preventDefault();
-        const user = Object.assign({}, this.state);
+        
         this.props.dispatch(thunk_editInfosUser(user));
     }
 
@@ -94,11 +89,26 @@ class EditForm extends React.Component {
         this.handleInputChange(name, value);
     }
 
+    handleLocChange = (e) => {
+        e.preventDefault();
+        const name = e.target.name;
+        const value = e.target.value;
+        let loc = this.state.location;
+        if (name === "longitude"){
+            loc = loc.split(',').shift() +','+ value
+            this.setState({ location: loc });
+        }
+        else{
+            loc = value +','+ loc.split(',').pop()
+            this.setState({ location: loc });
+        }       
+    }
+
       handleRadioChange = (name, value) => {
         this.setState({ [name]: value });
     }
 
-    render() {       
+    render() {    
         return (
             <div id='edit'>
                 <div className="container">
@@ -167,8 +177,28 @@ class EditForm extends React.Component {
                                         className="inputForm mb5"
                                     />
 
+                                    <label>Location</label>
+                                    <p>{this.state.location}</p>
+                                    <input type="number"
+                                        step="0.0000000001"
+                                        min="-90" max="90"
+                                        name="latitude"
+                                        placeholder="latitude"
+                                        onChange={this.handleLocChange}
+                                        className="inputForm mb5"
+                                    />
+                                    <input type="number"
+                                        step="0.0000000001"
+                                        min="-180" max="180"
+                                        name="longitude"
+                                        placeholder="longitude"
+                                        onChange={this.handleLocChange}
+                                        className="inputForm mb5"
+                                    />
+
+                                    <div></div>
                                     <label>Birthday</label>
-                                    <p>{this.state.birthday}</p>
+                                    <p>{moment(this.state.birthday).format('L')}</p>
                                     <input type="date"
                                         name="birthday"
                                         placeholder="Birth Date"

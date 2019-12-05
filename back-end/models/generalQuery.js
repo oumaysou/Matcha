@@ -69,7 +69,7 @@ const getAll = ({ table }) => {
 }
 
 const insert = ({ table, userData }) => {
-    console.log(userData);
+    // console.log(userData);
 
     try {
         const result = new Promise((resolve, reject) => {
@@ -103,8 +103,6 @@ const update = ({ table, field, value, where, whereValue }) => {
 };
 
 const deleter = ({ table, field, value }) => {
-    console.log("DELETER");
-
     try {
         const result = new Promise((resolve, reject) => {
             const sql = `DELETE FROM ${table} WHERE ${field} = ?`;

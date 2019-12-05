@@ -97,7 +97,7 @@ export const thunk_saveAvatarUser = (userData, oldPath) => {
         return axios.post('/api/avatar', userData).then(({ data }) => {
             const { success, message } = data;
             if (success) {
-                axios.delete('/api/delavatar', oldPath)
+                axios.post('/api/delavatar', oldPath)
                 .catch(err => console.error('Error: ', err))
             }
             else

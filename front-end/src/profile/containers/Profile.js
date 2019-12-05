@@ -79,6 +79,8 @@ export default class Profile extends React.Component {
     render() {
         this.LoadOnce();
         if (this.state.finish) {
+            console.log(this.state.birthday);
+            
             return (
 
                 <div id='profile'>

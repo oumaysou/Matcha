@@ -18,7 +18,6 @@ const getProfile = async (req, res) => {
     const photos = await profileQuery.getPhotos(user.username);
     const tags = await profileQuery.getTags(user.username);
 
-    //bug heeeeeeere : correct avatar
     const visitedBy = await profileQuery.whoVisitedMe(user.username);
 
 

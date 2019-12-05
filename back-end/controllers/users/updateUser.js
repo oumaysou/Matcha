@@ -14,6 +14,7 @@ const updateUser = async (req, res) => {
         username,
         firstName,
         lastName,
+        location,
         gender,
         orientation,
         password,
@@ -23,7 +24,7 @@ const updateUser = async (req, res) => {
 
     } = req.body;
     
-    if (!username || !password || !passwordCfm || !birthday
+    if (!username || !password || !passwordCfm || !birthday || !location
         || !firstName || !lastName || !gender || !orientation || !bio || !tags)
     {
         return res.send({
@@ -41,7 +42,7 @@ const updateUser = async (req, res) => {
             const token = await createToken(user[0]);
             const location = await getLocation();
             const city = await getCity();
-
+            
             const userData = {
                 oldusername,
                 username,
@@ -67,10 +68,13 @@ const updateUser = async (req, res) => {
             fields['lastName'] = userData.lastName;
             fields['gender'] = userData.gender;
             fields['birthday'] = userData.birthday;
+            fields['location'] = req.body.location;
             fields['token'] = token;
             fields['orientation'] = userData.orientation;
             fields['bio'] = userData.bio;
             fields['lastConnection'] = moment().format('L LT');
+            
+            // console.log(fields['location']);
             
             for (let key in fields) {
                 await generalQuery.update({ table: 'users', field : key, value: fields[key], where: 'username' , whereValue: userData.oldusername });

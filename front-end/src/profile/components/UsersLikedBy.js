@@ -4,7 +4,7 @@ import '../css/likedBy.css';
 export default class UsersLikedBy extends React.Component {
     render() {
         const likedBy = this.props.likedBy;
-        const avatar = this.props.avatar.split('/').pop();
+        const avatar = 'like.png';
         if (likedBy) {
             return likedBy.map((user, index) => {
                 return (

@@ -12,10 +12,8 @@ class GetLocation extends React.Component {
 
     isEnabled () {
         if (navigator.geolocation) {
-            console.log("bim");
             return navigator.geolocation.getCurrentPosition(this.displayLocationInfo);
         } else {
-            console.log("bam");
             return false;
         }
     }
@@ -26,7 +24,7 @@ class GetLocation extends React.Component {
             longitude: position.coords.longitude
         })
 
-        return console.log(position.coords.latitude + "" + position.coords.longitude);
+        return console.log(position.coords.latitude + " " + position.coords.longitude);
     }
 
     render () {
