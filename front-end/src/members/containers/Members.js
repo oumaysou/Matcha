@@ -119,13 +119,10 @@ export default class Members extends React.Component {
     updateTag = (event) => {
         // const latitude = location.split(',')[0];
         // const longitude = location.split(',')[1];
-        const id = event.currentTarget.dataset.id
+        // const id = event.currentTarget.dataset.id
         const nam = event.currentTarget.dataset.name
         // this.setState({
 
-
-        console.log(id);
-        console.log(nam);
         //     id: event.currentTarget.dataset.id,
         axios.get(`api/updatetag/${nam}`).then(({ data }) => {
             // console.log("users ousssama "+data.usersData)
@@ -177,11 +174,8 @@ export default class Members extends React.Component {
         const myLat = this.state.myLocation.split(',')[0];
         const myLong = this.state.myLocation.split(',')[1];
 
-        console.log(value) // maybe a string or a object
         this.setState({ val: value })
 
-        console.log(myLat);
-        console.log(myLong);
 
         axios.get(`api/members/getdistances/${myLat}/${myLong}/${value}`).then(({ data }) => {
             // console.log("coco", data.usersData)
@@ -201,20 +195,17 @@ export default class Members extends React.Component {
         const myPopularity = this.state.myPopularity;
         const myGender = this.state.myGender;
 
-        console.log("OSEX ", oSex);
-        console.log("OSEX ", myAge);
-        console.log("OSEX ", myPopularity);
-        console.log("OSEX ", myGender);
         axios.get(`api/members/getmatch/${myLat}/${myLong}/${myAge}/${oSex}/${myPopularity}/${myGender}`).then(({ data }) => {
-            console.log(data.usersData)
             if (data.success)
                 this.setState({
                     users: data.usersData,
                     finish: true
                 })
+            else if (!data.success) {
+                NotificationManager.warning(data.message, 'Verify !', 3000);
+            }
         }).catch(err => console.error('Error: ', err));
 
-        console.log("ok1");
     }
 
     // updateMatchaAfter = (event) => {

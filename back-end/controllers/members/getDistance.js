@@ -16,11 +16,11 @@ const getDistance = async (req, res) => {
     if (minMax === '0')
         minMax = '10000000000000';
     else if (minMax === '20')
-        minMax = '1';
+        minMax = '10';
     else if (minMax === '50')
-        minMax = '5';
-    else if (minMax <= '100')
-        minMax = '1000';
+        minMax = '25';
+    else if (minMax === '100')
+        minMax = '150';
 
     const allMembers = await generalQuery.getDistance({table: 'users', myLat, myLong, minMax});
     // console.log("asdasd", JSON.stringify(allMembers));

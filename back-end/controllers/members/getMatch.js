@@ -13,8 +13,8 @@ const getMatch = async (req, res) => {
     let minMax = '1000000';
     let myMinPopularity = req.params.myPopularity - 300;
     let myMaxPopularity = myMinPopularity + 600;
-    let myMinAge = myAge.split('-')[0] - 5;
-    let myMaxAge = myMinAge + 10;
+    let myMinAge = myAge.split('-')[0] - 6;
+    let myMaxAge = myMinAge + 11;
     let myGender = req.params.myGender;
     let myGenderMale = "male";
     let myGenderFemale = "Female";
@@ -29,10 +29,10 @@ const getMatch = async (req, res) => {
     console.log("latitud back", myLat);
     console.log("longitud back", myLong);
     console.log("minmax back", minMax);
-    console.log("age back", myAge);
-    console.log("popu back", myPopularity);
-    console.log("popu back", myMinPopularity);
-    console.log("popu back", myMaxPopularity);
+    // console.log("age back", myAge);
+    // console.log("popu back", myPopularity);
+    console.log("popu back min", myMinPopularity);
+    console.log("popu back max", myMaxPopularity);
     console.log("sex back", oSex);
     console.log("sex back", myGender);
 
@@ -40,7 +40,8 @@ const getMatch = async (req, res) => {
         Change = "female"; }
     else if (myGender === myGenderFemale) {
         Change === "male"; }
-    else if (myGender )
+    
+    // else if (myGender )
     
 
     console.log("sex back GENDERRRR", myGender);
@@ -58,7 +59,7 @@ const getMatch = async (req, res) => {
     if (!allMembers[0]) {
         return res.send({
             success: false,
-            message: "There is no member yet"
+            message: "Update your profile for a better experience !"
         });
     }
 

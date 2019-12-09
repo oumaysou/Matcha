@@ -48,7 +48,7 @@ export default class UsersMap extends Component {
       zoomSnap: true,
       mouseEvents: true,
       touchEvents: true,
-      minZoom: 1,
+      minZoom: 5,
       maxZoom: 18,
       dragAnchor: [48.8565, 2.3475],
       loaded: false,
